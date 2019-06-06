@@ -1,5 +1,6 @@
 /Models/obj
 /Data/obj
 /WebAPI/obj
+/WebAPI/Logs
 /Business/obj
 /Detention_facility.Tests/obj

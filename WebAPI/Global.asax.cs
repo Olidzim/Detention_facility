@@ -7,12 +7,14 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
+
 namespace Detention_facility
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
+            CustomLogging.Initialize(Server.MapPath("~"));
             UnityConfig.RegisterTypes();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

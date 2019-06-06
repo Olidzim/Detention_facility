@@ -2,39 +2,30 @@
 using Detention_facility.Models;
 using System.Collections.Generic;
 using System.Web.Http;
-//using NLog;
-using System;
-using System.Net;
-using Newtonsoft.Json;
-using System.Linq;
+
 
 namespace Detention_facility.Controllers
 {
     public class DetaineeController : ApiController
-    {
-       // private static Logger logger = LogManager.GetCurrentClassLogger();
-
+    {    
         private IDetaineeBusinessLayer _detaineeService;
 
         public DetaineeController(IDetaineeBusinessLayer detaineeService)
-        {
+        {            
             _detaineeService = detaineeService;
         }
 
         [HttpPost]
         public IHttpActionResult InsertDetainee([FromBody] Detainee Detainee)
-        {
+        {            
+            
             if (ModelState.IsValid)
             {
                 _detaineeService.InsertDetainee(Detainee);
-               // logger.Info("New detainee added" + Environment.NewLine + DateTime.Now);
+
                 return Ok(Detainee);
             }
-            
-          /*  string errors = JsonConvert.SerializeObject(ModelState.Values
-    .SelectMany(state => state.Errors)
-    .Select(error => error.ErrorMessage));
-            logger.Info(errors + Environment.NewLine + DateTime.Now);*/
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -46,6 +37,7 @@ namespace Detention_facility.Controllers
                 _detaineeService.UpdateDetainee(id, Detainee);
                 return Ok(Detainee);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
