@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller.Tests\DetaineeControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,10 @@
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{57b129d2-fb6d-4f1a-8ae9-4d5ca657c44d}</Project>
       <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebAPI\WebAPI.csproj">
+      <Project>{f9a9016a-153b-4b9b-b915-85db8a2e6434}</Project>
+      <Name>WebAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
