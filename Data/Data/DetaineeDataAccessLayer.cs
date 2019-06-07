@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace Detention_facility.Data
 {
@@ -41,7 +42,7 @@ namespace Detention_facility.Data
                 command.Parameters["@HomePhoneNumber"].Value = detainee.HomePhoneNumber;
 
                 command.Parameters.Add("@Photo", SqlDbType.Image);
-                command.Parameters["@Photo"].Value = detainee.Photo;
+                command.Parameters["@Photo"].Value = System.Convert.FromBase64String(detainee.Photo);
 
                 command.Parameters.Add("@ExtraInfo", SqlDbType.NVarChar);
                 command.Parameters["@ExtraInfo"].Value = detainee.ExtraInfo;
@@ -154,7 +155,7 @@ namespace Detention_facility.Data
                     }
                     else
                     {
-                        Detainee.Photo = (byte?[])reader.GetValue(9);
+                        Detainee.Photo = Convert.ToBase64String((byte[])reader.GetValue(9));
                     }
                     Detainee.ExtraInfo = reader.GetValue(10).ToString();
                     Detainee.ResidencePlace = reader.GetValue(11).ToString();
@@ -198,7 +199,7 @@ namespace Detention_facility.Data
                     }
                     else
                     {
-                        Detainee.Photo = (byte?[])reader.GetValue(9);
+                        Detainee.Photo = Convert.ToBase64String((byte[])reader.GetValue(9));
                     }
                     Detainee.ExtraInfo = reader.GetValue(10).ToString();
                     Detainee.ResidencePlace = reader.GetValue(11).ToString();
@@ -249,7 +250,7 @@ namespace Detention_facility.Data
                     }
                     else
                     {
-                        Detainee.Photo = (byte?[])reader.GetValue(9);
+                        Detainee.Photo = Convert.ToBase64String((byte[])reader.GetValue(9));
                     }
 
                     Detainee.ExtraInfo = reader.GetValue(10).ToString();
