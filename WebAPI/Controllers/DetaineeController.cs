@@ -7,18 +7,20 @@ using System.Web.Http;
 namespace Detention_facility.Controllers
 {
     public class DetaineeController : ApiController
-    {    
+    {
         private IDetaineeBusinessLayer _detaineeService;
+        private IDetaineeCachingService _detaineeCachingService;
 
-        public DetaineeController(IDetaineeBusinessLayer detaineeService)
-        {            
+        public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService)
+        {
             _detaineeService = detaineeService;
+            _detaineeCachingService = detaineeCachingService;
         }
 
         [HttpPost]
         public IHttpActionResult InsertDetainee([FromBody] Detainee Detainee)
-        {            
-            
+        {
+
             if (ModelState.IsValid)
             {
                 _detaineeService.InsertDetainee(Detainee);
@@ -44,7 +46,13 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetDetaineeByID(int id)
         {
-            var Detainee = _detaineeService.GetDetaineeByID(id);
+            var Detainee = _detaineeCachingService.Get(id);
+
+            if (Detainee == null)
+            {
+                Detainee = _detaineeService.GetDetaineeByID(id);
+                _detaineeCachingService.Add(Detainee);
+            }
             if (Detainee == null)
             {
                 return NotFound();

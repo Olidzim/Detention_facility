@@ -12,6 +12,7 @@ namespace Detention_facility.Business
             Container.RegisterType<IEmployeeDataAccess, EmployeeDataAccessLayer>();
             Container.RegisterType<IDetentionDataAccess, DetentionDataAccessLayer>();
             Container.RegisterType<IReleaseDataAccess, ReleaseDataAccessLayer>();
+            Container.RegisterType<IDetaineeCachingService, DetaineeCachingService>();
         }
     }
 }
