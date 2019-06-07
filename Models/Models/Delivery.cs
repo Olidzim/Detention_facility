@@ -11,7 +11,7 @@ namespace Detention_facility.Models
         [Required]
         public int DetentionID { get; set; }
         [Required]
-        public int PlaceID { get; set; }
+        public string PlaceAddress { get; set; }
         [Required]
         public int DeliveredByEmployeeID { get; set; }
         [Required]

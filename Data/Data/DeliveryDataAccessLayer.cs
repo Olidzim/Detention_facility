@@ -22,8 +22,8 @@ namespace Detention_facility.Data
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceID", SqlDbType.Int);
-                command.Parameters["@PlaceID"].Value = delivery.PlaceID;
+                command.Parameters.Add("@PlaceAddress", SqlDbType.NVarChar);
+                command.Parameters["@PlaceAddres"].Value = delivery.PlaceAddress;
 
                 command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
                 command.Parameters["@DeliveredByEmployeeID"].Value = delivery.DeliveredByEmployeeID;
@@ -53,8 +53,8 @@ namespace Detention_facility.Data
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceID", SqlDbType.Int);
-                command.Parameters["@PlaceID"].Value = delivery.PlaceID;
+                command.Parameters.Add("@PlaceAddress", SqlDbType.NVarChar);
+                command.Parameters["@PlaceAddress"].Value = delivery.PlaceAddress;
 
                 command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
                 command.Parameters["@DeliveredByEmployeeID"].Value = delivery.DeliveredByEmployeeID;
@@ -108,7 +108,7 @@ namespace Detention_facility.Data
 
                     Delivery.DetentionID = Convert.ToInt32(reader.GetValue(3));
 
-                    Delivery.PlaceID = Convert.ToInt32(reader.GetValue(4));
+                    Delivery.PlaceAddress = reader.GetValue(4).ToString();
 
                     Delivery.DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(5));
 
@@ -142,7 +142,7 @@ namespace Detention_facility.Data
 
                         DetentionID = Convert.ToInt32(reader.GetValue(2)),
 
-                        PlaceID = Convert.ToInt32(reader.GetValue(3)),
+                        PlaceAddress = reader.GetValue(3).ToString(),
 
                         DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(4)),
 
