@@ -376,3 +376,41 @@ SET
 WHERE 
 	ReleaseID = @ReleaseID
 GO
+
+CREATE PROC [GetDetentionsByDate]
+@DetentionDate datetime
+AS
+SELECT detentions.*
+FROM Detentions AS detentions
+Inner Join DetentionsOfDetainees 
+ON DetentionsOfDetainees.DetentionID = detentions.DetentionID 
+Inner Join Detainees 
+ON Detainees.DetaineeID = DetentionsOfDetainees.DetaineeID 
+WHERE Detentions.DetentionDate = @DetentionDate
+GO
+
+CREATE PROC [GetDetentionsByLastName]
+@LastName nvarchar(50)
+AS
+SELECT detentions.*
+FROM Detentions AS detentions
+Inner Join DetentionsOfDetainees 
+ON DetentionsOfDetainees.DetentionID = detentions.DetentionID 
+Inner Join Detainees 
+ON Detainees.DetaineeID = DetentionsOfDetainees.DetaineeID 
+WHERE Detainees.LastName = @LastName
+GROUP BY detentions.DetentionID, detentions.DetentionDate, detentions.DetainedByEmployeeID
+GO
+
+CREATE PROC [GetDetentionsByResidencePlace]
+@ResidencePlace nvarchar(50)
+AS
+SELECT detentions.*
+FROM Detentions AS detentions
+Inner Join DetentionsOfDetainees 
+ON DetentionsOfDetainees.DetentionID = detentions.DetentionID 
+Inner Join Detainees 
+ON Detainees.DetaineeID = DetentionsOfDetainees.DetaineeID 
+WHERE Detainees.ResidencePlace = @ResidencePlace
+GROUP BY detentions.DetentionID, detentions.DetentionDate, detentions.DetainedByEmployeeID
+GO

@@ -1,4 +1,5 @@
 ﻿using Detention_facility.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Detention_facility.Business
@@ -10,5 +11,8 @@ namespace Detention_facility.Business
         void DeleteDetention(int id);
         Detention GetDetentionByID(int id);
         List<Detention> GetDetentions();
+        List<Detention> GetDetentionsByPlace(string place);
+        List<Detention> GetDetentionsByLastName(string lastname);
+        List<Detention> GetDetentionsByDate(DateTime date);
     }
 }

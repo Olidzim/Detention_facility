@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace Detention_facility.Data
 {
     public class DetentionDataAccessLayer : IDetentionDataAccess
-    {        
+    {
         public void InsertDetention(Detention detention)
         {
             const string storedProcedureName = "InsertDetention";
@@ -84,7 +84,7 @@ namespace Detention_facility.Data
                 {
                     detention = new Detention();
 
-                    detention.DetentionID = Convert.ToInt32(reader.GetValue(0));       
+                    detention.DetentionID = Convert.ToInt32(reader.GetValue(0));
 
                     if (reader.GetValue(1) == DBNull.Value)
                     {
@@ -93,7 +93,7 @@ namespace Detention_facility.Data
                     else
                     {
                         detention.DetentionDate = Convert.ToDateTime(reader.GetValue(1));
-                    }                                      
+                    }
 
                     detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));
                 }
@@ -128,9 +128,132 @@ namespace Detention_facility.Data
                     else
                     {
                         detention.DetentionDate = Convert.ToDateTime(reader.GetValue(1));
-                    }                                  
+                    }
 
-                    detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));                    
+                    detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));
+
+                    detentions_list.Add(detention);
+                }
+                connection.Close();
+                return detentions_list;
+            }
+        }
+
+        public List<Detention> GetDetentionsByPlace(string place)
+        {
+            const string storedProcedureName = "GetDetentionsByResidencePlace";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                connection.Open();
+
+                command.Parameters.Add("@ResidencePlace", SqlDbType.NVarChar);
+                command.Parameters["@ResidencePlace"].Value = place;
+
+                SqlDataReader reader = command.ExecuteReader();
+                Detention detention = null;
+
+                List<Detention> detentions_list = new List<Detention>();
+                while (reader.Read())
+                {
+                    detention = new Detention
+                    {
+                        DetentionID = Convert.ToInt32(reader.GetValue(0))
+                    };
+
+                    if (reader.GetValue(1) == DBNull.Value)
+                    {
+                        detention.DetentionDate = null;
+                    }
+                    else
+                    {
+                        detention.DetentionDate = Convert.ToDateTime(reader.GetValue(1));
+                    }
+
+                    detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));
+
+                    detentions_list.Add(detention);
+                }
+                connection.Close();
+                return detentions_list;
+            }
+        }
+
+        public List<Detention> GetDetentionsByLastName(string lastname)
+        {
+            const string storedProcedureName = "GetDetentionsByLastName";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                connection.Open();
+
+                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
+                command.Parameters["@LastName"].Value = lastname;
+
+                SqlDataReader reader = command.ExecuteReader();
+                Detention detention = null;
+
+                List<Detention> detentions_list = new List<Detention>();
+                while (reader.Read())
+                {
+                    detention = new Detention
+                    {
+                        DetentionID = Convert.ToInt32(reader.GetValue(0))
+                    };
+
+                    if (reader.GetValue(1) == DBNull.Value)
+                    {
+                        detention.DetentionDate = null;
+                    }
+                    else
+                    {
+                        detention.DetentionDate = Convert.ToDateTime(reader.GetValue(1));
+                    }
+
+                    detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));
+
+                    detentions_list.Add(detention);
+                }
+                connection.Close();
+                return detentions_list;
+            }
+        }
+
+        public List<Detention> GetDetentionsByDate(DateTime date)
+        {
+            const string storedProcedureName = "GetDetentionsByDate";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                connection.Open();
+
+                command.Parameters.Add("@DetentionDate", SqlDbType.DateTime);
+                command.Parameters["@DetentionDate"].Value = date;
+
+                SqlDataReader reader = command.ExecuteReader();
+                Detention detention = null;
+
+                List<Detention> detentions_list = new List<Detention>();
+                while (reader.Read())
+                {
+                    detention = new Detention
+                    {
+                        DetentionID = Convert.ToInt32(reader.GetValue(0))
+                    };
+
+                    if (reader.GetValue(1) == DBNull.Value)
+                    {
+                        detention.DetentionDate = null;
+                    }
+                    else
+                    {
+                        detention.DetentionDate = Convert.ToDateTime(reader.GetValue(1));
+                    }
+
+                    detention.DetainedByEmployeeID = Convert.ToInt32(reader.GetValue(2));
 
                     detentions_list.Add(detention);
                 }
