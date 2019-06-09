@@ -11,7 +11,7 @@ namespace Detention_facility.Business
 
         public DetentionBusinessLayer(IDetentionDataAccess detentionDataProvider)
         { 
-            _detentionDataProvider = detentionDataProvider;           
+            _detentionDataProvider = detentionDataProvider;            
         }
 
         public void InsertDetention(Detention detention)
@@ -52,6 +52,7 @@ namespace Detention_facility.Business
         public List<Detention> GetDetentionsByDate(DateTime date)
         {
             return _detentionDataProvider.GetDetentionsByDate(date);
-        }
+        } 
+       
     }
 }

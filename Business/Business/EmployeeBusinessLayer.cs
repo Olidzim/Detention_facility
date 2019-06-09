@@ -6,37 +6,37 @@ namespace Detention_facility.Business
 {
     public class EmployeesBusinessLayer : IEmployeeBusinesslayer
     {
-        private IEmployeeDataAccess _employeesDataProvider;
+        private IEmployeeDataAccess _employeeDataProvider;
 
         public EmployeesBusinessLayer(IEmployeeDataAccess employeesDataProvider)
         {
-            _employeesDataProvider = employeesDataProvider;
+            _employeeDataProvider = employeesDataProvider;
         }
 
         public void InsertEmployee(Employee employee)
         {
-            _employeesDataProvider.InsertEmployee(employee);
+            _employeeDataProvider.InsertEmployee(employee);
         }
 
         public void UpdateEmployee(int id, Employee employee)
         {
-            _employeesDataProvider.UpdateEmployee(id, employee);
+            _employeeDataProvider.UpdateEmployee(id, employee);
         }
 
         public void DeleteEmployee(int id)
         {
-            _employeesDataProvider.DeleteEmployee(id);
+            _employeeDataProvider.DeleteEmployee(id);
         }
 
         public Employee GetEmployeeByID(int id)
         {
-            return _employeesDataProvider.GetEmployeeByID(id);
+            return _employeeDataProvider.GetEmployeeByID(id);
             // return _employeesDataProvider.GetEmployeeByID(id);
         }
 
         public List<Employee> GetEmployees()
         {
-            return _employeesDataProvider.GetEmployees();
+            return _employeeDataProvider.GetEmployees();
         }
     }
 }

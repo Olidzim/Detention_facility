@@ -7,6 +7,9 @@ namespace Detention_facility.Business
     public class ReleaseBusinessLayer : IReleaseBusinessLayer
     {
         private IReleaseDataAccess _releaseDataProvider;
+        private IDetentionDataAccess _detentionDataProvider;
+        private IEmployeeDataAccess _employeeDataProvider;
+        private IDetaineeDataAccess _detaineeDataProvider;
 
         public ReleaseBusinessLayer(IReleaseDataAccess releaseDataProvider)
         {
@@ -36,6 +39,17 @@ namespace Detention_facility.Business
         public List<Release> GetReleases()
         {
             return _releaseDataProvider.GetReleases();
+        }
+        public string CheckValuesForRelease(int detaineeID, int detentionID, int employeeID)
+        {
+            string message = null;
+            if (_detaineeDataProvider.GetDetaineeByID(detaineeID) == null)
+                message += "[Такой задержанный отсутствует в базе данных]";
+            if (_detentionDataProvider.GetDetentionByID(detentionID) == null)
+                message += "[Такое задержание отсутствует в базе данных]";
+            if (_employeeDataProvider.GetEmployeeByID(employeeID) == null)
+                message += "[Такой сотрудник отсутствует в базе данных]";
+            return message;
         }
     }
 }

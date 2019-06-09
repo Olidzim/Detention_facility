@@ -15,23 +15,31 @@ namespace Detention_facility.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult InsertDelivery([FromBody] Delivery deliveries)
+        public IHttpActionResult InsertDelivery([FromBody] Delivery delivery)
         {
+            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
+            {
+                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
+            }
             if (ModelState.IsValid)
             {
-                _deliveryService.InsertDelivery(deliveries);
-                return Ok(deliveries);
+                _deliveryService.InsertDelivery(delivery);
+                return Ok(delivery);
             }
             return BadRequest(ModelState);
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateDelivery(int id, [FromBody] Delivery deliveries)
+        public IHttpActionResult UpdateDelivery(int id, [FromBody] Delivery delivery)
         {
+            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
+            {
+                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
+            }
             if (ModelState.IsValid)
             {
-                _deliveryService.UpdateDelivery(id, deliveries);
-                return Ok(deliveries);
+                _deliveryService.UpdateDelivery(id, delivery);
+                return Ok(delivery);
             }
             return BadRequest(ModelState);
         }
@@ -39,18 +47,23 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetDelivery(int id)
         {
-            Delivery deliveries = _deliveryService.GetDeliveryByID(id);
-            if (deliveries == null)
+            Delivery delivery = _deliveryService.GetDeliveryByID(id);
+            if (delivery == null)
             {
                 return NotFound();
             }
-            return Ok(deliveries);
+            return Ok(delivery);
         }
 
         [HttpDelete]
-        public void DeleteDelivery(int id)
+        public IHttpActionResult DeleteDelivery(int id)
         {
-            _deliveryService.DeleteDelivery(id);
+            Delivery delivery = _deliveryService.GetDeliveryByID(id);
+            if (delivery == null)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
 
         [HttpGet]

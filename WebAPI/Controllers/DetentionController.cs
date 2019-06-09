@@ -9,10 +9,12 @@ namespace Detention_facility.Controllers
     public class DetentionController : ApiController
     {
         private IDetentionBusinessLayer _detentionService;
+        private IEmployeeBusinesslayer _employeeService;
 
-        public DetentionController(IDetentionBusinessLayer detentionService)
+        public DetentionController(IDetentionBusinessLayer detentionService, IEmployeeBusinesslayer employeeService)
         {
             _detentionService = detentionService;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
@@ -73,7 +75,11 @@ namespace Detention_facility.Controllers
        
         [HttpPost]
         public IHttpActionResult InsertDetention([FromBody] Detention detention)
-        {  
+        {
+            if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
+            {
+                return BadRequest("Нет сотрудника");
+            }
             if (ModelState.IsValid)
             {
                 _detentionService.InsertDetention(detention);
@@ -85,6 +91,14 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult UpdateDetention(int id, [FromBody] Detention detention)
         {
+            if (_detentionService.GetDetentionByID(id) == null)
+            {
+                return NotFound();
+            }
+            if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
+            {
+                return BadRequest("Нет сотрудника");
+            }
             if (ModelState.IsValid)
             {
                 _detentionService.UpdateDetention(id, detention);
@@ -94,9 +108,14 @@ namespace Detention_facility.Controllers
         }
 
         [HttpDelete]
-        public void DeleteDetention(int id)
+        public IHttpActionResult DeleteDetention(int id)
         {
+            if (_detentionService.GetDetentionByID(id) == null)
+            {
+                return NotFound();
+            }
             _detentionService.DeleteDetention(id);
+            return Ok();
         }
 
     }

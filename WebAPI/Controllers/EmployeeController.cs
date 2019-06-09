@@ -31,6 +31,10 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee Employee)
         {
+            if (_employeeService.GetEmployeeByID(id) == null)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _employeeService.UpdateEmployee(id, Employee);
@@ -51,9 +55,14 @@ namespace Detention_facility.Controllers
         }
 
         [HttpDelete]
-        public void DeleteEmployee(int id)
+        public IHttpActionResult DeleteEmployee(int id)
         {
+            if (_employeeService.GetEmployeeByID(id) == null)
+            {
+                return NotFound();
+            }
             _employeeService.DeleteEmployee(id);
+            return Ok();
         }
 
         [HttpGet]

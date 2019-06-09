@@ -17,6 +17,10 @@ namespace Detention_facility.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody] Release release)
         {
+            if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
+            {
+                return BadRequest(_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
+            }
             if (ModelState.IsValid)
             {                
                 _releaseService.InsertRelease(release);
@@ -28,6 +32,10 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody] Release release)
         {
+            if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
+            {
+                return BadRequest(_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
+            }
             if (ModelState.IsValid)
             {                
                 _releaseService.UpdateRelease(id, release);
