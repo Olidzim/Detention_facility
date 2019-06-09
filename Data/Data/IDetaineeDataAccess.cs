@@ -11,5 +11,7 @@ namespace Detention_facility.Data
         Detainee GetDetaineeByID(int id);
         List<Detainee> GetDetainees();
         List<Detainee> GetDetaineesByDetentionID(int id);
+        void AddDetaineeToDetention(int detaineeID, int detentionID);
+        bool CheckDetaineeInDetention(int detaineeID, int detentionID);
     }
 }

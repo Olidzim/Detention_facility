@@ -8,13 +8,13 @@ namespace Detention_facility.Controllers
 {
     public class DetaineeController : ApiController
     {
-        private IDetaineeBusinessLayer _detaineeService;
+        private IDetaineeBusinessLayer _detaineeService;       
         private IDetaineeCachingService _detaineeCachingService;
 
-        public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService)
+        public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService, IDetentionBusinessLayer detentionService)
         {
             _detaineeService = detaineeService;
-            _detaineeCachingService = detaineeCachingService;
+            _detaineeCachingService = detaineeCachingService;            
         }
 
         [HttpPost]
@@ -29,6 +29,17 @@ namespace Detention_facility.Controllers
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddDetaineeToDetention(int id, [FromBody] int detentionID)
+        {
+            if (_detaineeService.CheckValuesForAddDetainee(id, detentionID) != null)
+            { 
+                return BadRequest(_detaineeService.CheckValuesForAddDetainee(id, detentionID));
+            }
+            _detaineeService.AddDetaineeToDetention(id, detentionID);
+            return Ok("Задержанный добавлен к задержанию");
         }
 
         [HttpPut]

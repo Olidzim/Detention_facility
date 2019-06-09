@@ -7,10 +7,12 @@ namespace Detention_facility.Business
     public class DetaineeBusinessLayer : IDetaineeBusinessLayer
     {
         private IDetaineeDataAccess _detaineeDataProvider;
+        private IDetentionDataAccess _detentionDataProvider;
 
-        public DetaineeBusinessLayer(IDetaineeDataAccess detaineeDataProvider)
+        public DetaineeBusinessLayer(IDetaineeDataAccess detaineeDataProvider, IDetentionDataAccess detentionDataProvider)
         {
             _detaineeDataProvider = detaineeDataProvider;
+            _detentionDataProvider = detentionDataProvider;
         }
 
         public void InsertDetainee(Detainee detainee)
@@ -41,6 +43,28 @@ namespace Detention_facility.Business
         public List<Detainee> GetDetaineesByDetentionID(int id)
         {
             return _detaineeDataProvider.GetDetaineesByDetentionID(id);
+        }
+
+        public void AddDetaineeToDetention(int detaineeID, int detentionID)
+        {
+            _detaineeDataProvider.AddDetaineeToDetention(detaineeID, detentionID);
+        }
+
+        public bool CheckDetaineeInDetention(int detaineeID, int detentionID)
+        {
+            return _detaineeDataProvider.CheckDetaineeInDetention(detaineeID, detentionID);
+        }
+
+        public string CheckValuesForAddDetainee(int detaineeID, int detentionID)
+        {
+            string message = null;
+            if (_detaineeDataProvider.CheckDetaineeInDetention(detaineeID, detentionID))
+                message = "[Такой задержанный уже имеется в данном задержании]";
+            if (_detaineeDataProvider.GetDetaineeByID(detaineeID) == null)
+                message += "[Такой задержанный отсутствует в базе данных]";
+            if (_detentionDataProvider.GetDetentionByID(detentionID) == null)
+                message += "[Такое задержание отсутствует в базе данных]";
+            return message;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Detention_facility.Controllers
        
         [HttpPost]
         public IHttpActionResult InsertDetention([FromBody] Detention detention)
-        {
+        {  
             if (ModelState.IsValid)
             {
                 _detentionService.InsertDetention(detention);
@@ -94,7 +94,7 @@ namespace Detention_facility.Controllers
         }
 
         [HttpDelete]
-        public void DeletetDetention(int id)
+        public void DeleteDetention(int id)
         {
             _detentionService.DeleteDetention(id);
         }

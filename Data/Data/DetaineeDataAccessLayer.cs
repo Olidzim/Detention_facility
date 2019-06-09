@@ -54,6 +54,55 @@ namespace Detention_facility.Data
                 connection.Close();
             }
         }
+
+        public void AddDetaineeToDetention(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = "AddDetaineeToDetention";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@DetentionID", SqlDbType.Int);
+                command.Parameters["@DetentionID"].Value = detaineeID;
+
+                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
+                command.Parameters["@DetaineeID"].Value = detentionID;
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public bool CheckDetaineeInDetention(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = "CheckDetaineeInDetention";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@DetentionID", SqlDbType.Int);
+                command.Parameters["@DetentionID"].Value = detaineeID;
+
+                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
+                command.Parameters["@DetaineeID"].Value = detentionID;
+
+                connection.Open();
+                if (command.ExecuteScalar() == null)
+                {
+                    connection.Close();
+                    return false;
+                }
+                else
+                {
+                    connection.Close();
+                    return true;
+                }                
+            }        
+        }
+
         public void UpdateDetainee(int id, Detainee detainee)
         {
 
