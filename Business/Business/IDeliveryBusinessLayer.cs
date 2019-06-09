@@ -10,5 +10,6 @@ namespace Detention_facility.Business
         void DeleteDelivery(int id);
         Delivery GetDeliveryByID(int id);
         List<Delivery> GetDeliveries();
+        string CheckValuesForDelivery(int detaineeID, int detentionID, int employeeID);
     }
 }

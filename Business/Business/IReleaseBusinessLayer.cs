@@ -10,5 +10,6 @@ namespace Detention_facility.Business
         void DeleteRelease(int id);
         Release GetReleaseByID(int id);
         List<Release> GetReleases();
+        string CheckValuesForRelease(int detaineeID, int detentionID, int employeeID);
     }
 }

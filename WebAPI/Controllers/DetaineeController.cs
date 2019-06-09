@@ -11,7 +11,7 @@ namespace Detention_facility.Controllers
         private IDetaineeBusinessLayer _detaineeService;       
         private IDetaineeCachingService _detaineeCachingService;
 
-        public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService, IDetentionBusinessLayer detentionService)
+        public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService)
         {
             _detaineeService = detaineeService;
             _detaineeCachingService = detaineeCachingService;            
@@ -20,7 +20,6 @@ namespace Detention_facility.Controllers
         [HttpPost]
         public IHttpActionResult InsertDetainee([FromBody] Detainee Detainee)
         {
-
             if (ModelState.IsValid)
             {
                 _detaineeService.InsertDetainee(Detainee);
@@ -72,9 +71,17 @@ namespace Detention_facility.Controllers
         }
 
         [HttpDelete]
-        public void DeleteDetainee(int id)
+        public IHttpActionResult DeleteDetainee(int id)           
         {
-            _detaineeService.DeleteDetainee(id);
+            if (_detaineeService.GetDetaineeByID(id) == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _detaineeService.DeleteDetainee(id);
+                return Ok();
+            }
         }
 
         [HttpGet]
