@@ -40,6 +40,7 @@ namespace Detention_facility.Business
         {
             return _releaseDataProvider.GetReleases();
         }
+
         public string CheckValuesForRelease(int detaineeID, int detentionID, int employeeID)
         {
             string message = null;

@@ -8,6 +8,5 @@ namespace Detention_facility.Business
         bool Add(Detainee detainee);
         void Update(Detainee detainee);
         void Delete(int id);
-
     }
 }

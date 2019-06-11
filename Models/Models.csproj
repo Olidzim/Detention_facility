@@ -46,6 +46,7 @@
     <Compile Include="Models\Detainee.cs" />
     <Compile Include="Models\Detention.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Release.cs" />
   </ItemGroup>

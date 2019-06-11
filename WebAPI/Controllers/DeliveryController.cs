@@ -14,6 +14,7 @@ namespace Detention_facility.Controllers
             _deliveryService = deliveryService;
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertDelivery([FromBody] Delivery delivery)
         {
@@ -29,6 +30,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateDelivery(int id, [FromBody] Delivery delivery)
         {
@@ -43,7 +45,7 @@ namespace Detention_facility.Controllers
             }
             return BadRequest(ModelState);
         }
-
+       
         [HttpGet]
         public IHttpActionResult GetDelivery(int id)
         {
@@ -55,6 +57,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public IHttpActionResult DeleteDelivery(int id)
         {
@@ -66,6 +69,7 @@ namespace Detention_facility.Controllers
             return Ok();
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetDeliveries()
         {

@@ -14,6 +14,7 @@ namespace Detention_facility.Controllers
             _releaseService = releaseService;
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult Post([FromBody] Release release)
         {
@@ -29,6 +30,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult Put(int id, [FromBody] Release release)
         {
@@ -44,7 +46,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
 
         }
-
+       
         [HttpGet]
         public IHttpActionResult GetRelease(int id)
         {           
@@ -56,12 +58,14 @@ namespace Detention_facility.Controllers
             return Ok(release);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public void DeleteRelease(int id)
         {       
             _releaseService.DeleteRelease(id);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetReleases()
         {            

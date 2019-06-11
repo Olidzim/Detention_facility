@@ -14,6 +14,7 @@ namespace Detention_facility.Controllers
             _employeeService = employeeService;
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertEmployee([FromBody] Employee Employee)
         {
@@ -28,6 +29,7 @@ namespace Detention_facility.Controllers
             }
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee Employee)
         {
@@ -43,6 +45,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetEmployee(int id)
         {
@@ -54,6 +57,7 @@ namespace Detention_facility.Controllers
             return Ok(Employee);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public IHttpActionResult DeleteEmployee(int id)
         {
@@ -65,6 +69,7 @@ namespace Detention_facility.Controllers
             return Ok();
         }
 
+        [Authorize(Roles ="Admin,Editor")]       
         [HttpGet]
         public IHttpActionResult GetEmployees()
         {

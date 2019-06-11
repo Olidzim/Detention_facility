@@ -51,6 +51,8 @@
     <Compile Include="Data\IDetentionDataAccess.cs" />
     <Compile Include="Data\IEmployeeDataAccess.cs" />
     <Compile Include="Data\IReleaseDataAccess.cs" />
+    <Compile Include="Data\IUserDataAccessLayer.cs" />
+    <Compile Include="Data\UserDataAccessLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\ReleaseDataAccessLayer.cs" />
   </ItemGroup>

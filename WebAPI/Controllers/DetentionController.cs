@@ -28,6 +28,7 @@ namespace Detention_facility.Controllers
             return Ok(detention);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetDetentions()
         {
@@ -38,7 +39,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(detentions_list);
         }
-    
+            
         [HttpGet]
         public IHttpActionResult GetDetentionsByPlace([FromBody] string place)
         {
@@ -72,7 +73,8 @@ namespace Detention_facility.Controllers
             }
             return Ok(detentions_list);
         }
-       
+
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertDetention([FromBody] Detention detention)
         {
@@ -88,6 +90,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateDetention(int id, [FromBody] Detention detention)
         {
@@ -107,6 +110,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public IHttpActionResult DeleteDetention(int id)
         {

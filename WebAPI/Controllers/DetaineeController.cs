@@ -8,6 +8,7 @@ namespace Detention_facility.Controllers
 {
     public class DetaineeController : ApiController
     {
+
         private IDetaineeBusinessLayer _detaineeService;       
         private IDetaineeCachingService _detaineeCachingService;
 
@@ -17,6 +18,7 @@ namespace Detention_facility.Controllers
             _detaineeCachingService = detaineeCachingService;            
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertDetainee([FromBody] Detainee Detainee)
         {
@@ -30,6 +32,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult AddDetaineeToDetention(int id, [FromBody] int detentionID)
         {
@@ -41,6 +44,7 @@ namespace Detention_facility.Controllers
             return Ok("Задержанный добавлен к задержанию");
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateDetainee(int id, [FromBody] Detainee Detainee)
         {
@@ -52,7 +56,7 @@ namespace Detention_facility.Controllers
             CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
-
+        
         [HttpGet]
         public IHttpActionResult GetDetaineeByID(int id)
         {
@@ -65,16 +69,19 @@ namespace Detention_facility.Controllers
             }
             if (Detainee == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутсвует в базе данных");
                 return NotFound();
             }
             return Ok(Detainee);
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public IHttpActionResult DeleteDetainee(int id)           
         {
             if (_detaineeService.GetDetaineeByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутсвует в базе данных");
                 return NotFound();
             }
             else
@@ -84,6 +91,7 @@ namespace Detention_facility.Controllers
             }
         }
 
+        [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetDetainees()
         {

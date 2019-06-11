@@ -30,8 +30,7 @@ namespace Detention_facility.Business
 
         public Employee GetEmployeeByID(int id)
         {
-            return _employeeDataProvider.GetEmployeeByID(id);
-            // return _employeesDataProvider.GetEmployeeByID(id);
+            return _employeeDataProvider.GetEmployeeByID(id);           
         }
 
         public List<Employee> GetEmployees()

@@ -16,7 +16,8 @@ namespace Detention_facility
             container.RegisterType<IEmployeeBusinesslayer, EmployeesBusinessLayer>();
             container.RegisterType<IDetentionBusinessLayer, DetentionBusinessLayer>();
             container.RegisterType<IReleaseBusinessLayer, ReleaseBusinessLayer>();
-            container.AddNewExtension<DependencyInjectionExtension>();
+            container.RegisterType<IAuthorizationService, AuthorizationService>();
+            container.AddNewExtension<DependencyInjectionExtension>();           
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
