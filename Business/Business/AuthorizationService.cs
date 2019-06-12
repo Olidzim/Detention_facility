@@ -11,15 +11,10 @@ namespace Detention_facility.Business
         {
             _userDataProvider = userDataProvider;
         }
-
-        public void RegisterUser(User user)
+        
+        public User CheckUser(string login, string password)
         {
-            _userDataProvider.InsertDetention(user);
-        }
-
-        public User FindUser(string login, string password)
-        {
-            User user = _userDataProvider.FindUser(login, password);
+            User user = _userDataProvider.CheckUser(login, password);
             return user;
         }
     }

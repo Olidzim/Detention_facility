@@ -121,6 +121,5 @@ namespace Detention_facility.Controllers
             _detentionService.DeleteDetention(id);
             return Ok();
         }
-
     }
 }

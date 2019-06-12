@@ -115,8 +115,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AccountService.cs" />
     <Compile Include="Business\AuthorizationService.cs" />
     <Compile Include="Business\DetaineeCachingService.cs" />
+    <Compile Include="Business\IAccountService.cs" />
     <Compile Include="Business\IAuthorizationService.cs" />
     <Compile Include="Business\IDetaineeCachingService.cs" />
     <Compile Include="Business\DeliveryBusinessLayer.cs" />

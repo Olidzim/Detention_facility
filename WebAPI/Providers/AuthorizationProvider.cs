@@ -24,7 +24,7 @@ namespace Detention_facility.Controllers
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            User user = _authorizationService.FindUser(context.UserName, context.Password);
+            User user = _authorizationService.CheckUser(context.UserName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");

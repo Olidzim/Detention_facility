@@ -27,6 +27,7 @@ namespace Detention_facility.Data
                 connection.Close();
             }
         }
+
         public void UpdateDetention(int id, Detention detention)
         {
             const string storedProcedureName = "UpdateDetention";
@@ -65,6 +66,7 @@ namespace Detention_facility.Data
                 connection.Close();
             }
         }
+
         public Detention GetDetentionByID(int id)
         {
             const string storedProcedureName = "GetDetentionByID";
@@ -101,6 +103,7 @@ namespace Detention_facility.Data
                 return detention;
             }
         }
+
         public List<Detention> GetDetentions()
         {
             const string storedProcedureName = "GetDetentions";

@@ -3,8 +3,7 @@
 namespace Detention_facility.Business
 {
     public interface IAuthorizationService
-    {
-        void RegisterUser(User user);
-        User FindUser(string login, string password);
+    {        
+        User CheckUser(string login, string password);
     }
 }
