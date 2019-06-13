@@ -117,13 +117,13 @@ REFERENCES [Detainees] ([DetaineeID])
 GO
 ALTER TABLE [DetentionsOfDetainees] CHECK CONSTRAINT [FK_ArrestsOfDetainees_Detainees]
 GO
-ALTER TABLE [ReleasesOfDetaineesOfDetainees]  WITH CHECK ADD  CONSTRAINT [FK_ReleasesOfDetainees_Detentions] FOREIGN KEY([DetentionID])
+ALTER TABLE [ReleasesOfDetainees]  WITH CHECK ADD  CONSTRAINT [FK_ReleasesOfDetainees_Detentions] FOREIGN KEY([DetentionID])
 REFERENCES [Detentions] ([DetentionID])
 GO
-ALTER TABLE [ReleasesOfDetaineesOfDetainees] CHECK CONSTRAINT [FK_ReleasesOfDetainees_Detentions]
+ALTER TABLE [ReleasesOfDetainees] CHECK CONSTRAINT [FK_ReleasesOfDetainees_Detentions]
 GO
-ALTER TABLE [ReleasesOfDetaineesOfDetainees]  WITH CHECK ADD  CONSTRAINT [FK_ReleasesOfDetainees_Employees] FOREIGN KEY([ReleasedByEmployeeID])
+ALTER TABLE [ReleasesOfDetainees]  WITH CHECK ADD  CONSTRAINT [FK_ReleasesOfDetainees_Employees] FOREIGN KEY([ReleasedByEmployeeID])
 REFERENCES [Employees] ([EmployeeID])
 GO
-ALTER TABLE [ReleasesOfDetaineesOfDetainees] CHECK CONSTRAINT [FK_ReleasesOfDetainees_Employees]
+ALTER TABLE [ReleasesOfDetainees] CHECK CONSTRAINT [FK_ReleasesOfDetainees_Employees]
 GO
