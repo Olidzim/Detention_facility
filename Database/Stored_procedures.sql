@@ -9,13 +9,6 @@ INSERT INTO DetentionsOfDetainees(DetentionID, DetaineeID)
 VALUES (@DetentionID, @DetaineeID) 
 GO
 
-CREATE PROC [DeleteDetention]
-@DetentionID int
-AS
-DBCC CHECKIDENT (Detentions, RESEED, 1)
-DELETE FROM Detentions WHERE DetentionID = @DetentionID
-GO
-
 CREATE PROC [DeleteDelivery]
 @DeliveryID int
 AS
