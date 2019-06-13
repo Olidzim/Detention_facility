@@ -27,6 +27,7 @@ namespace Detention_facility.Controllers
                 _accountService.RegisterUser(user);
                 return Ok(user);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -36,6 +37,7 @@ namespace Detention_facility.Controllers
         {
             if (_accountService.GetUserByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }          
             if (ModelState.IsValid)
@@ -43,6 +45,7 @@ namespace Detention_facility.Controllers
                 _accountService.UpdateUser(id, user);
                 return Ok(user);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -52,6 +55,7 @@ namespace Detention_facility.Controllers
         {
             if (_accountService.GetUserByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace Detention_facility.Controllers
                 _accountService.UpdateUserPassword(id, password);
                 return Ok();
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -68,6 +73,7 @@ namespace Detention_facility.Controllers
         {
             if (_accountService.GetUserByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }
             _accountService.DeleteUser(id);

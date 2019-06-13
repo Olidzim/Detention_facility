@@ -28,7 +28,7 @@ namespace Detention_facility.Controllers
 
                 return Ok(Detainee);
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -53,7 +53,7 @@ namespace Detention_facility.Controllers
                 _detaineeService.UpdateDetainee(id, Detainee);
                 return Ok(Detainee);
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.ERROR, CustomLogging.ModelStatusConverter(ModelState));
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
         
@@ -69,7 +69,7 @@ namespace Detention_facility.Controllers
             }
             if (Detainee == null)
             {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутсвует в базе данных");
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
                 return NotFound();
             }
             return Ok(Detainee);
@@ -79,15 +79,16 @@ namespace Detention_facility.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteDetainee(int id)           
         {
-            if (_detaineeService.GetDetaineeByID(id) == null)
+            var detaineeForDelete = _detaineeService.GetDetaineeByID(id);
+            if (detaineeForDelete == null)
             {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутсвует в базе данных");
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
                 return NotFound();
             }
             else
             {
                 _detaineeService.DeleteDetainee(id);
-                return Ok();
+                return Ok(detaineeForDelete);
             }
         }
 

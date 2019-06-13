@@ -25,6 +25,7 @@ namespace Detention_facility.Controllers
             }
             else
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
                 return BadRequest(ModelState);
             }
         }
@@ -35,6 +36,7 @@ namespace Detention_facility.Controllers
         {
             if (_employeeService.GetEmployeeByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
             if (ModelState.IsValid)
@@ -42,6 +44,7 @@ namespace Detention_facility.Controllers
                 _employeeService.UpdateEmployee(id, Employee);
                 return Ok(Employee);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -52,6 +55,7 @@ namespace Detention_facility.Controllers
             var Employee = _employeeService.GetEmployeeByID(id);
             if (Employee == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
             return Ok(Employee);
@@ -61,12 +65,14 @@ namespace Detention_facility.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteEmployee(int id)
         {
-            if (_employeeService.GetEmployeeByID(id) == null)
+            var employeeForDelete = _employeeService.GetEmployeeByID(id);
+            if (employeeForDelete == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
             _employeeService.DeleteEmployee(id);
-            return Ok();
+            return Ok(employeeForDelete);
         }
 
         [Authorize(Roles ="Admin,Editor")]       

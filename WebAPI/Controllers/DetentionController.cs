@@ -23,6 +23,7 @@ namespace Detention_facility.Controllers
             var detention = _detentionService.GetDetentionByID(id);
             if (detention == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не такого задержания");
                 return NotFound();
             }
             return Ok(detention);
@@ -46,6 +47,7 @@ namespace Detention_facility.Controllers
             List<Detention> detentions_list = _detentionService.GetDetentionsByPlace(place);
             if (detentions_list == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
             return Ok(detentions_list);
@@ -57,6 +59,7 @@ namespace Detention_facility.Controllers
             List<Detention> detentions_list = _detentionService.GetDetentionsByLastName(lastname);
             if (detentions_list == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
             return Ok(detentions_list);
@@ -69,6 +72,7 @@ namespace Detention_facility.Controllers
             List<Detention> detentions_list = _detentionService.GetDetentionsByDate(date);
             if (detentions_list == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
             return Ok(detentions_list);
@@ -80,6 +84,7 @@ namespace Detention_facility.Controllers
         {
             if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не такого сотрудника");
                 return BadRequest("Нет сотрудника");
             }
             if (ModelState.IsValid)
@@ -87,6 +92,7 @@ namespace Detention_facility.Controllers
                 _detentionService.InsertDetention(detention);
                 return Ok(detention);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -96,10 +102,12 @@ namespace Detention_facility.Controllers
         {
             if (_detentionService.GetDetentionByID(id) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого задержания");
                 return NotFound();
             }
             if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return BadRequest("Нет сотрудника");
             }
             if (ModelState.IsValid)
@@ -107,6 +115,7 @@ namespace Detention_facility.Controllers
                 _detentionService.UpdateDetention(id, detention);
                 return Ok(detention);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -114,12 +123,14 @@ namespace Detention_facility.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteDetention(int id)
         {
-            if (_detentionService.GetDetentionByID(id) == null)
+            var detentionForDelete = _detentionService.GetDetentionByID(id);
+            if (detentionForDelete == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого задержания");
                 return NotFound();
             }
             _detentionService.DeleteDetention(id);
-            return Ok();
+            return Ok(detentionForDelete);
         }
     }
 }

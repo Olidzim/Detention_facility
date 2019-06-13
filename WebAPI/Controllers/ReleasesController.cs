@@ -20,6 +20,7 @@ namespace Detention_facility.Controllers
         {
             if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
                 return BadRequest(_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
             }
             if (ModelState.IsValid)
@@ -27,6 +28,7 @@ namespace Detention_facility.Controllers
                 _releaseService.InsertRelease(release);
                 return Ok(release);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
@@ -36,6 +38,7 @@ namespace Detention_facility.Controllers
         {
             if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
                 return BadRequest(_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID));
             }
             if (ModelState.IsValid)
@@ -43,6 +46,7 @@ namespace Detention_facility.Controllers
                 _releaseService.UpdateRelease(id, release);
                 return Ok(release);
             }
+            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
 
         }
@@ -50,9 +54,10 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetRelease(int id)
         {           
-            Release release = _releaseService.GetReleaseByID(id);
+            var release = _releaseService.GetReleaseByID(id);
             if (release == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет освобождения с таким номером");
                 return NotFound();
             }
             return Ok(release);
@@ -60,9 +65,16 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
-        public void DeleteRelease(int id)
-        {       
+        public IHttpActionResult DeleteRelease(int id)
+        {
+            var release = _releaseService.GetReleaseByID(id);
+            if (release == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет освобождения с таким номером");
+                return NotFound();
+            }
             _releaseService.DeleteRelease(id);
+            return Ok(release);
         }
 
         [Authorize(Roles ="Admin,Editor")] 
@@ -72,6 +84,7 @@ namespace Detention_facility.Controllers
             List<Release> releases_list = _releaseService.GetReleases();
             if (releases_list == null)
             {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет освобождения с таким номером");
                 return NotFound();
             }
             return Ok(releases_list);

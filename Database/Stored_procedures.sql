@@ -40,7 +40,7 @@ GO
 CREATE PROC [DeleteRelease]
 @ReleaseID int
 AS
-DBCC CHECKIDENT (ReleaseOfDetainees, RESEED, 1)
+DBCC CHECKIDENT (ReleasesOfDetainees, RESEED, 1)
 DELETE FROM ReleasesOfDetainees WHERE ReleaseID = @ReleaseID
 GO
 
@@ -131,10 +131,10 @@ AS
 Select * FROM Employees
 GO
 
-CREATE proc [GetReleasesByID]
+CREATE proc [GetReleaseByID]
 @ReleaseID int
 AS
-Select * From ReleaseOfDetainees where ReleaseID = @ReleaseID
+Select * From ReleasesOfDetainees where ReleaseID = @ReleaseID
 GO
 
 Create proc [GetReleasesOfDetainees]

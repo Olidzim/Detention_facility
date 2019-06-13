@@ -66,7 +66,7 @@ CREATE TABLE [Employees](
 ) ON [PRIMARY]
 GO
 
-CREATE TABLE [ReleasesOfDetaineesOfDetainees](
+CREATE TABLE [ReleasesOfDetainees](
 	[ReleaseID] [int] IDENTITY(1,1) NOT NULL,
 	[DetaineeID] [int] NOT NULL,
 	[ReleasedByEmployeeID] [int] NOT NULL,
