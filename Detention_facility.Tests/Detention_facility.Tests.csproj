@@ -72,7 +72,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller.Tests\AccountControllerTest.cs" />
+    <Compile Include="Controller.Tests\DeliveryControllerTests.cs" />
+    <Compile Include="Controller.Tests\ReleaseController.cs" />
     <Compile Include="Controller.Tests\DetaineeControllerTests.cs" />
+    <Compile Include="Controller.Tests\DetentionControllerTests.cs" />
+    <Compile Include="Controller.Tests\EmployeeControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

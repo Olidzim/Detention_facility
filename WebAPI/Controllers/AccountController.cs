@@ -53,7 +53,8 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult UpdateUserPassword (int id, [FromBody] string password)
         {
-            if (_accountService.GetUserByID(id) == null)
+            var user = _accountService.GetUserByID(id);
+            if (user == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
@@ -61,7 +62,7 @@ namespace Detention_facility.Controllers
             if (ModelState.IsValid)
             {
                 _accountService.UpdateUserPassword(id, password);
-                return Ok();
+                return Ok(user);
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -71,13 +72,14 @@ namespace Detention_facility.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteUser(int id)
         {
-            if (_accountService.GetUserByID(id) == null)
+            var userForDelete = _accountService.GetUserByID(id);
+            if (userForDelete == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }
             _accountService.DeleteUser(id);
-            return Ok();
+            return Ok(userForDelete);
         }
     }
 }

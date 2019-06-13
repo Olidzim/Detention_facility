@@ -255,7 +255,7 @@ GO
 CREATE proc [InsertRelease]
 	@DetaineeID int,
 	@DetentionID int,
-	@DeliveredByEmployeeID int,
+	@ReleasedByEmployeeID int,
 	@ReleaseDate datetime
 AS
 INSERT INTO ReleasesOfDetainees 
@@ -269,7 +269,7 @@ VALUES
 	(
 	@DetaineeID,
 	@DetentionID,
-	@DeliveredByEmployeeID,
+	@ReleasedByEmployeeID,
 	@ReleaseDate 
 	)
 GO
@@ -278,7 +278,7 @@ CREATE PROC [UpdateDelivery]
 	@DeliveryID int,
 	@DetaineeID int,
 	@DetentionID int,
-	@DeliveredByEmployeeID int,
+	@ReleasedByEmployeeID int,
 	@PlaceAddress nvarchar(50),
 	@DeliveryDate datetime
 AS

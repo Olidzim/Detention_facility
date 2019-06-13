@@ -16,7 +16,7 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
-        public IHttpActionResult Post([FromBody] Release release)
+        public IHttpActionResult InsertRelease([FromBody] Release release)
         {
             if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
             {
@@ -34,7 +34,7 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody] Release release)
+        public IHttpActionResult UpdateRelease(int id, [FromBody] Release release)
         {
             if (_releaseService.CheckValuesForRelease(release.DetaineeID, release.DetentionID, release.ReleasedByEmployeeID) != null)
             {

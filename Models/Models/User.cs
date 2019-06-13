@@ -5,7 +5,7 @@ namespace Detention_facility.Models
 {
     public class User
     {
-        public string UserId { get; set; }
+        public int UserID { get; set; }
 
         [Required]
         [Display(Name = "User name")]

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Detention_facility.Data;
 
 namespace Detention_facility.Data
 {
@@ -22,9 +21,6 @@ namespace Detention_facility.Data
 
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = release.DetentionID;
-
-                command.Parameters.Add("@PlaceID", SqlDbType.Int);
-                command.Parameters["@PlaceID"].Value = release.PlaceID;
 
                 command.Parameters.Add("@ReleasedByEmployeeID", SqlDbType.Int);
                 command.Parameters["@ReleasedByEmployeeID"].Value = release.ReleasedByEmployeeID;
@@ -53,9 +49,6 @@ namespace Detention_facility.Data
 
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = release.DetentionID;
-
-                command.Parameters.Add("@PlaceID", SqlDbType.Int);
-                command.Parameters["@PlaceID"].Value = release.PlaceID;
 
                 command.Parameters.Add("@ReleasedByEmployeeID", SqlDbType.Int);
                 command.Parameters["@ReleasedByEmployeeID"].Value = release.ReleasedByEmployeeID;
@@ -101,19 +94,18 @@ namespace Detention_facility.Data
                 Release Release = null;
                 while (reader.Read())
                 {
-                    Release = new Release();
+                    Release = new Release
+                    {
+                        ReleaseID = Convert.ToInt32(reader.GetValue(0)),
 
-                    Release.ReleaseID = Convert.ToInt32(reader.GetValue(1));
+                        DetaineeID = Convert.ToInt32(reader.GetValue(1)),
 
-                    Release.DetaineeID = Convert.ToInt32(reader.GetValue(2));
+                        ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(2)),
 
-                    Release.DetentionID = Convert.ToInt32(reader.GetValue(3));
+                        DetentionID = Convert.ToInt32(reader.GetValue(3)),
 
-                    Release.PlaceID = Convert.ToInt32(reader.GetValue(4));
-
-                    Release.ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(5));
-
-                    Release.ReleaseDate = Convert.ToDateTime(reader.GetValue(6));
+                        ReleaseDate = Convert.ToDateTime(reader.GetValue(4))
+                    };
 
                 }
                 connection.Close();
@@ -137,17 +129,15 @@ namespace Detention_facility.Data
                 {
                     Release = new Release
                     {
-                        ReleaseID = Convert.ToInt32(reader.GetValue(1)),
+                        ReleaseID = Convert.ToInt32(reader.GetValue(0)),
 
-                        DetaineeID = Convert.ToInt32(reader.GetValue(2)),
+                        DetaineeID = Convert.ToInt32(reader.GetValue(1)),
 
-                        DetentionID = Convert.ToInt32(reader.GetValue(3)),
+                        ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(2)),
 
-                        PlaceID = Convert.ToInt32(reader.GetValue(4)),
+                        DetentionID = Convert.ToInt32(reader.GetValue(3)),  
 
-                        ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(5)),
-
-                        ReleaseDate = Convert.ToDateTime(reader.GetValue(6))
+                        ReleaseDate = Convert.ToDateTime(reader.GetValue(4))
                     };
 
                     Releases_list.Add(Release);

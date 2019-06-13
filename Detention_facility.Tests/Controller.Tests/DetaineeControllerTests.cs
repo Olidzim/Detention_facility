@@ -31,9 +31,9 @@ namespace Detention_facility.Tests.Controller.Tests
         public void TestGetDetaineeByID()
         {
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
-            detaineeService.Setup(x => x.GetDetaineeByID(1))
-                .Returns(testdetainee);
             var detaineeCachingService = new Mock<IDetaineeCachingService>();
+
+            detaineeService.Setup(x => x.GetDetaineeByID(1)).Returns(testdetainee);
 
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
@@ -48,9 +48,9 @@ namespace Detention_facility.Tests.Controller.Tests
         public void InsertDetainee()
         {
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
-            detaineeService.Setup(x => x.InsertDetainee(testdetainee));
-          
             var detaineeCachingService = new Mock<IDetaineeCachingService>();
+
+            detaineeService.Setup(x => x.InsertDetainee(testdetainee));
 
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
@@ -65,15 +65,16 @@ namespace Detention_facility.Tests.Controller.Tests
         public void AddDetaineeToDetention()
         {
             string message = null;
+
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
+            var detaineeCachingService = new Mock<IDetaineeCachingService>();
+
             detaineeService.Setup(x => x.CheckValuesForAddDetainee(1, 1)).Returns(message);
             detaineeService.Setup(x => x.AddDetaineeToDetention(1, 1));
 
-            var detaineeCachingService = new Mock<IDetaineeCachingService>();
-
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
-            IHttpActionResult actionResult = controller.AddDetaineeToDetention(1,1);
+            IHttpActionResult actionResult = controller.AddDetaineeToDetention(1, 1);
             var contentResult = actionResult as OkNegotiatedContentResult<String>;
             Assert.IsNotNull(contentResult.Content);
 
@@ -84,13 +85,11 @@ namespace Detention_facility.Tests.Controller.Tests
         public void UpdateDetainee()
         {
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
-           // detaineeService.Setup(x => x.UpdateDetainee(1,testdetainee));
-
             var detaineeCachingService = new Mock<IDetaineeCachingService>();
 
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
-            IHttpActionResult actionResult = controller.UpdateDetainee(1,testdetainee);
+            IHttpActionResult actionResult = controller.UpdateDetainee(1, testdetainee);
             var contentResult = actionResult as OkNegotiatedContentResult<Detainee>;
 
             Assert.IsNotNull(contentResult.Content);
@@ -101,33 +100,32 @@ namespace Detention_facility.Tests.Controller.Tests
         public void GetDetainees()
         {
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
-            detaineeService.Setup(x => x.GetDetainees())
-               .Returns(new List<Detainee>());
-
             var detaineeCachingService = new Mock<IDetaineeCachingService>();
+
+            detaineeService.Setup(x => x.GetDetainees()).Returns(new List<Detainee>());
 
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
             IHttpActionResult actionResult = controller.GetDetainees();
             var contentResult = actionResult as OkNegotiatedContentResult<List<Detainee>>;
 
-            Assert.IsNotNull(contentResult.Content);           
+            Assert.IsNotNull(contentResult.Content);
         }
 
         [TestMethod]
         public void DeleteDetainee()
         {
             var detaineeService = new Mock<IDetaineeBusinessLayer>();
-            detaineeService.Setup(x => x.GetDetaineeByID(1))
-             .Returns(testdetainee);
 
             var detaineeCachingService = new Mock<IDetaineeCachingService>();
+
+            detaineeService.Setup(x => x.GetDetaineeByID(1)).Returns(testdetainee);            
 
             var controller = new DetaineeController(detaineeService.Object, detaineeCachingService.Object);
 
             IHttpActionResult actionResult = controller.DeleteDetainee(1);
 
-            Assert.IsInstanceOfType(actionResult, typeof(OkResult));
+            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<Detainee>));
         }
     }
 }

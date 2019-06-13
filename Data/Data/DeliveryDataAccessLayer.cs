@@ -100,20 +100,20 @@ namespace Detention_facility.Data
                 Delivery Delivery = null;
                 while (reader.Read())
                 {
-                    Delivery = new Delivery();
+                    Delivery = new Delivery
+                    {
+                        DeliveryID = Convert.ToInt32(reader.GetValue(0)),
 
-                    Delivery.DeliveryID = Convert.ToInt32(reader.GetValue(1));
+                        DetaineeID = Convert.ToInt32(reader.GetValue(1)),
 
-                    Delivery.DetaineeID = Convert.ToInt32(reader.GetValue(2));
+                        DetentionID = Convert.ToInt32(reader.GetValue(2)),
 
-                    Delivery.DetentionID = Convert.ToInt32(reader.GetValue(3));
+                        PlaceAddress = reader.GetValue(3).ToString(),
 
-                    Delivery.PlaceAddress = reader.GetValue(4).ToString();
+                        DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(4)),
 
-                    Delivery.DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(5));
-
-                    Delivery.DeliveryDate = Convert.ToDateTime(reader.GetValue(6));
-
+                        DeliveryDate = Convert.ToDateTime(reader.GetValue(5))
+                    };
                 }
                 connection.Close();
                 return Delivery;

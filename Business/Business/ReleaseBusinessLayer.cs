@@ -1,6 +1,6 @@
-﻿using Detention_facility.Models;
+﻿using Detention_facility.Data;
+using Detention_facility.Models;
 using System.Collections.Generic;
-using Detention_facility.Data;
 
 namespace Detention_facility.Business
 {
@@ -11,9 +11,12 @@ namespace Detention_facility.Business
         private IEmployeeDataAccess _employeeDataProvider;
         private IDetaineeDataAccess _detaineeDataProvider;
 
-        public ReleaseBusinessLayer(IReleaseDataAccess releaseDataProvider)
+        public ReleaseBusinessLayer(IReleaseDataAccess releaseDataProvider, IDetentionDataAccess detentionDataProvider, IEmployeeDataAccess employeeDataProvider, IDetaineeDataAccess detaineeDataProvider)
         {
             _releaseDataProvider = releaseDataProvider;
+            _detentionDataProvider = detentionDataProvider;
+            _employeeDataProvider = employeeDataProvider;
+            _detaineeDataProvider = detaineeDataProvider;
         }
 
         public void InsertRelease(Release release)
@@ -45,11 +48,20 @@ namespace Detention_facility.Business
         {
             string message = null;
             if (_detaineeDataProvider.GetDetaineeByID(detaineeID) == null)
+            {
                 message += "[Такой задержанный отсутствует в базе данных]";
+            }
+
             if (_detentionDataProvider.GetDetentionByID(detentionID) == null)
+            {
                 message += "[Такое задержание отсутствует в базе данных]";
+            }
+
             if (_employeeDataProvider.GetEmployeeByID(employeeID) == null)
+            {
                 message += "[Такой сотрудник отсутствует в базе данных]";
+            }
+
             return message;
         }
     }
