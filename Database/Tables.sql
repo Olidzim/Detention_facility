@@ -1,4 +1,4 @@
-USE [Detention facility]
+USE [Detention_facility]
 GO
 
 CREATE TABLE [DeliveriesOfDetainees](
@@ -81,8 +81,10 @@ GO
 
 CREATE TABLE [Users](
 	[UserID] [int] NOT NULL,
-	[Email] [nvarchar](30) NOT NULL,
-	[Password] [nvarchar](30) NOT NULL
+        [Login] [nvarchar](30) NOT NULL,
+ 	[Password] [nvarchar](30) NOT NULL,
+	[Role] [nvarchar](30) NOT NULL,
+	[Email] [nvarchar](30) NOT NULL	
 ) ON [PRIMARY]
 GO
 ALTER TABLE [DeliveriesOfDetainees]  WITH CHECK ADD  CONSTRAINT [FK_Detentions_Arrests] FOREIGN KEY([DetentionID])

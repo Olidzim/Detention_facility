@@ -1,4 +1,4 @@
-USE [Detention facility]
+USE [Detention_facility]
 GO
 
 CREATE PROC [AddDetaineeToDetention]
@@ -7,6 +7,13 @@ CREATE PROC [AddDetaineeToDetention]
 AS
 INSERT INTO DetentionsOfDetainees(DetentionID, DetaineeID)
 VALUES (@DetentionID, @DetaineeID) 
+GO
+
+CREATE PROC [DeleteDetention]
+@DetentionID int
+AS
+DBCC CHECKIDENT (Detentions, RESEED, 1)
+DELETE FROM Detentions WHERE DetentionID = @DetentionID
 GO
 
 CREATE PROC [DeleteDelivery]
@@ -83,6 +90,7 @@ Inner Join Detentions
 ON DetentionsOfDetainees.DetentionID = Detentions.DetentionID 
 WHERE Detentions.DetentionDate = @DetentionDate
 GO
+
 
 CREATE proc [GetDetentionByID]
 @DetentionID int
@@ -413,4 +421,79 @@ Inner Join Detainees
 ON Detainees.DetaineeID = DetentionsOfDetainees.DetaineeID 
 WHERE Detainees.ResidencePlace = @ResidencePlace
 GROUP BY detentions.DetentionID, detentions.DetentionDate, detentions.DetainedByEmployeeID
+GO
+
+CREATE PROC [CheckDetaineeInDetention]
+@DetentionID int,
+@DetaineeID int
+AS
+SELECT DetentionID FROM DetentionsOfDetainees
+WHERE DetentionsOfDetainees.DetaineeID = @DetaineeID AND DetentionsOfDetainees.DetentionID = @DetentionID
+GO
+
+CREATE PROC [FindUser]
+@Login nvarchar,
+@Password nvarchar
+AS
+SELECT *
+FROM Users
+Where Users.Login = @Login AND Users.Password = @Password
+GO
+
+CREATE proc [GetUserByID]
+@UserID int
+AS
+Select * From Users where UserID = @UserID
+GO
+
+CREATE PROC [InsertUser]
+	@Login nvarchar,
+	@Password nvarchar,
+	@Role nvarchar,
+	@Email nvarchar
+AS
+INSERT INTO Users
+	(
+	Login, 
+	Password,
+	Role,
+	Email
+	)
+VALUES 
+	(
+	@Login, 
+	@Password,
+	@Role,
+	@Email
+	)
+GO
+
+CREATE PROC [UpdateUser]
+	@UserID int,
+	@Login nvarchar(50),
+	@Password nvarchar(50),
+	@Role nvarchar(50),
+	@Email nvarchar(50)
+AS
+UPDATE 
+	Users
+SET 
+	Login = @Login,
+	Password = @Password,
+	Email = @Email, 
+	Role = @Role
+WHERE 
+	UserID = @UserID
+GO
+
+CREATE PROC [dbo].[UpdateUserPassword]
+	@UserID int,
+	@Password nvarchar(50)
+AS
+UPDATE 
+	Users
+SET 
+	Password = @Password
+WHERE 
+	UserID = @UserID
 GO
