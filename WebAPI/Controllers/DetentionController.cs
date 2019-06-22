@@ -1,8 +1,8 @@
-﻿using Detention_facility.Models;
+﻿using Detention_facility.Business;
+using Detention_facility.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Detention_facility.Business;
-using System;
 
 namespace Detention_facility.Controllers
 {
@@ -19,7 +19,7 @@ namespace Detention_facility.Controllers
 
         [HttpGet]
         public IHttpActionResult GetDetention(int id)
-        {            
+        {
             var detention = _detentionService.GetDetentionByID(id);
             if (detention == null)
             {
@@ -29,77 +29,82 @@ namespace Detention_facility.Controllers
             return Ok(detention);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public IHttpActionResult GetDetentions()
         {
-            List<Detention> detentions_list = _detentionService.GetDetentions();
-            if (detentions_list == null)
+            var detentionsList = _detentionService.GetDetentions();
+            if (detentionsList == null)
             {
                 return NotFound();
             }
-            return Ok(detentions_list);
+            return Ok(detentionsList);
         }
-            
+
         [HttpGet]
         public IHttpActionResult GetDetentionsByPlace([FromBody] string place)
         {
-            List<Detention> detentions_list = _detentionService.GetDetentionsByPlace(place);
-            if (detentions_list == null)
+            var detentionsList = _detentionService.GetDetentionsByPlace(place);
+            if (detentionsList == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
-            return Ok(detentions_list);
+            return Ok(detentionsList);
         }
-     
+
         [HttpGet]
         public IHttpActionResult GetDetentionsByLastName([FromBody] string lastname)
         {
-            List<Detention> detentions_list = _detentionService.GetDetentionsByLastName(lastname);
-            if (detentions_list == null)
+            var detentionsList = _detentionService.GetDetentionsByLastName(lastname);
+            if (detentionsList == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
-            return Ok(detentions_list);
+            return Ok(detentionsList);
         }
 
         //[Route("Api/Detention/GetDetentionsByDate/{date:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
         [HttpGet]
         public IHttpActionResult GetDetentionsByDate([FromBody] DateTime date)
-        {            
-            List<Detention> detentions_list = _detentionService.GetDetentionsByDate(date);
-            if (detentions_list == null)
+        {
+            var detentionsList = _detentionService.GetDetentionsByDate(date);
+            if (detentionsList == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не таких задержания");
                 return NotFound();
             }
-            return Ok(detentions_list);
+            return Ok(detentionsList);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         public IHttpActionResult InsertDetention([FromBody] Detention detention)
         {
-            if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
-            {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не такого сотрудника");
-                return BadRequest("Нет сотрудника");
-            }
             if (ModelState.IsValid)
             {
                 _detentionService.InsertDetention(detention);
                 return Ok(detention);
             }
+            if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не такого сотрудника");
+                return BadRequest("Нет сотрудника");
+            }            
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPut]
         public IHttpActionResult UpdateDetention(int id, [FromBody] Detention detention)
         {
+            if (ModelState.IsValid)
+            {
+                _detentionService.UpdateDetention(id, detention);
+                return Ok(detention);
+            }
             if (_detentionService.GetDetentionByID(id) == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого задержания");
@@ -109,17 +114,12 @@ namespace Detention_facility.Controllers
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return BadRequest("Нет сотрудника");
-            }
-            if (ModelState.IsValid)
-            {
-                _detentionService.UpdateDetention(id, detention);
-                return Ok(detention);
-            }
+            }     
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpDelete]
         public IHttpActionResult DeleteDetention(int id)
         {

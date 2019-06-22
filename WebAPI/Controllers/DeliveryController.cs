@@ -18,15 +18,15 @@ namespace Detention_facility.Controllers
         [HttpPost]
         public IHttpActionResult InsertDelivery([FromBody] Delivery delivery)
         {
-            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
-            {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
-                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
-            }
             if (ModelState.IsValid)
             {
                 _deliveryService.InsertDelivery(delivery);
                 return Ok(delivery);
+            }
+            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
+                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -36,15 +36,15 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult UpdateDelivery(int id, [FromBody] Delivery delivery)
         {
-            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
-            {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
-                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
-            }
             if (ModelState.IsValid)
             {
                 _deliveryService.UpdateDelivery(id, delivery);
                 return Ok(delivery);
+            }
+            if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
+                return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -53,7 +53,7 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetDelivery(int id)
         {
-            Delivery delivery = _deliveryService.GetDeliveryByID(id);
+            var delivery = _deliveryService.GetDeliveryByID(id);
             if (delivery == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
@@ -66,26 +66,27 @@ namespace Detention_facility.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteDelivery(int id)
         {
-            Delivery delivery = _deliveryService.GetDeliveryByID(id);
+            var delivery = _deliveryService.GetDeliveryByID(id);
             if (delivery == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
                 return NotFound();
             }
+            _deliveryService.DeleteDelivery(id);
             return Ok(delivery);
         }
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpGet]
         public IHttpActionResult GetDeliveries()
-        {
-            List<Delivery> deliveries_list = _deliveryService.GetDeliveries();
-            if (deliveries_list == null)
+        {            
+            var deliveriesList = _deliveryService.GetDeliveries();
+            if (deliveriesList == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
                 return NotFound();
             }
-            return Ok(deliveries_list);
+            return Ok(deliveriesList);
         }
 
     }

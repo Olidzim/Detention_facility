@@ -20,13 +20,13 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
-        public IHttpActionResult InsertDetainee([FromBody] Detainee Detainee)
+        public IHttpActionResult InsertDetainee([FromBody] Detainee detainee)
         {
             if (ModelState.IsValid)
             {
-                _detaineeService.InsertDetainee(Detainee);
+                _detaineeService.InsertDetainee(detainee);
 
-                return Ok(Detainee);
+                return Ok(detainee);
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -46,12 +46,12 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
-        public IHttpActionResult UpdateDetainee(int id, [FromBody] Detainee Detainee)
+        public IHttpActionResult UpdateDetainee(int id, [FromBody] Detainee detainee)
         {
             if (ModelState.IsValid)
             {
-                _detaineeService.UpdateDetainee(id, Detainee);
-                return Ok(Detainee);
+                _detaineeService.UpdateDetainee(id, detainee);
+                return Ok(detainee);
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -60,19 +60,18 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetDetaineeByID(int id)
         {
-            var Detainee = _detaineeCachingService.Get(id);
-
-            if (Detainee == null)
-            {
-                Detainee = _detaineeService.GetDetaineeByID(id);
-                _detaineeCachingService.Add(Detainee);
-            }
-            if (Detainee == null)
+            var detainee = _detaineeCachingService.Get(id);
+            if (detainee == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
                 return NotFound();
             }
-            return Ok(Detainee);
+            if (detainee == null)
+            {
+                detainee = _detaineeService.GetDetaineeByID(id);
+                _detaineeCachingService.Add(detainee);
+            }
+            return Ok(detainee);
         }
 
         [Authorize(Roles ="Admin,Editor")] 
@@ -96,23 +95,23 @@ namespace Detention_facility.Controllers
         [HttpGet]
         public IHttpActionResult GetDetainees()
         {
-            List<Detainee> Detainees_list = _detaineeService.GetDetainees();
-            if (Detainees_list == null)
+            var detaineesList = _detaineeService.GetDetainees();
+            if (detaineesList == null)
             {
                 return NotFound();
             }
-            return Ok(Detainees_list);
+            return Ok(detaineesList);
         }
 
         [HttpGet]
         public IHttpActionResult GetDetaineeByDetentionID(int id)
         {
-            List<Detainee> Detainees_list = _detaineeService.GetDetaineesByDetentionID(id);
-            if (Detainees_list == null)
+            var detaineesList = _detaineeService.GetDetaineesByDetentionID(id);
+            if (detaineesList == null)
             {
                 return NotFound();
             }
-            return Ok(Detainees_list);
+            return Ok(detaineesList);
         }
     }
 }

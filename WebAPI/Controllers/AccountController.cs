@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Detention_facility.Business;
+﻿using Detention_facility.Business;
 using Detention_facility.Models;
+using System.Web.Http;
 
 namespace Detention_facility.Controllers
 {
@@ -21,7 +16,7 @@ namespace Detention_facility.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public IHttpActionResult RegisterUser([FromBody] User user)
-        {          
+        {
             if (ModelState.IsValid)
             {
                 _accountService.RegisterUser(user);
@@ -35,15 +30,15 @@ namespace Detention_facility.Controllers
         [HttpPut]
         public IHttpActionResult UpdateUser(int id, [FromBody] User user)
         {
-            if (_accountService.GetUserByID(id) == null)
-            {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
-                return NotFound();
-            }          
             if (ModelState.IsValid)
             {
                 _accountService.UpdateUser(id, user);
                 return Ok(user);
+            }
+            if (_accountService.GetUserByID(id) == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
+                return NotFound();
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
@@ -51,18 +46,18 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles = "Admin,Editor")]
         [HttpPut]
-        public IHttpActionResult UpdateUserPassword (int id, [FromBody] string password)
+        public IHttpActionResult UpdateUserPassword(int id, [FromBody] string password)
         {
             var user = _accountService.GetUserByID(id);
-            if (user == null)
-            {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
-                return NotFound();
-            }
             if (ModelState.IsValid)
             {
                 _accountService.UpdateUserPassword(id, password);
                 return Ok(user);
+            }
+            if (user == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
+                return NotFound();
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);

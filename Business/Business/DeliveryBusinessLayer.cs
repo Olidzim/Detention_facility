@@ -11,9 +11,12 @@ namespace Detention_facility.Business
         private IEmployeeDataAccess _employeeDataProvider;
         private IDetaineeDataAccess _detaineeDataProvider;
 
-        public DeliveryBusinessLayer(IDeliveryDataAccess deliveryDataProvider)
+        public DeliveryBusinessLayer(IDeliveryDataAccess deliveryDataProvider, IDetentionDataAccess detentionDataProvider, IEmployeeDataAccess employeeDataProvider, IDetaineeDataAccess detaineeDataProvider)
         {
             _deliveryDataProvider = deliveryDataProvider;
+            _detentionDataProvider = detentionDataProvider;
+            _employeeDataProvider = employeeDataProvider;
+            _detaineeDataProvider = detaineeDataProvider;
         }
 
         public void InsertDelivery(Delivery delivery)
@@ -44,11 +47,20 @@ namespace Detention_facility.Business
         {
             string message = null;
             if (_detaineeDataProvider.GetDetaineeByID(detaineeID) == null)
+            {
                 message += "[Такой задержанный отсутствует в базе данных]";
+            }
+
             if (_detentionDataProvider.GetDetentionByID(detentionID) == null)
+            {
                 message += "[Такое задержание отсутствует в базе данных]";
+            }
+
             if (_employeeDataProvider.GetEmployeeByID(employeeID) == null)
-                message += "[Такой сотрудник отсутствует в базе данных]"; 
+            {
+                message += "[Такой сотрудник отсутствует в базе данных]";
+            }
+
             return message;
         }
     }

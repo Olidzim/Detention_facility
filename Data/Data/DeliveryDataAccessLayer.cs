@@ -22,8 +22,8 @@ namespace Detention_facility.Data
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceAddress", SqlDbType.NVarChar);
-                command.Parameters["@PlaceAddres"].Value = delivery.PlaceAddress;
+                command.Parameters.Add("@PlaceAddress", SqlDbType.VarChar);
+                command.Parameters["@PlaceAddress"].Value = delivery.PlaceAddress;
 
                 command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
                 command.Parameters["@DeliveredByEmployeeID"].Value = delivery.DeliveredByEmployeeID;
@@ -33,7 +33,6 @@ namespace Detention_facility.Data
 
                 connection.Open();
                 command.ExecuteNonQuery();
-                connection.Close();
             }
         }
         public void UpdateDelivery(int id, Delivery delivery)
@@ -53,7 +52,7 @@ namespace Detention_facility.Data
                 command.Parameters.Add("@DetentionID", SqlDbType.Int);
                 command.Parameters["@DetentionID"].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceAddress", SqlDbType.NVarChar);
+                command.Parameters.Add("@PlaceAddress", SqlDbType.VarChar);
                 command.Parameters["@PlaceAddress"].Value = delivery.PlaceAddress;
 
                 command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
@@ -64,7 +63,6 @@ namespace Detention_facility.Data
 
                 connection.Open();
                 command.ExecuteNonQuery();
-                connection.Close();
             }
         }
         public void DeleteDelivery(int id)
@@ -80,7 +78,6 @@ namespace Detention_facility.Data
 
                 connection.Open();
                 command.ExecuteNonQuery();
-                connection.Close();
             }
         }
         public Delivery GetDeliveryByID(int id)
@@ -97,10 +94,10 @@ namespace Detention_facility.Data
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                Delivery Delivery = null;
+                Delivery delivery = null;
                 while (reader.Read())
                 {
-                    Delivery = new Delivery
+                    delivery = new Delivery
                     {
                         DeliveryID = Convert.ToInt32(reader.GetValue(0)),
 
@@ -116,7 +113,7 @@ namespace Detention_facility.Data
                     };
                 }
                 connection.Close();
-                return Delivery;
+                return delivery;
             }
         }
         public List<Delivery> GetDeliveries()
@@ -129,12 +126,12 @@ namespace Detention_facility.Data
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
-                Delivery Delivery = null;
+                Delivery delivery = null;
 
-                List<Delivery> Deliverys_list = new List<Delivery>();
+                List<Delivery> deliveriesList = new List<Delivery>();
                 while (reader.Read())
                 {
-                    Delivery = new Delivery
+                    delivery = new Delivery
                     {
                         DeliveryID = Convert.ToInt32(reader.GetValue(0)),
 
@@ -149,10 +146,10 @@ namespace Detention_facility.Data
                         DeliveryDate = Convert.ToDateTime(reader.GetValue(5))
                     };
 
-                    Deliverys_list.Add(Delivery);
+                    deliveriesList.Add(delivery);
                 }
                 connection.Close();
-                return Deliverys_list;
+                return deliveriesList;
             }
         }
     }

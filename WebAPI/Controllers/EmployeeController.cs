@@ -14,14 +14,14 @@ namespace Detention_facility.Controllers
             _employeeService = employeeService;
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
-        public IHttpActionResult InsertEmployee([FromBody] Employee Employee)
+        public IHttpActionResult InsertEmployee([FromBody] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                _employeeService.InsertEmployee(Employee);
-                return Ok(Employee);
+                _employeeService.InsertEmployee(employee);
+                return Ok(employee);
             }
             else
             {
@@ -30,25 +30,25 @@ namespace Detention_facility.Controllers
             }
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpPut]
-        public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee Employee)
+        public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee employee)
         {
+            if (ModelState.IsValid)
+            {
+                _employeeService.UpdateEmployee(id, employee);
+                return Ok(employee);
+            }
             if (_employeeService.GetEmployeeByID(id) == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
-                _employeeService.UpdateEmployee(id, Employee);
-                return Ok(Employee);
-            }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public IHttpActionResult GetEmployee(int id)
         {
@@ -61,7 +61,7 @@ namespace Detention_facility.Controllers
             return Ok(Employee);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles = "Admin,Editor")]
         [HttpDelete]
         public IHttpActionResult DeleteEmployee(int id)
         {
@@ -75,16 +75,16 @@ namespace Detention_facility.Controllers
             return Ok(employeeForDelete);
         }
 
-        [Authorize(Roles ="Admin,Editor")]       
+        [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public IHttpActionResult GetEmployees()
         {
-            List<Employee> Employees_list = _employeeService.GetEmployees();
-            if (Employees_list == null)
+            var employeesList = _employeeService.GetEmployees();
+            if (employeesList == null)
             {
                 return NotFound();
             }
-            return Ok(Employees_list);
+            return Ok(employeesList);
         }
     }
 }
