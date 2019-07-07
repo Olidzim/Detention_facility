@@ -41,7 +41,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult GetDetentionsByPlace([FromBody] string place)
         {
             var detentionsList = _detentionService.GetDetentionsByPlace(place);

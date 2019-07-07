@@ -9,17 +9,25 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Detention_facility.Business;
-
+using Microsoft.Owin.Cors;
 
 [assembly: OwinStartup(typeof(Detention_facility.Startup))]
 
 namespace Detention_facility
 {
+
     public class Startup
     {
+ 
         public void Configuration(IAppBuilder app)
         {
+            HttpConfiguration config = new HttpConfiguration();
+
             
+          //  WebApiConfig.Register(config);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+        //    app.UseWebApi(config);
+
             CustomLogging.Initialize(HttpContext.Current.Server.MapPath("~"));
             UnityConfig.RegisterTypes();
             AreaRegistration.RegisterAllAreas();
@@ -27,22 +35,34 @@ namespace Detention_facility
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ConfigureOAuth(app, GlobalConfiguration.Configuration.DependencyResolver);          
+
+            ConfigureOAuth(app, GlobalConfiguration.Configuration.DependencyResolver);
+            
+            
+
+
+
+
         }
+
+        
+
         public void ConfigureOAuth(IAppBuilder app, System.Web.Http.Dependencies.IDependencyResolver resolver)
         {
+            
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new AuthorizationProvider((IAuthorizationService)resolver.GetService(typeof(AuthorizationService)))              
-            };
-                       
+            };            
+            
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
         }
+
 
     }
 }

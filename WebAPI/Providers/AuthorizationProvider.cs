@@ -23,7 +23,7 @@ namespace Detention_facility.Controllers
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            context.OwinContext.Response.Headers.Add("http://localhost:4200", new[] { "*" });
             User user = _authorizationService.CheckUser(context.UserName, context.Password);
             if (user == null)
             {

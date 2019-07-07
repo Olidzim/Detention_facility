@@ -63,13 +63,13 @@ namespace Detention_facility.Controllers
             var detainee = _detaineeCachingService.Get(id);
             if (detainee == null)
             {
-                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
-                return NotFound();
+                detainee = _detaineeService.GetDetaineeByID(id);
+                _detaineeCachingService.Add(detainee);
             }
             if (detainee == null)
             {
-                detainee = _detaineeService.GetDetaineeByID(id);
-                _detaineeCachingService.Add(detainee);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
+                return NotFound();
             }
             return Ok(detainee);
         }

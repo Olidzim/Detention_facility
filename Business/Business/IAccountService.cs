@@ -9,6 +9,7 @@ namespace Detention_facility.Business
         void UpdateUserPassword(int id, string password);
         User GetUserByID(int id);
         void DeleteUser(int id);
+        string GetRole(string login, string password);
 
     }
 }

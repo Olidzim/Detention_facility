@@ -10,5 +10,6 @@ namespace Detention_facility.Data
         void UpdateUserPassword(int id, string password);
         void DeleteUser(int id);
         User GetUserByID (int id);
+        string GetRole(string Login, string password);
     }
 }

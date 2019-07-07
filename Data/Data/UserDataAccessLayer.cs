@@ -50,8 +50,8 @@ namespace Detention_facility.Data
                 while (reader.Read())
                 {
                     user = new User();
-                   
-                    user.Login = reader.GetValue(1).ToString();                   
+
+                    user.Login = reader.GetValue(1).ToString();
 
                     user.Password = reader.GetValue(2).ToString();
 
@@ -96,6 +96,33 @@ namespace Detention_facility.Data
                 }
                 connection.Close();
                 return checked_user;
+            }
+        }
+
+        public string GetRole(string Login, string password)
+        {
+            const string storedProcedureName = "GetRole";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@Login", SqlDbType.NVarChar);
+                command.Parameters["@Login"].Value = Login;
+
+                command.Parameters.Add("@Password", SqlDbType.NVarChar);
+                command.Parameters["@Password"].Value = password;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                string role = null;
+                while (reader.Read())
+                {
+                    role = reader.GetValue(0).ToString();
+     
+                }
+                connection.Close();
+                return role;
             }
         }
 

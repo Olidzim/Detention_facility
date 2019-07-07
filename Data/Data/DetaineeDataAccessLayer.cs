@@ -140,7 +140,7 @@ namespace Detention_facility.Data
                 command.Parameters["@HomePhoneNumber"].Value = detainee.HomePhoneNumber;
 
                 command.Parameters.Add("@Photo", SqlDbType.Image);
-                command.Parameters["@Photo"].Value = detainee.Photo;
+                command.Parameters["@Photo"].Value = System.Convert.FromBase64String(detainee.Photo);
 
                 command.Parameters.Add("@ExtraInfo", SqlDbType.NVarChar);
                 command.Parameters["@ExtraInfo"].Value = detainee.ExtraInfo;
