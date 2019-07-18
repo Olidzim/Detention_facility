@@ -1,17 +1,17 @@
-﻿using Detention_facility.Models;
-using System.Collections.Generic;
-using Detention_facility.Data;
+﻿using Detention_facility.Data;
+using Detention_facility.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Detention_facility.Business
 {
     public class DetentionBusinessLayer : IDetentionBusinessLayer
     {
-        private IDetentionDataAccess _detentionDataProvider;        
+        private IDetentionDataAccess _detentionDataProvider;
 
         public DetentionBusinessLayer(IDetentionDataAccess detentionDataProvider)
-        { 
-            _detentionDataProvider = detentionDataProvider;            
+        {
+            _detentionDataProvider = detentionDataProvider;
         }
 
         public void InsertDetention(Detention detention)
@@ -49,10 +49,29 @@ namespace Detention_facility.Business
             return _detentionDataProvider.GetDetentionsByLastName(lastname);
         }
 
-        public List<Detention> GetDetentionsByDate(DateTime date)
+        public List<SmartDetention> GetDetentionsByDate(DateTime date)
         {
             return _detentionDataProvider.GetDetentionsByDate(date);
-        } 
-       
+        }
+
+        public List<SmartDetention> GetSmartDetentions()
+        {
+            return _detentionDataProvider.GetSmartDetentions();
+        }
+
+        public List<SmartDetention> GetSmartDetentionsByDetaineeID(int id)
+        {
+            return _detentionDataProvider.GetSmartDetentionsByDetaineeID(id);
+        }
+
+        public SmartDetention GetSmartDetentionsByDetentionID(int id)
+        {
+            return _detentionDataProvider.GetSmartDetentionsByDetentionID(id);
+        }
+
+        public int LastDetention()
+        {
+            return _detentionDataProvider.LastDetention();
+        }
     }
 }

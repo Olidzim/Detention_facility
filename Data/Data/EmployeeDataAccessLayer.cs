@@ -147,5 +147,43 @@ namespace Detention_facility.Data
                 return Employees_list;
             }
         }
+
+        public List<SmartEmployee> Employees(string term)
+        {
+            const string storedProcedureName = "EmployeeSearch";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+
+                command.Parameters.Add("@term", SqlDbType.VarChar);
+                command.Parameters["@term"].Value = term;
+
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                SmartEmployee Employee = null;
+
+                List<SmartEmployee> Employees_list = new List<SmartEmployee>();
+                while (reader.Read())
+                {
+                    Employee = new SmartEmployee
+                    {
+                        EmployeeID = Convert.ToInt32(reader.GetValue(0)),
+
+                        FullName = reader.GetValue(1).ToString(),
+
+                        EmployeeRank = reader.GetValue(2).ToString(),
+
+                        Position = reader.GetValue(3).ToString()
+                    };
+                    Employees_list.Add(Employee);
+                }
+                connection.Close();
+                return Employees_list;
+            }
+        }
     }
 }
+

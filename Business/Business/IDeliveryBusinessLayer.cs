@@ -11,5 +11,6 @@ namespace Detention_facility.Business
         Delivery GetDeliveryByID(int id);
         List<Delivery> GetDeliveries();
         string CheckValuesForDelivery(int detaineeID, int detentionID, int employeeID);
+        SmartDelivery GetDeliveryByIDs(int detaineeID, int detentionID);
     }
 }

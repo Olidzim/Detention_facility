@@ -12,7 +12,11 @@ namespace Detention_facility.Data
         Detention GetDetentionByID(int id);
         List<Detention> GetDetentionsByPlace(string place);
         List<Detention> GetDetentionsByLastName(string lastname);
-        List<Detention> GetDetentionsByDate(DateTime date);
+        List<SmartDetention> GetDetentionsByDate(DateTime date);
         List<Detention> GetDetentions();
+        List<SmartDetention> GetSmartDetentionsByDetaineeID(int id);
+        SmartDetention GetSmartDetentionsByDetentionID(int id);
+        List<SmartDetention> GetSmartDetentions();
+        int LastDetention();
     }
 }

@@ -37,5 +37,10 @@ namespace Detention_facility.Business
         {
             return _employeeDataProvider.GetEmployees();
         }
+
+        public List<SmartEmployee> Employees(string term)
+        {
+            return _employeeDataProvider.Employees(term);
+        }
     }
 }

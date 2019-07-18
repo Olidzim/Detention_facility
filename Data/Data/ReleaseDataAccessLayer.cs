@@ -112,6 +112,48 @@ namespace Detention_facility.Data
                 return Release;
             }
         }
+
+
+        public SmartRelease GetReleaseByIDs(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = "GetReleasesByIDs";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
+                command.Parameters["@DetaineeID"].Value = detaineeID;
+
+                command.Parameters.Add("@DetentionID", SqlDbType.Int);
+                command.Parameters["@DetentionID"].Value = detentionID;
+
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SmartRelease release = null;
+                while (reader.Read())
+                {
+                    release = new SmartRelease();
+
+
+                    release.ReleaseID = Convert.ToInt32(reader.GetValue(0));
+
+                    release.ReleaseDate = Convert.ToDateTime(reader.GetValue(1));
+
+                    release.AmountAccrued = reader.GetValue(2) == DBNull.Value ? 0: Convert.ToInt32(reader.GetValue(2)) ;
+
+                    release.AmountPaid = reader.GetValue(3) == DBNull.Value ? 0: Convert.ToInt32(reader.GetValue(3)) ;
+
+                    release.EmployeeFullName = reader.GetValue(4).ToString();
+                    
+                }
+                connection.Close();
+                return release;
+            }
+        }
+
         public List<Release> GetReleases()
         {
             const string storedProcedureName = "GetReleasesOfDetainees";
@@ -135,7 +177,7 @@ namespace Detention_facility.Data
 
                         ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(2)),
 
-                        DetentionID = Convert.ToInt32(reader.GetValue(3)),  
+                        DetentionID = Convert.ToInt32(reader.GetValue(3)),
 
                         ReleaseDate = Convert.ToDateTime(reader.GetValue(4))
                     };

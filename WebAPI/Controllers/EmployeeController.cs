@@ -86,5 +86,17 @@ namespace Detention_facility.Controllers
             }
             return Ok(employeesList);
         }
+
+       // [Route("Api/employee/name=/{term}")]
+        [HttpGet]
+        public IHttpActionResult GetEmploy(string term)
+        {
+            var employeesList = _employeeService.Employees(term);
+            if (employeesList == null)
+            {
+                return NotFound();
+            }
+            return Ok(employeesList);
+        }
     }
 }

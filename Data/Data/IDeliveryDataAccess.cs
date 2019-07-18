@@ -10,5 +10,6 @@ namespace Detention_facility.Data
         void DeleteDelivery(int id);
         Delivery GetDeliveryByID(int id);
         List<Delivery> GetDeliveries();
+        SmartDelivery GetDeliveryByIDs(int detaineeID, int detentionID);
     }
 }

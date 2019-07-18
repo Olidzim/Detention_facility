@@ -10,5 +10,6 @@ namespace Detention_facility.Business
         void DeleteEmployee(int id);
         Employee GetEmployeeByID(int id);
         List<Employee> GetEmployees();
+        List<SmartEmployee> Employees(string term);
     }
 }

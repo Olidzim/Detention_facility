@@ -10,26 +10,26 @@ namespace Detention_facility.Data
     {
         public void InsertDelivery(Delivery delivery)
         {
-            const string storedProcedureName = "InsertDelivery";
+            const string storedProcedureName = Constants.InsertDelivery;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = delivery.DetaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = delivery.DetaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = delivery.DetentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceAddress", SqlDbType.VarChar);
-                command.Parameters["@PlaceAddress"].Value = delivery.PlaceAddress;
+                command.Parameters.Add(Constants.PlaceAddress, SqlDbType.VarChar);
+                command.Parameters[Constants.PlaceAddress].Value = delivery.PlaceAddress;
 
-                command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
-                command.Parameters["@DeliveredByEmployeeID"].Value = delivery.DeliveredByEmployeeID;
+                command.Parameters.Add(Constants.@DeliveredByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.DeliveredByEmployeeID].Value = delivery.DeliveredByEmployeeID;
 
-                command.Parameters.Add("@DeliveryDate", SqlDbType.DateTime);
-                command.Parameters["@DeliveryDate"].Value = delivery.DeliveryDate;
+                command.Parameters.Add(Constants.DeliveryDate, SqlDbType.DateTime);
+                command.Parameters[Constants.DeliveryDate].Value = delivery.DeliveryDate;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -37,29 +37,29 @@ namespace Detention_facility.Data
         }
         public void UpdateDelivery(int id, Delivery delivery)
         {
-            const string storedProcedureName = "UpdateDelivery";
+            const string storedProcedureName = Constants.UpdateDelivery;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DeliveryID", SqlDbType.Int);
-                command.Parameters["@DeliveryID"].Value = id;
+                command.Parameters.Add(Constants.DeliveryID, SqlDbType.Int);
+                command.Parameters[Constants.DeliveryID].Value = id;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = delivery.DetaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = delivery.DetaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = delivery.DetentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = delivery.DetentionID;
 
-                command.Parameters.Add("@PlaceAddress", SqlDbType.VarChar);
-                command.Parameters["@PlaceAddress"].Value = delivery.PlaceAddress;
+                command.Parameters.Add(Constants.PlaceAddress, SqlDbType.VarChar);
+                command.Parameters[Constants.PlaceAddress].Value = delivery.PlaceAddress;
 
-                command.Parameters.Add("@DeliveredByEmployeeID", SqlDbType.Int);
-                command.Parameters["@DeliveredByEmployeeID"].Value = delivery.DeliveredByEmployeeID;
+                command.Parameters.Add(Constants.DeliveredByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.DeliveredByEmployeeID].Value = delivery.DeliveredByEmployeeID;
 
-                command.Parameters.Add("@DeliveryDate", SqlDbType.DateTime);
-                command.Parameters["@DeliveryDate"].Value = delivery.DeliveryDate;
+                command.Parameters.Add(Constants.DeliveryDate, SqlDbType.DateTime);
+                command.Parameters[Constants.DeliveryDate].Value = delivery.DeliveryDate;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -67,14 +67,14 @@ namespace Detention_facility.Data
         }
         public void DeleteDelivery(int id)
         {
-            const string storedProcedureName = "DeleteDelivery";
+            const string storedProcedureName = Constants.DeleteDelivery;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DeliveryID", SqlDbType.Int);
-                command.Parameters["@DeliveryID"].Value = id;
+                command.Parameters.Add(Constants.DeliveryID, SqlDbType.Int);
+                command.Parameters[Constants.DeliveryID].Value = id;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -82,14 +82,14 @@ namespace Detention_facility.Data
         }
         public Delivery GetDeliveryByID(int id)
         {
-            const string storedProcedureName = "GetDeliveryByID";
+            const string storedProcedureName = Constants.GetDeliveryByID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DeliveryID", SqlDbType.Int);
-                command.Parameters["@DeliveryID"].Value = id;
+                command.Parameters.Add(Constants.DeliveryID, SqlDbType.Int);
+                command.Parameters[Constants.DeliveryID].Value = id;
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -116,9 +116,48 @@ namespace Detention_facility.Data
                 return delivery;
             }
         }
+
+
+        public SmartDelivery GetDeliveryByIDs(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = Constants.GetDeliveriesByIDs;
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
+
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
+
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SmartDelivery delivery = null;
+                while (reader.Read())
+                {
+                    delivery = new SmartDelivery
+                    {
+                        DeliveryID = Convert.ToInt32(reader.GetValue(0)),
+
+                        DeliveryDate = Convert.ToDateTime(reader.GetValue(1)),
+
+                        PlaceAddress = reader.GetValue(2).ToString(),
+                    
+                        EmployeeFullName = reader.GetValue(3).ToString()                 
+                    };
+                }
+                connection.Close();
+                return delivery;
+            }
+        }
+
         public List<Delivery> GetDeliveries()
         {
-            const string storedProcedureName = "GetDeliveriesOfDetainees";
+            const string storedProcedureName = Constants.GetDeliveriesOfDetainees;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);

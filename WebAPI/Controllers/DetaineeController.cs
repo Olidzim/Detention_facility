@@ -24,8 +24,7 @@ namespace Detention_facility.Controllers
         {
             if (ModelState.IsValid)
             {
-                _detaineeService.InsertDetainee(detainee);
-
+                detainee.DetaineeID = _detaineeService.InsertDetainee(detainee);               
                 return Ok(detainee);
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
@@ -63,7 +62,11 @@ namespace Detention_facility.Controllers
             var detainee = _detaineeCachingService.Get(id);
             if (detainee == null)
             {
-                detainee = _detaineeService.GetDetaineeByID(id);
+                detainee = _detaineeService.GetDetaineeByID(id); if (detainee == null)
+                {
+                    CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Такой задержанный отсутствует в базе данных");
+                    return NotFound();
+                }
                 _detaineeCachingService.Add(detainee);
             }
             if (detainee == null)
@@ -112,6 +115,28 @@ namespace Detention_facility.Controllers
                 return NotFound();
             }
             return Ok(detaineesList);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetDet(string term)
+        {
+            var detainee_list = _detaineeService.Detainees(term);
+            if (detainee_list == null)
+            {
+                return NotFound();
+            }
+            return Ok(detainee_list);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetDetaineeByAddress(string term)
+        {
+            var detainee_list = _detaineeService.GetDetaineesByAddres(term);
+            if (detainee_list == null)
+            {
+                return NotFound();
+            }
+            return Ok(detainee_list);
         }
     }
 }

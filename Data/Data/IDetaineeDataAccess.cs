@@ -5,13 +5,16 @@ namespace Detention_facility.Data
 {
     public interface IDetaineeDataAccess
     {
-        void InsertDetainee(Detainee employee);
+        int InsertDetainee(Detainee employee);
         void UpdateDetainee(int id, Detainee employee);
         void DeleteDetainee(int id);
         Detainee GetDetaineeByID(int id);
         List<Detainee> GetDetainees();
-        List<Detainee> GetDetaineesByDetentionID(int id);
+        List<SmartDetainee> GetDetaineesByDetentionID(int id);
         void AddDetaineeToDetention(int detaineeID, int detentionID);
         bool CheckDetaineeInDetention(int detaineeID, int detentionID);
+        List<SmartDetainee> Detainees(string term);
+        List<SmartDetainee> GetDetaineesByAddress(string term);
+        int LastDetainee();
     }
 }

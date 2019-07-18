@@ -32,6 +32,20 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
+        [Authorize(Roles = "Admin,Editor")]
+        [Route("Api/Release/GetReleaseByIDs/{detaineeID}/{detentionID}")]
+        [HttpGet]
+        public IHttpActionResult GetReleaseByIDs(int detaineeID, int detentionID)
+        {
+            var delivery = _releaseService.GetReleaseByIDs(detaineeID, detentionID);
+            if (delivery == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
+                return NotFound();
+            }
+            return Ok(delivery);
+        }
+
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateRelease(int id, [FromBody] Release release)

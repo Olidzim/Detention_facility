@@ -41,6 +41,39 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [HttpGet]
+        public IHttpActionResult GetSmartDetentionsByDetaineeID(int id)
+        {
+            var detentionsList = _detentionService.GetSmartDetentionsByDetaineeID(id);
+            if (detentionsList == null)
+            {
+                return NotFound();
+            }
+            return Ok(detentionsList);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetSmartDetentionsByDetentionID(int id)
+        {
+            var detentionsList = _detentionService.GetSmartDetentionsByDetentionID(id);
+            if (detentionsList == null)
+            {
+                return NotFound();
+            }
+            return Ok(detentionsList);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetSmartDetentions()
+        {
+            var detentionsList = _detentionService.GetSmartDetentions();
+            if (detentionsList == null)
+            {
+                return NotFound();
+            }
+            return Ok(detentionsList);
+        }
+
         [HttpPost]
         public IHttpActionResult GetDetentionsByPlace([FromBody] string place)
         {
@@ -66,7 +99,7 @@ namespace Detention_facility.Controllers
         }
 
         //[Route("Api/Detention/GetDetentionsByDate/{date:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
-        [HttpGet]
+        [HttpPost]
         public IHttpActionResult GetDetentionsByDate([FromBody] DateTime date)
         {
             var detentionsList = _detentionService.GetDetentionsByDate(date);
@@ -85,6 +118,7 @@ namespace Detention_facility.Controllers
             if (ModelState.IsValid)
             {
                 _detentionService.InsertDetention(detention);
+                detention.DetentionID = _detentionService.LastDetention();
                 return Ok(detention);
             }
             if (_employeeService.GetEmployeeByID(detention.DetainedByEmployeeID) == null)

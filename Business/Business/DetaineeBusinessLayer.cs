@@ -15,9 +15,9 @@ namespace Detention_facility.Business
             _detentionDataProvider = detentionDataProvider;
         }
 
-        public void InsertDetainee(Detainee detainee)
+        public int InsertDetainee(Detainee detainee)
         {
-            _detaineeDataProvider.InsertDetainee(detainee);
+           return _detaineeDataProvider.InsertDetainee(detainee);
         }
 
         public void UpdateDetainee(int id, Detainee detainee)
@@ -40,7 +40,7 @@ namespace Detention_facility.Business
             return _detaineeDataProvider.GetDetainees();
         }
 
-        public List<Detainee> GetDetaineesByDetentionID(int id)
+        public List<SmartDetainee> GetDetaineesByDetentionID(int id)
         {
             return _detaineeDataProvider.GetDetaineesByDetentionID(id);
         }
@@ -65,6 +65,21 @@ namespace Detention_facility.Business
             if (_detentionDataProvider.GetDetentionByID(detentionID) == null)
                 message += "[Такое задержание отсутствует в базе данных]";
             return message;
+        }
+
+        public List<SmartDetainee> Detainees(string term)
+        {
+            return _detaineeDataProvider.Detainees(term);
+        }
+
+        public List<SmartDetainee> GetDetaineesByAddres(string term)
+        {
+            return _detaineeDataProvider.GetDetaineesByAddress(term);
+        }
+
+        public int LastDetainee()
+        {
+            return _detaineeDataProvider.LastDetainee();
         }
     }
 }

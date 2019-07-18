@@ -18,7 +18,14 @@ namespace Detention_facility.Tests.Controller.Tests
             DetentionID = 1,
             DetentionDate = DateTime.Today,
             DetainedByEmployeeID = 1    
-        };   
+        };
+
+        SmartDetention testsmartdetention = new SmartDetention()
+        {
+            DetentionID = 1,
+            DetentionDate = DateTime.Today,
+            EmployeeFullName = "John Doe"
+        };
 
         [TestMethod]
         public void TestGetDetentionByID()
@@ -61,8 +68,8 @@ namespace Detention_facility.Tests.Controller.Tests
             var employeeService = new Mock<IEmployeeBusinesslayer>();
             var detentionService = new Mock<IDetentionBusinessLayer>();
 
-            List<Detention> testDetentionList = new List<Detention>();
-            testDetentionList.Add(testdetention);
+            List<SmartDetention> testDetentionList = new List<SmartDetention>();
+            testDetentionList.Add(testsmartdetention);
 
             detentionService.Setup(x => x.GetDetentionsByDate(DateTime.Today)).Returns(testDetentionList);
 
