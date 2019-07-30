@@ -1,0 +1,9 @@
+<div id="search-component">
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" size="52">
+  <ul class="search-result">
+    <li (click)="chooseEmployee(employee)" *ngFor="let employee of employees$ | async"><p>{{employee.fullName}}</p></li>               
+  </ul>
+</div>
+<p *ngIf="employeeForParent">Выбранный сотрудник</p>
+<p *ngIf="employeeForParent">{{employeeForParent.employeeID}} {{employeeForParent.fullName}}</p>
+<!--<button mat-button [mat-dialog-close]="k" cdkFocusInitial>Ok</button>-->

@@ -1,0 +1,55 @@
+<nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand text-white" id="nav-cursor" [routerLink]="['/home']">Специальный изолятор</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" id="nav-cursor">
+          <a class="nav-link" (click)="searchPanel()">Поиск</a>
+        </li>
+      <li  class="nav-item" id="nav-cursor">
+          <a class="nav-link"   (click)="tablePanel()">Панель редактора</a>
+        </li>
+        <li  class="nav-item" id="nav-cursor">
+          <a class="nav-link" href="#">Панель администратора</a>
+        </li>      
+    </ul>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
+</nav>
+<div *ngIf="show==1" class="wrapper">
+    <nav id="sidebar">
+        <ul class="list-unstyled components">
+            <li>
+                <p>Таблицы</p>
+            </li>
+            <li>                
+            </li>
+            <li>
+                <a  routerLink="detention" routerLinkActive="active">Задержания</a>
+            </li>
+            <li>
+                <a  routerLink="detainee" routerLinkActive="active">Задержанные</a>
+            </li>
+            <li>
+                <a routerLink="employee" routerLinkActive="active">Сотрудники</a>
+            </li>    
+        </ul>
+    </nav>
+</div>
+<div *ngIf="show==2" class="wrapper">
+    <nav id="sidebar">  
+        <ul class="list-unstyled components">
+            <li>
+                <p>Поиски</p>
+            </li>
+            <li>                
+            </li>
+            <li>
+                <a  routerLink="detention-search" routerLinkActive="active">Задержания</a>
+            </li>
+            <li>
+                <a  routerLink="find-detainee" routerLinkActive="active">Задержанные</a>
+            </li>    
+        </ul>
+    </nav>
+</div>
+<div class="child">
+<router-outlet></router-outlet>
+</div>

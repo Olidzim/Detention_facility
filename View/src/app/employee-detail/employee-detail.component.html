@@ -1,0 +1,6 @@
+<p><b>Found employee ID:</b> {{foundEmployeeID}}</p>
+<p><b>Фамилия и инициалы лица осуществляющего доставку:</b> {{employee.firstName}} {{employee.lastName}} {{employee.patronomyc}}</p>
+<p><b>Звание: </b>{{employee.employeeRank}}</p>
+<p><b>Должность: </b>{{employee.position}}</p>
+<button *ngIf="ifChange" type = "button" class = "btn btn-success" mat-raised-button (click)="openSearch()">Сменить сотрудника</button>
+<employee-search *ngIf="ifSearch" (toEmployeeDetail)="getEmployeeFromSearch($event)"></employee-search>  

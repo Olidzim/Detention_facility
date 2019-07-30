@@ -10,23 +10,23 @@ namespace Detention_facility.Data
     {
         public void InsertRelease(Release release)
         {
-            const string storedProcedureName = "InsertRelease";
+            const string storedProcedureName = Constants.InsertRelease;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = release.DetaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = release.DetaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = release.DetentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = release.DetentionID;
 
-                command.Parameters.Add("@ReleasedByEmployeeID", SqlDbType.Int);
-                command.Parameters["@ReleasedByEmployeeID"].Value = release.ReleasedByEmployeeID;
+                command.Parameters.Add(Constants.ReleasedByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.ReleasedByEmployeeID].Value = release.ReleasedByEmployeeID;
 
-                command.Parameters.Add("@ReleaseDate", SqlDbType.DateTime);
-                command.Parameters["@ReleaseDate"].Value = release.ReleaseDate;
+                command.Parameters.Add(Constants.ReleaseDate, SqlDbType.DateTime);
+                command.Parameters[Constants.ReleaseDate].Value = release.ReleaseDate;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -35,26 +35,26 @@ namespace Detention_facility.Data
         }
         public void UpdateRelease(int id, Release release)
         {
-            const string storedProcedureName = "UpdateRelease";
+            const string storedProcedureName = Constants.UpdateRelease;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@ReleaseID", SqlDbType.Int);
-                command.Parameters["@ReleaseID"].Value = id;
+                command.Parameters.Add(Constants.ReleaseID, SqlDbType.Int);
+                command.Parameters[Constants.ReleaseID].Value = id;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = release.DetaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = release.DetaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = release.DetentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = release.DetentionID;
 
-                command.Parameters.Add("@ReleasedByEmployeeID", SqlDbType.Int);
-                command.Parameters["@ReleasedByEmployeeID"].Value = release.ReleasedByEmployeeID;
+                command.Parameters.Add(Constants.ReleasedByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.ReleasedByEmployeeID].Value = release.ReleasedByEmployeeID;
 
-                command.Parameters.Add("@ReleaseDate", SqlDbType.DateTime);
-                command.Parameters["@ReleaseDate"].Value = release.ReleaseDate;
+                command.Parameters.Add(Constants.ReleaseDate, SqlDbType.DateTime);
+                command.Parameters[Constants.ReleaseDate].Value = release.ReleaseDate;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -63,14 +63,14 @@ namespace Detention_facility.Data
         }
         public void DeleteRelease(int id)
         {
-            const string storedProcedureName = "DeleteRelease";
+            const string storedProcedureName = Constants.DeleteRelease;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@ReleaseID", SqlDbType.Int);
-                command.Parameters["@ReleaseID"].Value = id;
+                command.Parameters.Add(Constants.ReleaseID, SqlDbType.Int);
+                command.Parameters[Constants.ReleaseID].Value = id;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -79,14 +79,14 @@ namespace Detention_facility.Data
         }
         public Release GetReleaseByID(int id)
         {
-            const string storedProcedureName = "GetReleaseByID";
+            const string storedProcedureName = Constants.GetReleaseByID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@ReleaseID", SqlDbType.Int);
-                command.Parameters["@ReleaseID"].Value = id;
+                command.Parameters.Add(Constants.ReleaseID, SqlDbType.Int);
+                command.Parameters[Constants.ReleaseID].Value = id;
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -116,17 +116,17 @@ namespace Detention_facility.Data
 
         public SmartRelease GetReleaseByIDs(int detaineeID, int detentionID)
         {
-            const string storedProcedureName = "GetReleasesByIDs";
+            const string storedProcedureName = Constants.GetReleasesByIDs;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = detaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = detentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
 
 
                 connection.Open();
@@ -156,7 +156,7 @@ namespace Detention_facility.Data
 
         public List<Release> GetReleases()
         {
-            const string storedProcedureName = "GetReleasesOfDetainees";
+            const string storedProcedureName = Constants.GetReleasesOfDetainees;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);

@@ -118,9 +118,46 @@ namespace Detention_facility.Data
         }
 
 
-        public SmartDelivery GetDeliveryByIDs(int detaineeID, int detentionID)
+        public Delivery GetDeliveryByIDs(int detaineeID, int detentionID)
         {
             const string storedProcedureName = Constants.GetDeliveriesByIDs;
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
+
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
+
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                Delivery delivery = null;
+                while (reader.Read())
+                {
+                    delivery = new Delivery
+                    {
+                        DeliveryID = Convert.ToInt32(reader.GetValue(0)),
+
+                        DeliveryDate = Convert.ToDateTime(reader.GetValue(1)),
+
+                        PlaceAddress = reader.GetValue(2).ToString(),
+                    
+                        DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(3))                 
+                    };
+                }
+                connection.Close();
+                return delivery;
+            }
+        }
+
+        public SmartDelivery GetSmartDeliveryByIDs(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = Constants.GetSmartDeliveriesByIDs;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -146,14 +183,15 @@ namespace Detention_facility.Data
                         DeliveryDate = Convert.ToDateTime(reader.GetValue(1)),
 
                         PlaceAddress = reader.GetValue(2).ToString(),
-                    
-                        EmployeeFullName = reader.GetValue(3).ToString()                 
+
+                        EmployeeFullName = reader.GetValue(3).ToString()
                     };
                 }
                 connection.Close();
                 return delivery;
             }
         }
+
 
         public List<Delivery> GetDeliveries()
         {

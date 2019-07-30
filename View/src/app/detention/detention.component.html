@@ -1,0 +1,43 @@
+<button id="addbutton" type="button" class="btn btn-primary" routerLink="../add-detention">Добавить задержание</button>
+<router-outlet></router-outlet>
+<br>
+<h2>Список задержаний</h2>
+<br>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr > 
+            <td>Номер задержания</td>
+            <td>Дата задержания</td>
+            <td>Фамилия и инициалы сотрудника ответственного за задержание</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let d of detentions" (dblclick)="editdetention(d)">
+            <ng-template [ngIf]="detention?.detentionID != d.detentionID" [ngIfElse]="edit">
+                <td>{{d?.detentionID}}</td>
+                <td >{{d?.detentionDate}}</td>
+                <td>{{d?.employeeFullName}}</td>
+                <button class="btn btn-block btn-secondary button5" (click)="toDetentionDetail(d)">Подробнее</button>                  
+                <button class="btn btn-block btn-secondary button5" (click)="delete(d)">X</button>      
+                <br>      
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #edit>
+    <td>
+        <input type="text"  [(ngModel)]="detention.detentionID" class="form-control d-inline-block" />
+    </td>
+     <td>
+        <input type="text" [(ngModel)]="detention.detentionDate" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="detention.detainedByEmployeeID" class="form-control" />
+    </td>
+    <td>
+        <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
+    <p></p>
+        <button class="btn btn-block btn-warning" (click)="cancelChanges()">Отмена</button>
+    </td>
+</ng-template>

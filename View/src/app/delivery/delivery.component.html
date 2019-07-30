@@ -1,0 +1,41 @@
+<button *ngIf="delivery.deliveryID==null" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
+<div *ngIf="delivery.deliveryID && !change">
+    <button  type = "button" class = "btn btn-danger" (click)="addForm()">Удалить доставку</button>
+    <button  type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали доставки</button>
+    <table class="table2">
+        <tbody>
+            <tr> 
+                <td>Номер доставки</td>
+                <td>{{delivery.deliveryID}}</td>
+            </tr>
+            <tr> 
+                <td>Дата доставки</td>
+                <td>{{delivery.deliveryDate}}</td>
+            </tr>
+            <tr> 
+                <td>Адрес места содержания</td>
+                <td>{{delivery.placeAddress}}</td>
+            </tr>                    
+            <tr> 
+                <td>ID Сотрудника</td>
+                <td>{{delivery.deliveredByEmployeeID}}</td>                       
+            </tr>                   
+         </tbody>
+    </table> 
+</div>
+<br>
+<div *ngIf="change">  
+    <p>В работе employee ID</p>{{delivery.deliveredByEmployeeID}}
+    <p>Дата доставки:</p>
+    <input type="date" [ngModel] ="delivery.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="delivery.deliveryDate = $event" class="form-control" />
+    <p>Адрес места содержания:</p>
+    <input type="text" [(ngModel)]="delivery.placeAddress" class="form-control" />   
+</div>
+<employee-detail *ngIf="delivery.deliveryID" (toDeliveryChange)="getEmployeeFromSearch($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
+<br>
+<br>
+<div *ngIf="change">
+    <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
+    <p></p>
+    <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
+</div>  

@@ -10,48 +10,44 @@ namespace Detention_facility.Data
     {
         public int InsertDetainee(Detainee detainee)
         {
-            const string storedProcedureName = "InsertDetainee";
+            const string storedProcedureName = Constants.InsertDetainee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@FirstName", SqlDbType.NVarChar);
-                command.Parameters["@FirstName"].Value = detainee.FirstName;
+                command.Parameters.Add(Constants.FirstName, SqlDbType.NVarChar);
+                command.Parameters[Constants.FirstName].Value = detainee.FirstName;
 
-                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
-                command.Parameters["@LastName"].Value = detainee.LastName;
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
+                command.Parameters[Constants.LastName].Value = detainee.LastName;
 
-                command.Parameters.Add("@Patronymic", SqlDbType.NVarChar);
-                command.Parameters["@Patronymic"].Value = detainee.Patronymic;
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
+                command.Parameters[Constants.LastName].Value = detainee.Patronymic;
 
-                command.Parameters.Add("@Birthdate", SqlDbType.DateTime);
-                command.Parameters["@Birthdate"].Value = detainee.BirthDate;
+                command.Parameters.Add(Constants.Birthdate, SqlDbType.DateTime);
+                command.Parameters[Constants.Birthdate].Value = detainee.BirthDate;
 
-                command.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar);
-                command.Parameters["@MaritalStatus"].Value = detainee.MaritalStatus;
+                command.Parameters.Add(Constants.MaritalStatus, SqlDbType.NVarChar);
+                command.Parameters[Constants.MaritalStatus].Value = detainee.MaritalStatus;
 
-                command.Parameters.Add("@Job", SqlDbType.NVarChar);
-                command.Parameters["@Job"].Value = detainee.Job;
+                command.Parameters.Add(Constants.Job, SqlDbType.NVarChar);
+                command.Parameters[Constants.Job].Value = detainee.Job;
 
-                command.Parameters.Add("@MobilePhoneNumber", SqlDbType.NVarChar);
-                command.Parameters["@MobilePhoneNumber"].Value = detainee.MobilePhoneNumber;
+                command.Parameters.Add(Constants.MobilePhoneNumber, SqlDbType.NVarChar);
+                command.Parameters[Constants.MobilePhoneNumber].Value = detainee.MobilePhoneNumber;
 
-                command.Parameters.Add("@HomePhoneNumber", SqlDbType.NVarChar);
-                command.Parameters["@HomePhoneNumber"].Value = detainee.HomePhoneNumber;
-                /*
-                                command.Parameters.Add("@Photo", SqlDbType.Image);
-                                command.Parameters["@Photo"].Value = System.Convert.FromBase64String(detainee.Photo);
-     */
+                command.Parameters.Add(Constants.HomePhoneNumber, SqlDbType.NVarChar);
+                command.Parameters[Constants.HomePhoneNumber].Value = detainee.HomePhoneNumber;
 
-                command.Parameters.Add("@Photo", SqlDbType.NVarChar);
-                command.Parameters["@Photo"].Value = detainee.Photo;
+                command.Parameters.Add(Constants.Photo, SqlDbType.NVarChar);
+                command.Parameters[Constants.Photo].Value = detainee.Photo;
 
-                command.Parameters.Add("@ExtraInfo", SqlDbType.NVarChar);
-                command.Parameters["@ExtraInfo"].Value = detainee.ExtraInfo;
+                command.Parameters.Add(Constants.ExtraInfo, SqlDbType.NVarChar);
+                command.Parameters[Constants.ExtraInfo].Value = detainee.ExtraInfo;
 
-                command.Parameters.Add("@ResidencePlace", SqlDbType.NVarChar);
-                command.Parameters["@ResidencePlace"].Value = detainee.ResidencePlace;
+                command.Parameters.Add(Constants.ResidencePlace, SqlDbType.NVarChar);
+                command.Parameters[Constants.ResidencePlace].Value = detainee.ResidencePlace;
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -67,17 +63,17 @@ namespace Detention_facility.Data
 
         public void AddDetaineeToDetention(int detaineeID, int detentionID)
         {
-            const string storedProcedureName = "AddDetaineeToDetention";
+            const string storedProcedureName = Constants.AddDetaineeToDetention;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = detaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = detentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -87,15 +83,15 @@ namespace Detention_facility.Data
 
         public List<SmartDetainee> Detainees(string term)
         {
-            const string storedProcedureName = "DetaineeSearch";
+            const string storedProcedureName = Constants.DetaineeSearch;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
 
-                command.Parameters.Add("@term", SqlDbType.VarChar);
-                command.Parameters["@term"].Value = term;
+                command.Parameters.Add(Constants.term, SqlDbType.VarChar);
+                command.Parameters[Constants.term].Value = term;
 
                 connection.Open();
 
@@ -122,17 +118,17 @@ namespace Detention_facility.Data
 
         public bool CheckDetaineeInDetention(int detaineeID, int detentionID)
         {
-            const string storedProcedureName = "CheckDetaineeInDetention";
+            const string storedProcedureName = Constants.CheckDetaineeInDetentionearch;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = detaineeID;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = detentionID;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
 
                 connection.Open();
                 if (command.ExecuteScalar() == null)
@@ -151,49 +147,47 @@ namespace Detention_facility.Data
         public void UpdateDetainee(int id, Detainee detainee)
         {
 
-            const string storedProcedureName = "UpdateDetainee";
+            const string storedProcedureName = Constants.UpdateDetainee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = id;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = id;
 
-                command.Parameters.Add("@FirstName", SqlDbType.NVarChar);
-                command.Parameters["@FirstName"].Value = detainee.FirstName;
+                command.Parameters.Add(Constants.FirstName, SqlDbType.NVarChar);
+                command.Parameters[Constants.FirstName].Value = detainee.FirstName;
 
-                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
-                command.Parameters["@LastName"].Value = detainee.LastName;
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
+                command.Parameters[Constants.LastName].Value = detainee.LastName;
 
-                command.Parameters.Add("@Patronymic", SqlDbType.NVarChar);
-                command.Parameters["@Patronymic"].Value = detainee.Patronymic;
+                command.Parameters.Add(Constants.Patronymic, SqlDbType.NVarChar);
+                command.Parameters[Constants.Patronymic].Value = detainee.Patronymic;
 
-                command.Parameters.Add("@Birthdate", SqlDbType.DateTime);
-                command.Parameters["@Birthdate"].Value = detainee.BirthDate;
+                command.Parameters.Add(Constants.Birthdate, SqlDbType.DateTime);
+                command.Parameters[Constants.Birthdate].Value = detainee.BirthDate;
 
-                command.Parameters.Add("@MaritalStatus", SqlDbType.NVarChar);
-                command.Parameters["@MaritalStatus"].Value = detainee.MaritalStatus;
+                command.Parameters.Add(Constants.MaritalStatus, SqlDbType.NVarChar);
+                command.Parameters[Constants.MaritalStatus].Value = detainee.MaritalStatus;
 
-                command.Parameters.Add("@Job", SqlDbType.NVarChar);
-                command.Parameters["@Job"].Value = detainee.Job;
+                command.Parameters.Add(Constants.Job, SqlDbType.NVarChar);
+                command.Parameters[Constants.Job].Value = detainee.Job;
 
-                command.Parameters.Add("@MobilePhoneNumber", SqlDbType.NVarChar);
-                command.Parameters["@MobilePhoneNumber"].Value = detainee.MobilePhoneNumber;
+                command.Parameters.Add(Constants.MobilePhoneNumber, SqlDbType.NVarChar);
+                command.Parameters[Constants.MobilePhoneNumber].Value = detainee.MobilePhoneNumber;
 
-                command.Parameters.Add("@HomePhoneNumber", SqlDbType.NVarChar);
-                command.Parameters["@HomePhoneNumber"].Value = detainee.HomePhoneNumber;
+                command.Parameters.Add(Constants.HomePhoneNumber, SqlDbType.NVarChar);
+                command.Parameters[Constants.HomePhoneNumber].Value = detainee.HomePhoneNumber;
 
-                /* command.Parameters.Add("@Photo", SqlDbType.Image);
-                 command.Parameters["@Photo"].Value = System.Convert.FromBase64String(detainee.Photo);*/
-                command.Parameters.Add("@Photo", SqlDbType.NVarChar);
-                command.Parameters["@Photo"].Value = detainee.Photo;
+                command.Parameters.Add(Constants.Photo, SqlDbType.NVarChar);
+                command.Parameters[Constants.Photo].Value = detainee.Photo;
 
-                command.Parameters.Add("@ExtraInfo", SqlDbType.NVarChar);
-                command.Parameters["@ExtraInfo"].Value = detainee.ExtraInfo;
+                command.Parameters.Add(Constants.ExtraInfo, SqlDbType.NVarChar);
+                command.Parameters[Constants.ExtraInfo].Value = detainee.ExtraInfo;
 
-                command.Parameters.Add("@ResidencePlace", SqlDbType.NVarChar);
-                command.Parameters["@ResidencePlace"].Value = detainee.ResidencePlace;
+                command.Parameters.Add(Constants.ResidencePlace, SqlDbType.NVarChar);
+                command.Parameters[Constants.ResidencePlace].Value = detainee.ResidencePlace;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -204,7 +198,7 @@ namespace Detention_facility.Data
 
         public int LastDetainee()
         {
-            const string storedProcedureName = "LastDetaineeID";
+            const string storedProcedureName = Constants.GetLastDetaineeID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -228,14 +222,14 @@ namespace Detention_facility.Data
         public void DeleteDetainee(int id)
         {
 
-            const string storedProcedureName = "DeleteDetainee";
+            const string storedProcedureName = Constants.DeleteDetainee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = id;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = id;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -244,14 +238,14 @@ namespace Detention_facility.Data
         }
         public Detainee GetDetaineeByID(int id)
         {
-            const string storedProcedureName = "GetDetaineeByID";
+            const string storedProcedureName = Constants.GetDetaineeByID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = id;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = id;
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -289,14 +283,14 @@ namespace Detention_facility.Data
 
         public List<SmartDetainee> GetDetaineesByDetentionID(int id)
         {
-            const string storedProcedureName = "GetDetaineesByDetentionID";
+            const string storedProcedureName = Constants.GetDetaineesByDetentionID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = id;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = id;
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -324,15 +318,15 @@ namespace Detention_facility.Data
 
         public List<SmartDetainee> GetDetaineesByAddress(string term)
         {
-            const string storedProcedureName = "DetaineeSearchByAddres";
+            const string storedProcedureName = Constants.DetaineeSearchByAddres;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
 
-                command.Parameters.Add("@term", SqlDbType.VarChar);
-                command.Parameters["@term"].Value = term;
+                command.Parameters.Add(Constants.term, SqlDbType.VarChar);
+                command.Parameters[Constants.term].Value = term;
 
                 connection.Open();
 
@@ -358,7 +352,7 @@ namespace Detention_facility.Data
 
         public List<Detainee> GetDetainees()
         {
-            const string storedProcedureName = "GetDetainees";
+            const string storedProcedureName = Constants.GetDetainees;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);

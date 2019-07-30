@@ -1,0 +1,38 @@
+#wrapper {
+margin:0;
+padding-right:250px;    
+position: relative;    
+max-height: 100%;    
+overflow: hidden;    
+}    
+
+#sidebar{
+max-height: 100%;  
+padding:30px;
+background:#3e5f8a;
+position: absolute;
+top: 5.8%;
+left: 0;
+bottom: 0;
+height: 100%;
+}
+
+.child{  
+    margin-top:30px;
+    margin-left:200px;   
+}
+
+a, a:hover, a:focus {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar ul p {
+    color: #fff;
+    font-size: 18pt
+}
+
+#nav-cursor {
+    cursor: pointer;
+}

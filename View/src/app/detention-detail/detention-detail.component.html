@@ -1,0 +1,56 @@
+<h1>Задержание</h1>
+<button style="float:right" type = "button" class = "btn btn-danger" mat-raised-button (click)="openSearch()">Удалить</button>
+<button  style="float:right; margin-right:20px" type = "button" class = "btn btn-warning" mat-raised-button (click)="openSearch()">Изменить</button>
+
+<h2>Дата</h2>
+{{smartDetention.detentionDate | date: "dd/MM/yyyy" }}
+<h2>Лицо ответственное за задержание</h2>
+{{smartDetention.employeeFullName}}
+<h2>ID лица ответственного за задержание</h2>
+{{ddetention.detainedByEmployeeID}}
+<h2>Employee detail</h2>
+<employee-detail *ngIf="employeeID" [employeeID]="employeeID"></employee-detail>
+<h2>Задержанные</h2>
+<div class="container">
+    <table  form  class="table table-bordered table-sm" style="height: 100px;">
+        <thead>
+            <tr > 
+                <td>Номер задержанного</td>
+                <td>Полное имя</td>    
+                <td>Дата рождения</td>
+                <td>Семейное положение</td>
+                <td>Место работы</td>
+                <td>Мобильный телефон</td>
+                <td>Домашний телефон</td>       
+                <td>Адрес прописки</td>
+    
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let d of smartDetainees" (dblclick)="getDetainee(d)">
+                <ng-template [ngIf]="detainee?.detaineeID != d.detaineeID" [ngIfElse]="edit">
+                    <td>{{d?.detaineeID}}</td>
+                    <td>{{d?.fullname}}</td>         
+                    <td>{{d?.birthDate | date: "dd/MM/yyyy"}}</td>
+                    <td>{{d?.maritalStatus}}</td>
+                    <td>{{d?.job}}</td>
+                    <td>{{d?.mobilePhoneNumber}}</td>
+                    <td>{{d?.homePhoneNumber}}</td>           
+                    <td class="text-truncate" style="max-width: 150px;">{{d?.residencePlace}}</td>
+                </ng-template>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+<div class="twins">
+    <h2>Доставка задержанного</h2>
+    <app-delivery *ngIf="smartDetainee" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
+</div>
+
+<div class="twins">
+    <h2>Освобождение задержанного</h2>
+    
+</div>
+
+
+

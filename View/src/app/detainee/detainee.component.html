@@ -1,0 +1,96 @@
+<h2 style="margin-left: 10px">Задержанные</h2>
+<div class="container">
+<table  form  class="table table-bordered table-sm" style="height: 100px;">
+    <thead>
+        <tr > 
+            <td>Номер задержанного</td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Отчество</td>
+            <td>Дата рождения</td>
+            <td>Семейное положение</td>
+            <td>Место работы</td>
+            <td>Мобильный телефон</td>
+            <td>Домашний телефон</td>       
+            <td>Адрес прописки</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let d of detainees" (dblclick)="editdetainee(d)">
+            <ng-template [ngIf]="detainee?.detaineeID != d.detaineeID" [ngIfElse]="edit">
+                <td>{{d?.detaineeID}}</td>
+                <td>{{d?.firstName}}</td>
+                <td>{{d?.lastName}}</td>
+                <td>{{d?.patronymic}}</td>
+                <td>{{d?.birthDate | date: "dd/MM/yyyy"}}</td>
+                <td>{{d?.maritalStatus}}</td>
+                <td>{{d?.job}}</td>
+                <td>{{d?.mobilePhoneNumber}}</td>
+                <td>{{d?.homePhoneNumber}}</td>           
+                <td class="text-truncate" style="max-width: 150px;">{{d?.residencePlace}}</td>
+                <td >
+                 <!--<button class="btn btn-block btn-secondary" (click)="editDetainee(d)">Изменить</button>
+                  <p></p>-->
+                <button class="btn btn-block btn-secondary button5" (click)="delete(d)">X</button>                  
+              </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+</div>
+<ng-template #edit>
+    <td>
+        <input type="text"  [(ngModel)]="detainee.detaineeID" class="form-control d-inline-block" />
+    </td>
+
+  <td>
+        <input type="text" [(ngModel)]="detainee.firstName" class="form-control" />
+    </td>
+
+  <td>
+        <input type="text" [(ngModel)]="detainee.lastName" class="form-control" />
+    </td>
+
+     <td>
+        <input type="text" [(ngModel)]="detainee.patronymic" class="form-control" />
+      </td>
+
+    <td>
+        <input type="date" [(ngModel)]="detainee.birthDate" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.maritalStatus" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.job" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.mobilePhoneNumber" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.homePhoneNumber" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.photo" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.extraInfo" class="form-control" />
+    </td>
+
+    <td>
+        <input type="text" [(ngModel)]="detainee.residencePlace" class="form-control" />
+    </td>
+
+    <td>
+        <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
+        <p></p>
+        <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
+    </td>
+</ng-template>

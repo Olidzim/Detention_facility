@@ -10,25 +10,25 @@ namespace Detention_facility.Data
     {
         public void InsertEmployee(Employee Employee)
         {
-            const string storedProcedureName = "InsertEmployee";
+            const string storedProcedureName = Constants.InsertEmployee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@FirstName", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.FirstName, SqlDbType.NVarChar);
                 command.Parameters["@FirstName"].Value = Employee.FirstName;
 
-                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
                 command.Parameters["@LastName"].Value = Employee.LastName;
 
-                command.Parameters.Add("@Patronymic", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.Patronymic, SqlDbType.NVarChar);
                 command.Parameters["@Patronymic"].Value = Employee.Patronymic;
                 
-                command.Parameters.Add("@Position", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.Position, SqlDbType.NVarChar);
                 command.Parameters["@Position"].Value = Employee.Position;
 
-                command.Parameters.Add("@EmployeeRank", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.EmployeeRank, SqlDbType.NVarChar);
                 command.Parameters["@EmployeeRank"].Value = Employee.EmployeeRank;
                 
                 connection.Open();
@@ -38,28 +38,28 @@ namespace Detention_facility.Data
         }
         public void UpdateEmployee(int id, Employee Employee)
         {
-            const string storedProcedureName = "UpdateEmployee";
+            const string storedProcedureName = Constants.UpdateEmployee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@EmployeeID", SqlDbType.Int);
+                command.Parameters.Add(Constants.EmployeeID, SqlDbType.Int);
                 command.Parameters["@EmployeeID"].Value = id;
 
-                command.Parameters.Add("@FirstName", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.FirstName, SqlDbType.NVarChar);
                 command.Parameters["@FirstName"].Value = Employee.FirstName;
 
-                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
                 command.Parameters["@LastName"].Value = Employee.LastName;
 
-                command.Parameters.Add("@Patronymic", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.Patronymic, SqlDbType.NVarChar);
                 command.Parameters["@Patronymic"].Value = Employee.Patronymic;
 
-                command.Parameters.Add("@Position", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.Position, SqlDbType.NVarChar);
                 command.Parameters["@Position"].Value = Employee.Position;
 
-                command.Parameters.Add("@EmployeeRank", SqlDbType.NVarChar);
+                command.Parameters.Add(Constants.EmployeeRank, SqlDbType.NVarChar);
                 command.Parameters["@EmployeeRank"].Value = Employee.EmployeeRank;
 
                 connection.Open();
@@ -69,13 +69,13 @@ namespace Detention_facility.Data
         }
         public void DeleteEmployee(int id)
         {
-            const string storedProcedureName = "DeleteEmployee";
+            const string storedProcedureName = Constants.DeleteEmployee;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@EmployeeID", SqlDbType.Int);
+                command.Parameters.Add(Constants.EmployeeID, SqlDbType.Int);
                 command.Parameters["@EmployeeID"].Value = id;
 
                 connection.Open();
@@ -85,13 +85,13 @@ namespace Detention_facility.Data
         }
         public Employee GetEmployeeByID(int id)
         {
-            const string storedProcedureName = "GetEmployeeByID";
+            const string storedProcedureName = Constants.GetEmployeeByID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@EmployeeID", SqlDbType.Int);
+                command.Parameters.Add(Constants.EmployeeID, SqlDbType.Int);
                 command.Parameters["@EmployeeID"].Value = id;
 
                 connection.Open();
@@ -114,7 +114,7 @@ namespace Detention_facility.Data
         }
         public List<Employee> GetEmployees()
         {
-            const string storedProcedureName = "GetEmployees";
+            const string storedProcedureName = Constants.GetEmployees;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -150,14 +150,14 @@ namespace Detention_facility.Data
 
         public List<SmartEmployee> Employees(string term)
         {
-            const string storedProcedureName = "EmployeeSearch";
+            const string storedProcedureName = Constants.EmployeeSearch;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
 
-                command.Parameters.Add("@term", SqlDbType.VarChar);
+                command.Parameters.Add(Constants.term, SqlDbType.VarChar);
                 command.Parameters["@term"].Value = term;
 
                 connection.Open();

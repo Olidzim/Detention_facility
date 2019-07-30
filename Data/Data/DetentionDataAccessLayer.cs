@@ -10,17 +10,17 @@ namespace Detention_facility.Data
     {
         public void InsertDetention(Detention detention)
         {
-            const string storedProcedureName = "InsertDetention";
+            const string storedProcedureName = Constants.InsertDetention;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionDate", SqlDbType.DateTime);
-                command.Parameters["@DetentionDate"].Value = detention.DetentionDate;
+                command.Parameters.Add(Constants.DetentionDate, SqlDbType.DateTime);
+                command.Parameters[Constants.DetentionDate].Value = detention.DetentionDate;
 
-                command.Parameters.Add("@DetainedByEmployeeID", SqlDbType.Int);
-                command.Parameters["@DetainedByEmployeeID"].Value = detention.DetainedByEmployeeID;
+                command.Parameters.Add(Constants.DetainedByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.DetainedByEmployeeID].Value = detention.DetainedByEmployeeID;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -30,20 +30,20 @@ namespace Detention_facility.Data
 
         public void UpdateDetention(int id, Detention detention)
         {
-            const string storedProcedureName = "UpdateDetention";
+            const string storedProcedureName = Constants.UpdateDetention;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = id;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = id;
 
-                command.Parameters.Add("@detentionDate", SqlDbType.DateTime);
-                command.Parameters["@detentionDate"].Value = detention.DetentionDate;
+                command.Parameters.Add(Constants.DetentionDate, SqlDbType.DateTime);
+                command.Parameters[Constants.DetentionDate].Value = detention.DetentionDate;
 
-                command.Parameters.Add("@DetainedByEmployeeID", SqlDbType.Int);
-                command.Parameters["@DetainedByEmployeeID"].Value = detention.DetainedByEmployeeID;
+                command.Parameters.Add(Constants.DetainedByEmployeeID, SqlDbType.Int);
+                command.Parameters[Constants.DetainedByEmployeeID].Value = detention.DetainedByEmployeeID;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -52,14 +52,14 @@ namespace Detention_facility.Data
         }
         public void DeleteDetention(int id)
         {
-            const string storedProcedureName = "DeleteDetention";
+            const string storedProcedureName = Constants.DeleteDetention;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = id;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = id;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -69,14 +69,14 @@ namespace Detention_facility.Data
 
         public Detention GetDetentionByID(int id)
         {
-            const string storedProcedureName = "GetDetentionByID";
+            const string storedProcedureName = Constants.GetDetentionByID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetentionID", SqlDbType.Int);
-                command.Parameters["@DetentionID"].Value = id;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = id;
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -106,7 +106,7 @@ namespace Detention_facility.Data
 
         public List<Detention> GetDetentions()
         {
-            const string storedProcedureName = "GetDetentions";
+            const string storedProcedureName = Constants.GetDetentions;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -146,7 +146,7 @@ namespace Detention_facility.Data
 
         public List<SmartDetention> GetSmartDetentions()
         {
-            const string storedProcedureName = "GetSmartDetentions";
+            const string storedProcedureName = Constants.GetSmartDetentions;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -186,7 +186,7 @@ namespace Detention_facility.Data
 
         public int LastDetention()
         {
-            const string storedProcedureName = "LastDetentionID";
+            const string storedProcedureName = Constants.GetLastDetentionID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
@@ -209,14 +209,14 @@ namespace Detention_facility.Data
 
         public List<SmartDetention> GetSmartDetentionsByDetaineeID(int id)
         {
-            const string storedProcedureName = "GetSmartDetentionsByDetaineeID";
+            const string storedProcedureName = Constants.GetSmartDetentionsByDetaineeID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@DetaineeID", SqlDbType.Int);
-                command.Parameters["@DetaineeID"].Value = id;
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = id;
 
                 connection.Open();
 
@@ -254,14 +254,14 @@ namespace Detention_facility.Data
 
         public SmartDetention GetSmartDetentionsByDetentionID(int id)
         {
-            const string storedProcedureName = "GetSmartDetentionsByDetentionID";
+            const string storedProcedureName = Constants.GetSmartDetentionsByDetentionID;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.Add("@Detention", SqlDbType.Int);
-                command.Parameters["@Detention"].Value = id;
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = id;
 
                 connection.Open();
 
@@ -359,15 +359,15 @@ namespace Detention_facility.Data
 
         public List<Detention> GetDetentionsByPlace(string place)
         {
-            const string storedProcedureName = "GetDetentionsByResidencePlace";
+            const string storedProcedureName = Constants.GetDetentionsByResidencePlace;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
 
-                command.Parameters.Add("@ResidencePlace", SqlDbType.NVarChar);
-                command.Parameters["@ResidencePlace"].Value = place;
+                command.Parameters.Add(Constants.ResidencePlace, SqlDbType.NVarChar);
+                command.Parameters[Constants.ResidencePlace].Value = place;
 
                 SqlDataReader reader = command.ExecuteReader();
                 Detention detention = null;
@@ -400,15 +400,15 @@ namespace Detention_facility.Data
 
         public List<Detention> GetDetentionsByLastName(string lastname)
         {
-            const string storedProcedureName = "GetDetentionsByLastName";
+            const string storedProcedureName = Constants.GetDetentionsByLastName;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
 
-                command.Parameters.Add("@LastName", SqlDbType.NVarChar);
-                command.Parameters["@LastName"].Value = lastname;
+                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
+                command.Parameters[Constants.LastName].Value = lastname;
 
                 SqlDataReader reader = command.ExecuteReader();
                 Detention detention = null;
@@ -441,15 +441,15 @@ namespace Detention_facility.Data
 
         public List<SmartDetention> GetDetentionsByDate(DateTime date)
         {
-            const string storedProcedureName = "GetSmartDetentionsByDate";
+            const string storedProcedureName = Constants.GetSmartDetentionsByDate;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(storedProcedureName, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
 
-                command.Parameters.Add("@date", SqlDbType.DateTime);
-                command.Parameters["@date"].Value = date;
+                command.Parameters.Add(Constants.DetentionDate, SqlDbType.DateTime);
+                command.Parameters[Constants.DetentionDate].Value = date;
 
                 SqlDataReader reader = command.ExecuteReader();
                 SmartDetention detention = null;

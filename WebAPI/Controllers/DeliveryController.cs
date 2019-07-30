@@ -63,6 +63,20 @@ namespace Detention_facility.Controllers
         }
 
         [Authorize(Roles = "Admin,Editor")]
+        [Route("Api/Delivery/GetSmartDeliveryByIDs/{detaineeID}/{detentionID}")]
+        [HttpGet]
+        public IHttpActionResult GetSmartDeliveryByIDs(int detaineeID, int detentionID)
+        {
+            var delivery = _deliveryService.GetSmartDeliveryByIDs(detaineeID, detentionID);
+            if (delivery == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
+                return NotFound();
+            }
+            return Ok(delivery);
+        }
+
+        [Authorize(Roles = "Admin,Editor")]
         [Route("Api/Delivery/GetDeliveryByIDs/{detaineeID}/{detentionID}")]
         [HttpGet]
         public IHttpActionResult GetDeliveryByIDs(int detaineeID, int detentionID)

@@ -1,0 +1,10 @@
+<title>Специальный изолятор</title> 
+<body class="text-center">
+    <form #form='ngForm' class="form-signin" (submit)="onSubmit(form)">
+      <h1 class="h3 mb-3 font-weight-normal">Специальный изолятор</h1>
+      <input type="login" #Login="ngModel" name="UserName" [(ngModel)]="formModel.Login"  class="form-control" placeholder="Логин" required autofocus>
+      <input type="password" class="form-control" #Password="ngModel" name="Password" [(ngModel)]="formModel.Password" placeholder="Пароль" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+  </form>
+</body>
+

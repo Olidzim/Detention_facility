@@ -64,7 +64,12 @@ namespace Detention_facility.Business
             return message;
         }
 
-        public SmartDelivery GetDeliveryByIDs(int detaineeID, int detentionID)
+        public SmartDelivery GetSmartDeliveryByIDs(int detaineeID, int detentionID)
+        {
+            return _deliveryDataProvider.GetSmartDeliveryByIDs(detaineeID, detentionID);
+        }
+
+        public Delivery GetDeliveryByIDs(int detaineeID, int detentionID)
         {
             return _deliveryDataProvider.GetDeliveryByIDs(detaineeID, detentionID);
         }

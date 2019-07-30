@@ -1,0 +1,31 @@
+<h2>Поиск задержанного</h2>
+<p>Поиск по имени:</p>
+<div class="form-style-8" id="search-component">     
+  <input #searchBoxName id="search-box" (input)="searchByName(searchBoxName.value)" size="18">
+  <ul class="search-result">
+    <li (click)="chooseSmartDetainee(smartDetainee)" *ngFor="let smartDetainee of smartDetainees$ | async" >         
+      <p>{{smartDetainee.fullname}}</p> 
+    </li>
+  </ul>
+</div>
+<p>Поиск задержанных по адресу прописки:</p>
+<div class="form-style-8" id="search-component">
+  <input #searchBoxAdress id="search-box" (input)="searchByAddres(searchBoxAdress.value)" size="18">
+  <ul class="search-result">
+    <li (click)="chooseSmartDetainee(addressDetainee)" *ngFor="let addressDetainee of addressDetainees$ | async" >         
+      <p>{{addressDetainee.fullname}}</p> 
+    </li>
+  </ul>
+</div>  
+<br>
+<br>
+<br>
+<br>
+  <input *ngIf="route == '/detention/find-detainee'&& button"  type="submit" (click)="sendDetaineeToDetention()" value="Добавить задержанного к задержанию" />
+  <input *ngIf="buttonShow"  type="submit" (click)="sendDetaineeToDetention()" value="Secret" />
+  <div class="child">
+    <router-outlet *ngIf="em"></router-outlet>
+   <!--<app-detainee-detail *ngIf="em" [detainee]="em"></app-detainee-detail>-->
+  </div>
+
+  

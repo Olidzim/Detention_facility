@@ -1,0 +1,167 @@
+.container {  
+  margin-top: 10px;
+  max-width: 100%;
+  max-height: 800px;
+  overflow: auto;
+}
+
+.square-1 {
+    top: 10%;
+    left: 6%;
+    position: absolute;
+  }
+  .square-2 {
+    top: 5;
+    right: -20px;
+    position: absolute;
+  }
+  .center {
+    position: absolute;
+    left: 0;
+    top: 10%;
+    left: 40%;    
+    text-align: center;
+    font-size: 16px;    
+    width: 300px;
+  }
+  #bot.center {
+    position: absolute;
+    top: 85%;
+    bottom: 10%;
+    left: 1%;    
+    text-align: center;
+    font-size: 16px;    
+    width: 300px;
+  }
+  form-style{
+      float: left;     
+      width: 29%;           
+      padding: 30px;
+      background: #FFFFFF;
+      height: 500px;
+  
+  }
+  table.table1 {    border: 1px solid black;    position: fixed;
+    position: fixed;
+    width: 31%;
+    top: 40%;
+    border: 3px solid #000000;}
+  table.table1 tr {    border: 1px solid black;}
+  table.table1 td {    border: 1px solid black;}
+  
+  table.table2 {    border: 1px solid red;position: fixed;
+    position: fixed;
+    width: 31%;
+    top: 50%;
+    border: 3px solid red;}
+  table.table2 tr {    border: 1px solid red;}
+  table.table2 td {    border: 1px solid red;}
+  .block1 { 
+    width: 30%; 
+    background: #ccc;  
+    padding-right: 20px; 
+    border: solid 1px black; 
+    float: left;
+   }
+   .block2 { 
+    width: 70%; 
+   height: 700px;
+    float: right; 
+    position: relative; 
+   }
+   .block3 { 
+    width: 30%;    
+    float: left; 
+    position: relative; 
+    border: solid 1px black; 
+   }
+
+
+   #final{
+    position:relative;
+    margin-top:100px;
+}
+
+  #oneform-style{
+    font-family: 'Open Sans Condensed', arial, sans;
+    width: 65%;
+    background: #FFFFFF;
+    left: 31%;
+    top: 1%;
+    float: right;
+    position:relative;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+}
+#twoform-style{
+    font-family: 'Open Sans Condensed', arial, sans;
+    width: 500px;
+    background: #FFFFFF;
+    left: 65%;
+    top: 40%;
+    position: absolute;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+}
+
+
+  form-style input[type="text"],
+  form-style input[type="date"],
+  form-style input[type="datetime"],
+  form-style input[type="email"],
+  form-style input[type="number"],
+  form-style input[type="search"],
+  form-style input[type="time"],
+  form-style input[type="url"],
+  form-style input[type="password"],
+  form-style textarea,
+  form-style select 
+  {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      outline: none;
+      display: block;
+      width: 100%;
+      padding: 7px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      margin-bottom: 10px;
+      font: 16px Arial, Helvetica, sans-serif;
+      height: 45px;
+  }
+  form-style textarea{
+      resize:none;
+      overflow: hidden;
+  }
+  form-style input[type="button"], 
+  form-style input[type="submit"]{
+      -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+      -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+      box-shadow: inset 0px 1px 0px 0px #45D6D6;
+      background-color: #2CBBBB;
+      border: 1px solid #27A0A0;
+      display: inline-block;
+      cursor: pointer;
+      color: #FFFFFF;
+      font-family: 'Open Sans Condensed', sans-serif;
+      font-size: 14px;
+      padding: 8px 18px;
+      text-decoration: none;
+      text-transform: uppercase;
+  }
+  form-style input[type="button"]:hover, 
+  form-style input[type="submit"]:hover {
+      background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+      background-color:#34CACA;
+  }
+#bot-button
+{
+  margin: 0 auto;
+  display: block;
+}

@@ -1,0 +1,38 @@
+<!--TODO DETENTION DETAIL-->
+<div>
+    <p>Поиск задержаний по дате:</p>
+    <input type="date" style="width:25%" [(ngModel)]="date" (ngModelChange)="getfoundDetentions()" class="form-control" name="UserName"/> 
+</div>
+    <table *ngIf="foundDetentions" class="table table-bordered table-sm">
+        <thead>
+            <tr > 
+                <td>Номер задержания</td>      
+                <td>Фамилия и инициалы сотрудника ответственного за задержание</td>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container  *ngFor="let d of foundDetentions; let i = index">
+                <tr (click)="getDetaineesOfDetention(i,d)">              
+                    <td>{{d?.detentionID}}</td>                    
+                    <td>{{d?.employeeFullName}}</td>             
+                </tr>
+                <tr *ngIf="foundDetainees && flag == i">
+                    <table id="childtable" class="table table-striped table-dark">
+                        <thead>
+                                <tr > 
+                                    <td>Номер задержанного</td>      
+                                    <td>Фамилия и инициалы задержанного</td>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let f of foundDetainees">              
+                                    <td>{{f?.detaineeID}}</td>                    
+                                    <td>{{f?.fullname}}</td>             
+                                </tr>
+                        </tbody>
+                    </table>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+<router-outlet *ngIf="detention"></router-outlet>

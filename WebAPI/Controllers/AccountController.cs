@@ -1,5 +1,8 @@
 ﻿using Detention_facility.Business;
 using Detention_facility.Models;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using WebAPI.Models;
 
@@ -14,7 +17,7 @@ namespace Detention_facility.Controllers
             _accountService = accountService;
         }
 
-      //  [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IHttpActionResult RegisterUser([FromBody] User user)
         {
@@ -78,16 +81,11 @@ namespace Detention_facility.Controllers
             return Ok(userForDelete);
         }
 
-        [HttpPost]
-        public IHttpActionResult GetRole([FromBody] LoginModel login )
+        [Authorize(Roles = "Admin,Editor")]
+        [HttpGet]
+        public IHttpActionResult GetRole()
         {
-            var role = _accountService.GetRole(login.Login, login.Password);
-            if (role == null)
-            {
-                return NotFound();
-            }
-            return Ok(role);
+            return Ok(Request.GetOwinContext().Authentication.User.Claims.First(claim => claim.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
         }
-
     }
 }
