@@ -38,7 +38,7 @@ export class DetentionService {
   }
 
   getSmartDetentionsByDetaineeID(id: number): Observable<SmartDetention[]> {
-    return this.http.get<SmartDetention[]>(`${this.DetentionsUrl}/GetSmartDetentionsByID/${id}`).pipe(              
+    return this.http.get<SmartDetention[]>(`${this.DetentionsUrl}/GetSmartDetentionsByDetaineeID/${id}`).pipe(              
       catchError(this.handleError<SmartDetention[]>(`getDetention id=${id}`))
     );
   }

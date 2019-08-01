@@ -1,7 +1,12 @@
 <h1>Задержание</h1>
 <button style="float:right" type = "button" class = "btn btn-danger" mat-raised-button (click)="openSearch()">Удалить</button>
-<button  style="float:right; margin-right:20px" type = "button" class = "btn btn-warning" mat-raised-button (click)="openSearch()">Изменить</button>
-
+<button  style="float:right; margin-right:20px" type = "button" class = "btn btn-warning" mat-raised-button (click)="changeDetention()">Изменить</button>
+<br>
+<br>
+<div *ngIf="change">
+    <button style="width:100px; float:right" class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>    
+    <button style="width:100px; float:right; margin-right:20px" class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
+</div>  
 <h2>Дата</h2>
 {{smartDetention.detentionDate | date: "dd/MM/yyyy" }}
 <h2>Лицо ответственное за задержание</h2>
@@ -9,7 +14,7 @@
 <h2>ID лица ответственного за задержание</h2>
 {{ddetention.detainedByEmployeeID}}
 <h2>Employee detail</h2>
-<employee-detail *ngIf="employeeID" [employeeID]="employeeID"></employee-detail>
+<employee-detail *ngIf="employeeID" (toDetentionChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="employeeID"></employee-detail>
 <h2>Задержанные</h2>
 <div class="container">
     <table  form  class="table table-bordered table-sm" style="height: 100px;">
@@ -44,7 +49,7 @@
     </div>
 <div class="twins">
     <h2>Доставка задержанного</h2>
-    <app-delivery *ngIf="smartDetainee" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
+    <app-delivery *ngIf="smartDetainee && !change" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
 </div>
 
 <div class="twins">

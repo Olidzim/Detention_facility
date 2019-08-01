@@ -31,7 +31,7 @@
     <p>Адрес места содержания:</p>
     <input type="text" [(ngModel)]="delivery.placeAddress" class="form-control" />   
 </div>
-<employee-detail *ngIf="delivery.deliveryID" (toDeliveryChange)="getEmployeeFromSearch($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
+<employee-detail *ngIf="delivery.deliveryID" (toDeliveryChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
 <br>
 <br>
 <div *ngIf="change">

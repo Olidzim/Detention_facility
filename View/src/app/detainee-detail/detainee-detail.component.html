@@ -1,22 +1,27 @@
-<div class="container emp-profile">
+
   <form method="post">
-      <div class="row">
-          <div class="col-md-4">
-              <div class="profile-img">
+      <div class="row" id="float-left">
+         
+             
                 <img id="img" class="image-holder" [src]=getSantizeUrl()>
-                  <div class="file btn btn-lg btn-primary">
+                <br>
+                  <div class="file btn btn-lg btn-primary" style="width: 340px">
                       Change Photo
                       <input type="file" name="file"/>
                   </div>
-              </div>
-          </div>
-          
-          <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-          </div>
+             
+       
+          <!--
+
+          -->
       </div>
-      <div class="row">
+      <div class="row">          
           <div class="col-md-8">
+                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    &nbsp;
+                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Delete Profile"/>                   
+                    <br>
+                    <br>
               <div class="tab-content profile-tab" id="myTabContent">
                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                               <div class="row">
@@ -56,7 +61,7 @@
                                     <label>Дата рождения | Возраст</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>{{detainee.birthDate}} | Age</p>
+                                    <p *ngIf="detainee.birthDate">{{detainee.birthDate}} | {{age }}</p>
                                 </div>
                             </div>
                               <div class="row">
@@ -95,5 +100,41 @@
               </div>
           </div>
       </div>
-  </form>           
-</div>
+  </form> 
+  <br>    
+  <div>
+        <h2>Задержания</h2>
+        <div>
+            <table form id="child-table" class="table table-bordered table-sm" style="height: 100px; width: 100%">
+                <thead>
+                    <tr > 
+                        <td>Номер задержания</td>
+                        <td>Дата задержания</td>    
+                        <td>Фамилия инициалы лица ответственного за задержание</td>
+                        <td>Должность</td>
+                        <td>Звание</td>                   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let d of smartDetentions" (dblclick)="getDetention(d)">
+                     <!--   <ng-template [ngIf]="detainee?.detaineeID != d.detaineeID" [ngIfElse]="edit">-->
+                            <td>{{d?.detentionID}}</td>
+                            <td>{{d?.detentionDate}}</td>         
+                            <td>{{d?.employeeFullName}}</td>
+                            <td>{{d?.deliveryStatus}}</td>  
+                            <td>{{d?.releaseStatus}}</td>           
+                     <!--   </ng-template>-->
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        <div class="twins">
+            <h2>Доставка задержанного</h2>
+            <app-delivery *ngIf="smartDetention && !change" [detaineeID]="detainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
+        </div>
+        
+        <div class="twins">
+            <h2>Освобождение задержанного</h2>
+            
+        </div>
+  </div>       

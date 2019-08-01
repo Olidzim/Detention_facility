@@ -19,7 +19,7 @@ import { DetentionService } from '../services/detention.service';
   styleUrls: ['./detainee-detail.component.css']
 })
 export class DetaineeDetailComponent implements OnInit {
-  @Input() detainee: Detainee;
+  @Input() detainee: Detainee = new Detainee();
   @Input() smartDetentions: SmartDetention[];
   smartDelivery: SmartDelivery;
   smartRelease: SmartRelease;
@@ -28,6 +28,11 @@ export class DetaineeDetailComponent implements OnInit {
   k: number;
   sho: boolean = false;
   text: string = 'Не доставлен';
+  smartDetention: SmartDetention;
+  change: boolean = false;
+  age: number;
+  myDate = new Date();
+
   constructor(
     private sharedService: SharedService,
     private http: HttpClient,
@@ -38,7 +43,6 @@ export class DetaineeDetailComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-
     this.sharedService.id;
     this.getDetainee(this.sharedService.id);
   }
@@ -58,12 +62,33 @@ export class DetaineeDetailComponent implements OnInit {
     
   }  
 
+  getSmartDetentionsByDetaineeID(): void {            
+    this.detentionService.getSmartDetentionsByDetaineeID(this.sharedService.id)
+    .subscribe(res => this.smartDetentions = res);  
+  } 
+
+  getDetention(d: SmartDetention): void {
+    if(this.change)
+    {
+
+    }
+    else
+    {
+      this.smartDetention = undefined;
+      this.smartDetention = d;
+      this.sharedService.ifChange = false;
+      console.log(d)
+    }
+  } 
+  
+
+/*
   trackByFn(index, item) {
 
     return item.id;
 
   }
-  
+  /*
   hi(i:number,e:SmartDetention): void {
 
 
@@ -74,6 +99,10 @@ export class DetaineeDetailComponent implements OnInit {
     this.getSmartReleases();
 
   }
+ */
+
+
+
  
      getSmartDeliveries(): void {  
 
@@ -81,7 +110,7 @@ export class DetaineeDetailComponent implements OnInit {
     .subscribe((data: SmartDelivery) => this.smartDelivery = data)      
 
   }
-
+/*
     getTrue(k: number): void {
     //TODO Delivery Service
     let id = this.detainee.detaineeID;
@@ -90,7 +119,7 @@ export class DetaineeDetailComponent implements OnInit {
     .subscribe((data: SmartDelivery) => this.smartDelivery = data); 
        
   }
-
+*/
     getSmartReleases(): void {  
 
     this.http.get('http://localhost:58653/Api/Release/GetReleaseByIDs/1/1')
@@ -101,8 +130,17 @@ export class DetaineeDetailComponent implements OnInit {
     getDetainee(id: number): void {
 
     this.detaineeService.getDetainee(id)
-    .subscribe(hero => this.detainee= hero);  
-
+    .subscribe(response =>     
+      {this.detainee = response 
+        let newDate = new Date(response.birthDate);
+        let timeDiff = Math.abs(Date.now() - newDate.getTime());
+        this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
+      
+    }); 
+    console.log(this.detainee)
+    this.getSmartDetentionsByDetaineeID();
+   
+   // alert(this.myDate)
   }
 }
 

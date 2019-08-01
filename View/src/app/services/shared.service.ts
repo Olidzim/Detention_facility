@@ -19,6 +19,7 @@ export class SharedService {
     forDetentionDetailID: number;
     ifChange = false;
     default = false;
+    ifDetention = false;
 
     constructor(
         private http: HttpClient

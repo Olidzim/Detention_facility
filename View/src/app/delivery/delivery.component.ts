@@ -33,7 +33,7 @@ export class DeliveryComponent implements OnInit {
     this.sharedService.ifChange = false;
   }
 
-  getEmployeeFromSearch(employeeIDForChange: number){  
+  getEmployeeFromDetail(employeeIDForChange: number){  
   this.delivery.deliveredByEmployeeID = employeeIDForChange;
   }
 

@@ -3,8 +3,9 @@
 <div class="form-style-8" id="search-component">     
   <input #searchBoxName id="search-box" (input)="searchByName(searchBoxName.value)" size="18">
   <ul class="search-result">
-    <li (click)="chooseSmartDetainee(smartDetainee)" *ngFor="let smartDetainee of smartDetainees$ | async" >         
-      <p>{{smartDetainee.fullname}}</p> 
+    <li (click)="chooseSmartDetainee(smartDetainee)" *ngFor="let smartDetainee of smartDetainees$ | async" > 
+
+      <p>{{smartDetainee.detaineeID}} {{smartDetainee.fullname}}</p> 
     </li>
   </ul>
 </div>

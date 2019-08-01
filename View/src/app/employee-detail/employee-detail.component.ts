@@ -1,8 +1,10 @@
 import { Component, OnInit, Input,  EventEmitter, Output} from '@angular/core';
+import { Router} from '@angular/router';
 import { SmartEmployee } from '../models/smartemployee';
 import { EmployeeService } from '../services/employee.service';
 import { Employee } from '../models/employee';
 import { SharedService } from '../services/shared.service';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'employee-detail',
@@ -11,6 +13,7 @@ import { SharedService } from '../services/shared.service';
 })
 export class EmployeeDetailComponent implements OnInit {
   @Output() toDeliveryChange = new EventEmitter<number>();
+  @Output() toDetentionChange = new EventEmitter<number>();
   @Input() employeeID: number;
   employee: Employee = new Employee();
   defaultemployee: Employee = new Employee();
@@ -18,24 +21,27 @@ export class EmployeeDetailComponent implements OnInit {
   foundEmployeeID: number;
   ifSearch: boolean = false;
   @Input() ifChange: boolean = false;
-  constructor(private employeeService: EmployeeService, private sharedService: SharedService) { }
+  constructor(private employeeService: EmployeeService, private sharedService: SharedService, private router: Router
+    ) { }
 
   ngOnInit() {
-    console.log(this.employeeID)  
-    this.foundEmployeeID= this.employee.employeeID;
-    console.log(this.employeeID)    
+    //console.log(this.employeeID)  
+    this.foundEmployeeID = this.employee.employeeID;
+    //console.log(this.employeeID)    
     this.getEmployee();
     this.defaultemployee = this.employee;
-    this.ifChange = this.sharedService.ifChange;    
+    this.ifChange = this.sharedService.ifChange;
+    console.log(this.ifChange) 
+    console.log("route "+this.router.url)   
   }
 
   ngOnChanges() {
-  console.log(this.employeeID)
+  //console.log(this.employeeID)
   if (this.sharedService.default == true) {
-    console.log(this.defaultemployee)
+   // console.log(this.defaultemployee)
     this.foundEmployeeID = this.employeeID;
     this.getEmployee();
-    console.log(this.employee)
+    //console.log(this.employee)
     this.sharedService.default =false;
     }
   }
@@ -55,10 +61,19 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   getEmployeeFromSearch(foundEmployee: SmartEmployee) {
-  this.foundEmployeeID=foundEmployee.employeeID;
+  this.foundEmployeeID = foundEmployee.employeeID;
   //this.sharedService.default = false;
-  this.ifSearch = false; 
-  this.toDeliveryChange.emit(foundEmployee.employeeID);
+  this.ifSearch = false;
+  if (this.sharedService.ifDetention)
+  {
+    alert("detention")
+    this.toDetentionChange.emit(foundEmployee.employeeID);
+  }
+  else
+  {
+    alert("delivery")
+    this.toDeliveryChange.emit(foundEmployee.employeeID);
+  }  
   this.employeeService.getEmployeeByID(this.foundEmployeeID)
   .subscribe(
   res => this.employee = res);

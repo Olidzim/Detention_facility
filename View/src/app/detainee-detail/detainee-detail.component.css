@@ -19,6 +19,20 @@
     border-radius: 4px;
   }
 
+  .twins
+  {
+    display: inline-block;
+    width: 40%;
+    height: 25%;
+    vertical-align: top; 
+  }
+
+  #float-left
+  {
+    float: left;
+    width: 40%;
+  }
+
   table.table1 {    border: 1px solid black;}
   table.table1 tr {    border: 1px solid black;}
   table.table1 td {    border: 1px solid black;}
@@ -52,11 +66,15 @@
  }
 
   #id img {
+    border: 2px black;
     max-width: 98%;
   }
   
-  .left { 
+  img {
+    border: 3px solid #00a8e1;
+   }
 
+  .left { 
     float: left;
     width: 50%;
   }
@@ -93,8 +111,14 @@
     bottom: -29px;
   }
 
+  #child-table
+  {
+    max-width: 90%;
+    text-align: center;
+  }
+
   .container{
-    padding:5%;
+    padding:1%;
   }
 
   .container .img{

@@ -21,7 +21,9 @@ export class DetentionDetailComponent implements OnInit {
     private detentionService: DetentionService,
     private detaineeService: DetaineeService,
     private router: Router,
-    private sharedService: SharedService) { }    
+    private sharedService: SharedService) { }  
+    
+    change: boolean = false;
     smartDetention: SmartDetention = new SmartDetention;
     smartDetainees: SmartDetainee[];
     smartDetainee: SmartDetainee;
@@ -34,9 +36,31 @@ export class DetentionDetailComponent implements OnInit {
     ddetention: Detention = new Detention();
     show: boolean = false;
     employeeID: number = 0;
+    defaultEmployeeID: number;
 
   ngOnInit() {
+    this.sharedService.ifChange = false;
     this.getSmartDetentionsByID();
+  }
+
+  changeDetention()
+  { 
+    this.change = true;
+    this.sharedService.ifChange = true;
+    this.sharedService.ifDetention = true;
+    this.smartDetainee = undefined;
+    console.log(this.sharedService.ifChange)    
+  }
+
+  cancel() {
+    this.sharedService.ifDetention = false;
+    this.change = false;
+    this.sharedService.ifChange = false;
+    this.sharedService.default = true;
+    this.ddetention.detainedByEmployeeID = this.defaultEmployeeID;
+    /*this.change = false;
+    this.sharedService.ifChange = false;
+    this.sharedService.default = true;*/
   }
 
   getSmartDetentionsByID(): void {    
@@ -50,6 +74,7 @@ export class DetentionDetailComponent implements OnInit {
       res => {
       this.ddetention = res
       this.employeeID = res.detainedByEmployeeID
+      this.defaultEmployeeID = res.detainedByEmployeeID
       console.log(this.employeeID)
       }
     );    
@@ -59,6 +84,10 @@ export class DetentionDetailComponent implements OnInit {
     this.employeeID = this.ddetention.detainedByEmployeeID;
     this.showEmployeeDetail();  
   }  
+
+  getEmployeeFromDetail(employeeIDForChange: number){  
+    this.ddetention.detainedByEmployeeID = employeeIDForChange;
+  }
 
   showEmployeeDetail() : void  {
   this.show = true; 
@@ -72,10 +101,17 @@ export class DetentionDetailComponent implements OnInit {
   } 
 
   getDetainee(d: SmartDetainee): void {
-    this.smartDetainee = undefined;
-    this.smartDetainee = d;
-    this.sharedService.ifChange = false;
-    console.log(d)
+    if(this.change)
+    {
+
+    }
+    else
+    {
+      this.smartDetainee = undefined;
+      this.smartDetainee = d;
+      this.sharedService.ifChange = false;
+      console.log(d)
+    }
   } 
 
   dataChanged(newObj) { 
