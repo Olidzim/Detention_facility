@@ -65,7 +65,7 @@ namespace Detention_facility.Business
             return message;
         }
 
-        public SmartRelease GetReleaseByIDs(int detaineeID, int detentionID)
+        public Release GetReleaseByIDs(int detaineeID, int detentionID)
         {
             return _releaseDataProvider.GetReleaseByIDs(detaineeID, detentionID);
         }

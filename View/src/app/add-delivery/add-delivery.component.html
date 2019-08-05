@@ -1,0 +1,14 @@
+<!--input type="text"  [(ngModel)]="delivery.deliveryID" placeholder="deliveryID" class="form-control d-inline-block" />   
+
+
+-->
+
+{{detaineeID}}
+{{detentionID}}
+
+<input type="text" [(ngModel)]="delivery.placeAddress"  placeholder="placeAddress" class="form-control" />
+<input type="date" [(ngModel)]="delivery.deliveryDate" placeholder="deliveryDate" class="form-control" />
+<employee-detail  (toDeliveryAdd)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
+<button class="btn btn-block btn-secondary" (click)="save()">Сохранить</button>
+<p></p>
+<button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>

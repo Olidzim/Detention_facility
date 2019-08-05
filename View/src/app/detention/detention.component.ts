@@ -12,7 +12,9 @@ import { SmartDetention } from '../models/smartdetention';
 })
 
 export class DetentionComponent implements OnInit {
-
+   date: Date;
+   
+  // message: String;
 
   detentions: Detention[];
   constructor(
@@ -22,10 +24,38 @@ export class DetentionComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.loadsmartDetentions()
+   /* if(this.date == undefined)
+    {
+      console.log("undefined")
+      this.loadsmartDetentions()
+    }
+    else {    */
+    this.sharedService.currentDate.subscribe(date =>
+      {
+     console.log("else")     
+      this.date = date
+      if(this.date == undefined)
+      {
+        console.log("initNoDate")
+        this.loadsmartDetentions();
+      }
+      else
+      {
+        console.log("initDate")
+        this.getDetentionsByDate();
+      }
+      
+      })  
+ 
+  }
+
+  toDefaultDate()
+  {
+    this.sharedService.changeMessage(undefined);
   }
 
   loadsmartDetentions() {
+    console.log("NoDate")
     this.detentionService.getSmartDetentions()
     .subscribe((data: Detention[]) => this.detentions = data);
   }
@@ -35,5 +65,11 @@ export class DetentionComponent implements OnInit {
     this.sharedService.forDetentionDetailID = d.detentionID;    
     this.router.navigateByUrl('/home/detention/detention-detail/'+d.detentionID);
   }
+
+  getDetentionsByDate() {   
+    console.log("Date")
+    this.detentionService.searchDetentionsByDate(this.date).subscribe
+    ((data: Detention[]) => this.detentions = data)
+  } 
 
 }

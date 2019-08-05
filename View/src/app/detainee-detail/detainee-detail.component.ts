@@ -76,8 +76,7 @@ export class DetaineeDetailComponent implements OnInit {
     {
       this.smartDetention = undefined;
       this.smartDetention = d;
-      this.sharedService.ifChange = false;
-      console.log(d)
+      this.sharedService.ifChange = false;    
     }
   } 
   
@@ -136,8 +135,7 @@ export class DetaineeDetailComponent implements OnInit {
         let timeDiff = Math.abs(Date.now() - newDate.getTime());
         this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
       
-    }); 
-    console.log(this.detainee)
+    });   
     this.getSmartDetentionsByDetaineeID();
    
    // alert(this.myDate)

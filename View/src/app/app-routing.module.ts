@@ -11,10 +11,12 @@ import {UploadComponent} from './upload/upload.component';
 import {DetentionComponent} from './detention/detention.component';
 import {AddDetaineeComponent} from './add-detainee/add-detainee.component';
 import {FindDetaineeComponent} from './find-detainee/find-detainee.component';
-import {DeliveryComponent} from './delivery/delivery.component';
+import {DeliveryDetailComponent} from './delivery-detail/delivery-detail.component';
 import {ReleaseComponent} from './release/release.component';
 import {DetentionSearchComponent} from './detention-search/detention-search.component';
 import {EmployeeComponent} from './employee/employee.component';
+import {DeliveryComponent} from './delivery/delivery.component';
+
 
 EmployeeComponent
 import {from } from 'rxjs';
@@ -25,9 +27,10 @@ const itemRoutes: Routes = [
 const iitemRoutes: Routes = [
   {path: 'add-detainee', component: AddDetaineeComponent},
   {path: 'find-detainee', component: FindDetaineeComponent},
-  {path: 'delivery', component: DeliveryComponent},
+  {path: 'delivery', component: DeliveryDetailComponent},
   {path: 'release', component: ReleaseComponent},
   {path: 'detention-search', component: DetentionSearchComponent},
+  {path: 'app-add-delivery', component: DetentionSearchComponent},  
   {path: 'find-detainee/detainee-detail/:id', component: DetaineeDetailComponent},
 ];
 const tableRoutes: Routes = [
@@ -39,7 +42,8 @@ const tableRoutes: Routes = [
   {path: 'find-detainee', component: FindDetaineeComponent},
   {path: 'detention-search', component: DetentionSearchComponent},
   {path: 'find-detainee/detainee-detail/:id', component: DetaineeDetailComponent},
-  {path: 'detention/detention-detail/:id', component: DetentionDetailComponent}
+  {path: 'detention/detention-detail/:id', component: DetentionDetailComponent},
+  {path: 'delivery', component: DeliveryComponent}
 ];
 
 

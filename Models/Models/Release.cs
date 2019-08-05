@@ -14,5 +14,9 @@ namespace Detention_facility.Models
         public int ReleasedByEmployeeID { get; set; }
         [Required]
         public DateTime ReleaseDate { get; set; }
+        [Required]
+        public int AmountAccrued { get; set; }
+        [Required]
+        public int AmountPaid { get; set; }
     }
 }

@@ -29,7 +29,20 @@
             </li>
             <li>
                 <a routerLink="employee" routerLinkActive="active">Сотрудники</a>
-            </li>    
+            </li>  
+            <li>
+                <a routerLink="delivery" routerLinkActive="active">Доставки</a>
+            </li>      
+        </ul>
+        <ul  class="list-unstyled components">
+                <p>Дата</p>
+
+                <ngb-datepicker style="background-color: white" #dp [(ngModel)]="model" (ngModelChange)="onDateSelected()" (navigate)="date = $event.next"></ngb-datepicker>
+                
+
+            
+                <pre>Month: {{ date.month }}.{{ date.year }}</pre>
+                <pre>Model: {{ model | json }}</pre>
         </ul>
     </nav>
 </div>
@@ -47,9 +60,14 @@
             <li>
                 <a  routerLink="find-detainee" routerLinkActive="active">Задержанные</a>
             </li>    
+            <li>
+                <a  routerLink="find-detainee" routerLinkActive="active">Задержанные</a>
+            </li> 
         </ul>
+
     </nav>
 </div>
 <div class="child">
 <router-outlet></router-outlet>
 </div>
+

@@ -49,12 +49,13 @@
     </div>
 <div class="twins">
     <h2>Доставка задержанного</h2>
-    <app-delivery *ngIf="smartDetainee && !change" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
+ <app-delivery *ngIf="smartDetainee && !change" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-delivery>
+    
 </div>
 
 <div class="twins">
     <h2>Освобождение задержанного</h2>
-    
+    <app-release *ngIf="smartDetainee && !change" [detaineeID]="smartDetainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-release>
 </div>
 
 

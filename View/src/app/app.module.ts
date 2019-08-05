@@ -17,7 +17,7 @@ import { AddDetaineeComponent } from './add-detainee/add-detainee.component';
 import { UploadComponent } from './upload/upload.component';
 import { DetaineeSearchComponent } from './detainee-search/detainee-search.component';
 import { FindDetaineeComponent } from './find-detainee/find-detainee.component';
-import { DeliveryComponent } from './delivery/delivery.component';
+import { DeliveryDetailComponent } from './delivery-detail/delivery-detail.component';
 import { ReleaseComponent } from './release/release.component';
 import { DetentionDetailComponent } from './detention-detail/detention-detail.component';
 import { DetentionSearchComponent } from './detention-search/detention-search.component';
@@ -30,7 +30,12 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
-
+import { DatepickerComponent } from './datepicker/datepicker.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
+import { AddReleaseComponent } from './add-release/add-release.component';
+import { DeliveryComponent } from './delivery/delivery.component';
 
 
 @NgModule({
@@ -46,7 +51,7 @@ import {MatInputModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
     UploadComponent,
     DetaineeSearchComponent,
     FindDetaineeComponent,
-    DeliveryComponent,
+    DeliveryDetailComponent,
     ReleaseComponent,
     DetentionDetailComponent,
     DetentionSearchComponent,
@@ -55,10 +60,17 @@ import {MatInputModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
     AddEmployeeComponent,
     UserComponent,
     AdminPanelComponent,
-    EmployeeDetailComponent 
+    EmployeeDetailComponent,
+    DatepickerComponent,
+    AddDeliveryComponent,
+    AddReleaseComponent,
+    DeliveryComponent,
+
+  
  
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -72,6 +84,7 @@ import {MatInputModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
   ],
   entryComponents:[DetaineeSearchComponent],
   providers: [
+    DatePipe,
     LoginService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],

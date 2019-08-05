@@ -10,6 +10,6 @@ namespace Detention_facility.Data
         void DeleteRelease(int id);
         Release GetReleaseByID(int id);
         List<Release> GetReleases();
-        SmartRelease GetReleaseByIDs(int detaineeID, int detentionID);
+        Release GetReleaseByIDs(int detaineeID, int detentionID);
     }
 }

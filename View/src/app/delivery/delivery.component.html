@@ -1,41 +1,22 @@
-<button *ngIf="delivery.deliveryID==null" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
-<div *ngIf="delivery.deliveryID && !change">
-    <button  type = "button" class = "btn btn-danger" (click)="addForm()">Удалить доставку</button>
-    <button  type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали доставки</button>
-    <table class="table2">
-        <tbody>
-            <tr> 
-                <td>Номер доставки</td>
-                <td>{{delivery.deliveryID}}</td>
-            </tr>
-            <tr> 
-                <td>Дата доставки</td>
-                <td>{{delivery.deliveryDate}}</td>
-            </tr>
-            <tr> 
-                <td>Адрес места содержания</td>
-                <td>{{delivery.placeAddress}}</td>
-            </tr>                    
-            <tr> 
-                <td>ID Сотрудника</td>
-                <td>{{delivery.deliveredByEmployeeID}}</td>                       
-            </tr>                   
-         </tbody>
-    </table> 
+<h2 style="margin-left: 10px">Доставки</h2>
+<div class="container">
+<table  form  class="table table-bordered table-sm" style="height: 100px;">
+    <thead>
+        <tr > 
+            <td>Номер доставки</td>
+            <td>Дата доставки</td>
+            <td>Адрес доставки</td>
+            <td>Фамилия и инициалы сотрудника</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let d of smartDeliverys">  
+            <td>{{d?.deliveryID}}</td>
+            <td>{{d?.deliveryDate}}</td>
+            <td>{{d?.placeAddress}}</td>
+            <td>{{d?.employeeFullName}}</td>             
+        </tr>
+    </tbody>
+</table>
 </div>
-<br>
-<div *ngIf="change">  
-    <p>В работе employee ID</p>{{delivery.deliveredByEmployeeID}}
-    <p>Дата доставки:</p>
-    <input type="date" [ngModel] ="delivery.deliveryDate | date:'yyyy-MM-dd'" (ngModelChange)="delivery.deliveryDate = $event" class="form-control" />
-    <p>Адрес места содержания:</p>
-    <input type="text" [(ngModel)]="delivery.placeAddress" class="form-control" />   
-</div>
-<employee-detail *ngIf="delivery.deliveryID" (toDeliveryChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
-<br>
-<br>
-<div *ngIf="change">
-    <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
-    <p></p>
-    <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
-</div>  
+

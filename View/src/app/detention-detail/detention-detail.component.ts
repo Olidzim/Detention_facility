@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { SharedService } from '../services/shared.service';
 import { SmartDetention } from '../models/smartdetention';
 import { SmartDetainee } from '../models/smartdetainee';
-import { DeliveryComponent } from '../delivery/delivery.component';
+import { DeliveryDetailComponent } from '../delivery-detail/delivery-detail.component';
 
 import { Detention } from '../models/detention';
 
@@ -48,8 +48,7 @@ export class DetentionDetailComponent implements OnInit {
     this.change = true;
     this.sharedService.ifChange = true;
     this.sharedService.ifDetention = true;
-    this.smartDetainee = undefined;
-    console.log(this.sharedService.ifChange)    
+    this.smartDetainee = undefined;  
   }
 
   cancel() {
@@ -66,19 +65,17 @@ export class DetentionDetailComponent implements OnInit {
   getSmartDetentionsByID(): void {    
     let id = this.sharedService.forDetentionDetailID;    
     this.detentionService.getSmartDetentionByDetentionID(id)
-    .subscribe(res => this.smartDetention = res);  
-    console.log(this.smartDetention)
+    .subscribe(res => this.smartDetention = res);      
 
     this.detentionService.getDetentionByDetentionID(id)
     .subscribe(
       res => {
       this.ddetention = res
       this.employeeID = res.detainedByEmployeeID
-      this.defaultEmployeeID = res.detainedByEmployeeID
-      console.log(this.employeeID)
+      this.defaultEmployeeID = res.detainedByEmployeeID   
       }
-    );    
-    console.log(this.ddetention)
+    );   
+   
 
     this.getSmartDetaineesByDetentionID();    
     this.employeeID = this.ddetention.detainedByEmployeeID;
@@ -94,7 +91,7 @@ export class DetentionDetailComponent implements OnInit {
   }
 
   getSmartDetaineesByDetentionID(): void {  
-    console.log(this.ddetention)
+ 
     let id = this.sharedService.forDetentionDetailID;    
     this.detaineeService.getsmartDetaineesByDetentionID(this.sharedService.forDetentionDetailID)
     .subscribe(res => this.smartDetainees = res);  
@@ -109,8 +106,7 @@ export class DetentionDetailComponent implements OnInit {
     {
       this.smartDetainee = undefined;
       this.smartDetainee = d;
-      this.sharedService.ifChange = false;
-      console.log(d)
+      this.sharedService.ifChange = false;    
     }
   } 
 
@@ -130,7 +126,7 @@ export class DetentionDetailComponent implements OnInit {
   }
 
   onActivate(componentReference) {  
-    console.log(componentReference)
+ 
     componentReference.getHeroes(this.detention, this.detainee);
   }
 }

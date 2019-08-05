@@ -13,7 +13,9 @@ import { Alert } from 'selenium-webdriver';
 })
 export class EmployeeDetailComponent implements OnInit {
   @Output() toDeliveryChange = new EventEmitter<number>();
+  @Output() toReleaseChange = new EventEmitter<number>();
   @Output() toDetentionChange = new EventEmitter<number>();
+  @Output() toDeliveryAdd = new EventEmitter<number>();
   @Input() employeeID: number;
   employee: Employee = new Employee();
   defaultemployee: Employee = new Employee();
@@ -24,25 +26,26 @@ export class EmployeeDetailComponent implements OnInit {
   constructor(private employeeService: EmployeeService, private sharedService: SharedService, private router: Router
     ) { }
 
-  ngOnInit() {
-    //console.log(this.employeeID)  
+  ngOnInit() {   
+    console.log(this.ifChange)  
+    //console.log(this.sharedService.ifChange)  
     this.foundEmployeeID = this.employee.employeeID;
     //console.log(this.employeeID)    
     this.getEmployee();
     this.defaultemployee = this.employee;
+    
     this.ifChange = this.sharedService.ifChange;
-    console.log(this.ifChange) 
-    console.log("route "+this.router.url)   
   }
 
   ngOnChanges() {
+    console.log(this.ifChange)  
   //console.log(this.employeeID)
   if (this.sharedService.default == true) {
    // console.log(this.defaultemployee)
     this.foundEmployeeID = this.employeeID;
     this.getEmployee();
     //console.log(this.employee)
-    this.sharedService.default =false;
+    this.sharedService.default = false;
     }
   }
 
@@ -50,14 +53,12 @@ export class EmployeeDetailComponent implements OnInit {
   this.ifSearch=true;
   }
 
-  getEmployee() {
-    console.log(this.employeeID);
+  getEmployee() {  
     this.sharedService.default = false;    
     this.employeeService.getEmployeeByID(this.employeeID)
     .subscribe(
     res => this.employee = res);  
-    this.defaultemployee = this.employee; 
-    console.log(this.defaultemployee)
+    this.defaultemployee = this.employee;    
   }
 
   getEmployeeFromSearch(foundEmployee: SmartEmployee) {
@@ -72,7 +73,9 @@ export class EmployeeDetailComponent implements OnInit {
   else
   {
     alert("delivery")
+    this.toDeliveryAdd.emit(foundEmployee.employeeID);
     this.toDeliveryChange.emit(foundEmployee.employeeID);
+    this.toReleaseChange.emit(foundEmployee.employeeID);
   }  
   this.employeeService.getEmployeeByID(this.foundEmployeeID)
   .subscribe(

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { SmartDetention } from '../models/smartdetention';
 import { Detention } from '../models/detention';
+import { DatePipe } from '@angular/common';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json ; charset=utf-8' })
@@ -13,7 +14,10 @@ const httpOptions = {
 export class DetentionService {
 
   private DetentionsUrl = 'http://localhost:58653/api/detention';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    public datepipe: DatePipe
+    
+    ) { }
 
   getDetentions() {   
     return this.http.get(`${this.DetentionsUrl}/GetDetentions/`);    
@@ -29,9 +33,12 @@ export class DetentionService {
   }
 
 /** Search detentions by date*/
-  searchDetentionsByDate(date: Date): Observable<SmartDetention[]> {    
-    date.toString;
-    var json = JSON.stringify(date);
+  searchDetentionsByDate(date: Date): Observable<SmartDetention[]> {  
+    let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');     
+    console.log(latest_date)
+    //date.toString;
+    
+    var json = JSON.stringify(latest_date);
     return this.http.post<SmartDetention[]>(`${this.DetentionsUrl}/GetDetentionsByDate/`, json, httpOptions).pipe(            
       catchError(this.handleError<SmartDetention[]>('searchDetentions', []))
     );
@@ -57,6 +64,12 @@ export class DetentionService {
 
   getSmartDetentions(): Observable<SmartDetention[]> {    
     return this.http.get<SmartDetention[]>(`${this.DetentionsUrl}/GetSmartDetentions`).pipe(              
+      catchError(this.handleError<SmartDetention[]>('searchHeroes', []))
+    );
+  }
+
+  getSmartDetentionsByDate(): Observable<SmartDetention[]> {    
+    return this.http.get<SmartDetention[]>(`${this.DetentionsUrl}/GetDetentionsByDate`).pipe(              
       catchError(this.handleError<SmartDetention[]>('searchHeroes', []))
     );
   }

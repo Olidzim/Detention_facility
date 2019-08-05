@@ -11,6 +11,6 @@ namespace Detention_facility.Business
         Release GetReleaseByID(int id);
         List<Release> GetReleases();
         string CheckValuesForRelease(int detaineeID, int detentionID, int employeeID);
-        SmartRelease GetReleaseByIDs(int detaineeID, int detentionID);
+        Release GetReleaseByIDs(int detaineeID, int detentionID);
     }
 }

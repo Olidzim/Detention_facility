@@ -114,7 +114,7 @@ namespace Detention_facility.Data
         }
 
 
-        public SmartRelease GetReleaseByIDs(int detaineeID, int detentionID)
+     /*   public SmartRelease GetReleaseByIDs(int detaineeID, int detentionID)
         {
             const string storedProcedureName = Constants.GetReleasesByIDs;
             using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
@@ -142,11 +142,51 @@ namespace Detention_facility.Data
 
                     release.ReleaseDate = Convert.ToDateTime(reader.GetValue(1));
 
+                    release.AmountAccrued = reader.GetValue(2) == DBNull.Value ? 0 : Convert.ToInt32(reader.GetValue(2));
+
+                    release.AmountPaid = reader.GetValue(3) == DBNull.Value ? 0 : Convert.ToInt32(reader.GetValue(3));
+
+                    release.EmployeeFullName = reader.GetValue(4).ToString();
+
+                }
+                connection.Close();
+                return release;
+            }
+        }*/
+
+        public Release GetReleaseByIDs(int detaineeID, int detentionID)
+        {
+            const string storedProcedureName = Constants.GetReleasesByIDs;
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(Constants.DetaineeID, SqlDbType.Int);
+                command.Parameters[Constants.DetaineeID].Value = detaineeID;
+
+                command.Parameters.Add(Constants.DetentionID, SqlDbType.Int);
+                command.Parameters[Constants.DetentionID].Value = detentionID;
+
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                Release release = null;
+                while (reader.Read())
+                {
+                    release = new Release();
+
+
+                    release.ReleaseID = Convert.ToInt32(reader.GetValue(0));
+
+                    release.ReleaseDate = Convert.ToDateTime(reader.GetValue(1));
+
                     release.AmountAccrued = reader.GetValue(2) == DBNull.Value ? 0: Convert.ToInt32(reader.GetValue(2)) ;
 
                     release.AmountPaid = reader.GetValue(3) == DBNull.Value ? 0: Convert.ToInt32(reader.GetValue(3)) ;
 
-                    release.EmployeeFullName = reader.GetValue(4).ToString();
+                    release.ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(4));
                     
                 }
                 connection.Close();

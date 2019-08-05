@@ -147,7 +147,11 @@ namespace Detention_facility.Data
 
                         PlaceAddress = reader.GetValue(2).ToString(),
                     
-                        DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(3))                 
+                        DeliveredByEmployeeID = Convert.ToInt32(reader.GetValue(3)),
+                        
+                        DetentionID = Convert.ToInt32(reader.GetValue(4)),
+
+                        DetaineeID = Convert.ToInt32(reader.GetValue(5))
                     };
                 }
                 connection.Close();

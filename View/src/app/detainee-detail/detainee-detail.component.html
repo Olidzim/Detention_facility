@@ -135,6 +135,6 @@
         
         <div class="twins">
             <h2>Освобождение задержанного</h2>
-            
+            <app-release *ngIf="smartDetention && !change" [detaineeID]="detainee.detaineeID" [detentionID]="smartDetention.detentionID"></app-release>
         </div>
   </div>       

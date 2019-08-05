@@ -74,8 +74,7 @@ export class FindDetaineeComponent implements OnInit {
       this.router.navigateByUrl('/home/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
   }  
 
-  onActivate(componentReference) {
-    console.log(componentReference)
+  onActivate(componentReference) {  
     componentReference.getDetainee(this.foundDetainee.detaineeID);
   }
 
