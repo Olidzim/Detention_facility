@@ -9,9 +9,10 @@ import {EmployeeService }  from '../services/employee.service';
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  employee: Employee;
-  employees : SmartEmployee[];
+  employee: Employee = new Employee();
+  employees : Employee[];
   tableMode: boolean = true;
+  add: boolean = false;
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
@@ -22,15 +23,27 @@ export class EmployeeComponent implements OnInit {
     .subscribe((data: SmartEmployee[]) => this.employees = data);
   } 
 
-  editdetainee(e:Employee) {
+  changeAdd()
+  {
+    this.add = !this.add;
+  }
+
+  editEmployee(e:Employee) {
     this.employee = e;
-    }
+  }
   
-    cancel() {
+  cancel() {
     this.employee = new Employee();
     this.tableMode = true;
-    }
+  }
   
+  createNewEmployee() {
+    console.log(this.employee);
+    this.employeeService.createEmployee(this.employee)
+    .subscribe(data => this.loadsmartEmployees());
+       this.changeAdd();
+  }
+
   saveChanges()
     { 
       this.employeeService.updateEmployee(this.employee)

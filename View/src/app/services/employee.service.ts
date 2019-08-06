@@ -32,7 +32,7 @@ export class EmployeeService {
         }
 
         deleteEmployee(id: number) {
-            return this.http.delete(`${this.employeeUrl}/DeleteEmloyee/${id}`);
+            return this.http.delete(`${this.employeeUrl}/DeleteEmployee/${id}`);
         }
 
         searchEmployees(term: string): Observable<SmartEmployee[]> {

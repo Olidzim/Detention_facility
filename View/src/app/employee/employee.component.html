@@ -1,4 +1,6 @@
 <h2 style="margin-left: 10px">Сотрудники</h2>
+<button *ngIf = "!add"  (click)="changeAdd()">Добавить сотрудника</button>
+<div *ngIf = "!add">
 <table class="table table-bordered table-sm">
     <thead>
       <tr > 
@@ -11,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let e of employees" (dblclick)="editemployee(e)">
+        <tr *ngFor="let e of employees" (dblclick)="editEmployee(e)">
           <ng-template [ngIf]="employee?.employeeID != e.employeeID" [ngIfElse]="edit">
             <td>{{e?.employeeID}}</td>
             <td >{{e?.firstName}}</td>
@@ -19,9 +21,8 @@
             <td>{{e?.patronymic}}</td>
             <td>{{e?.position}}</td>
             <td>{{e?.employeeRank}}</td>               
-                 <!--<button class="btn btn-block btn-secondary" (click)="editProduct(p)">Изменить</button>-->                  
+             <button class="btn btn-block btn-secondary" (click)="editEmployee(e)">Изменить</button>                
             <button class="btn btn-block btn-secondary button5" (click)="delete(e)">X</button>
-            <button class="btn btn-block btn-secondary button5" (click)="delete(e)">Добавить к задержанию</button>  
           </ng-template>
         </tr>
     </tbody>
@@ -53,27 +54,27 @@
   </td>
 
   <td>
-    <button class="btn btn-block btn-secondary" (click)="saz()">Сохранить</button>
+    <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
     <br>
     <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
   </td>
 </ng-template>
-
-<form *ngIf = "show == 2" #form='ngForm' class="mb-4" autocomplete="off">
+</div>
+<form *ngIf = "add" #form='ngForm' class="mb-4" autocomplete="off">
 
   <div class="form-group col-md-2 offset-md">
     <label>Имя</label>
-    <input type="text|Hi" default="Hi" name="firstName"  autocomplete="off" [(ngModel)]="employee.firstName" class="form-control"  required autofocus>
+    <input type="text" default="Hi" name="firstName"  autocomplete="off" [(ngModel)]="employee.firstName" class="form-control"  required autofocus>
   </div>
   
   <div class="form-group col-md-2 offset-md">
     <label>Фамилия</label>
-    <input type="email" #Login="ngModel" name="lastName" [(ngModel)]="employee.lastName"   class="form-control"  required autofocus>
+    <input type="text" #Login="ngModel" name="lastName" [(ngModel)]="employee.lastName"   class="form-control"  required autofocus>
   </div>
 
   <div class="form-group col-md-2 offset-md">
     <label>Отчество</label>
-    <input type="email" #Login="ngModel" name="patronymic" [(ngModel)]="employee.patronymic"   class="form-control"  required autofocus>
+    <input type="text" #Login="ngModel" name="patronymic" [(ngModel)]="employee.patronymic"   class="form-control"  required autofocus>
   </div>
 
   <div class="form-group col-md-2 offset-md">
@@ -83,12 +84,13 @@
 
   <div class="form-group col-md-2 offset-md">
     <label>Звание</label>
-    <input type="email" #Login="ngModel" name="employeeRank" [(ngModel)]="employee.employeeRank" class="form-control" required autofocus>
+    <input type="text" #Login="ngModel" name="employeeRank" [(ngModel)]="employee.employeeRank" class="form-control" required autofocus>
   </div>  
 
   <div class="form-row">
     <div class="form-group">
-      <button type="submit" (click)="save()" class="btn btn-lg btn-block" [disabled]="form.invalid">Добавить сотрудника</button>
+      <button type="submit" (click)="createNewEmployee()" class="btn btn-lg btn-block" [disabled]="form.invalid">Добавить сотрудника</button>
+      <button type="submit" (click)="changeAdd()" class="btn btn-lg btn-block" [disabled]="form.invalid">Отмена</button>
     </div>
   </div>
   
