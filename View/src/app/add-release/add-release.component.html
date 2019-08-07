@@ -1,1 +1,13 @@
-<p>add-release works!</p>
+{{detaineeID}}
+{{detentionID}}
+{{release.releasedByEmployeeID}}
+
+<input type="text" [(ngModel)]="release.amountPaid"  placeholder="amountPaid" class="form-control" />
+<input type="text" [(ngModel)]="release.amountAccrued"  placeholder="amountAccrued" class="form-control" />
+<input type="date" [(ngModel)]="release.releaseDate" placeholder="releaseDate" class="form-control" />
+
+
+<employee-detail  (toReleaseAdd)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="release.releasedByEmployeeID"></employee-detail>
+<button class="btn btn-block btn-secondary" (click)="save()">Сохранить</button>
+<p></p>
+<button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>

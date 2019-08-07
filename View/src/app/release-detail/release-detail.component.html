@@ -1,0 +1,43 @@
+<button *ngIf="release.releaseID==null" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
+<app-add-release [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewRelease)="getReleaseFromAdd($event)" *ngIf="add && release.releaseID==null"></app-add-release>
+<div *ngIf="release.releaseID">
+    <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить освобождение</button>
+    <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали освобождения</button>
+    <table class="table2">
+        <tbody>
+            <tr > 
+                <td>ID Сотрудника в работе</td><td>{{release.releasedByEmployeeID}}</td>
+            </tr>
+            <tr > 
+                <td>Номер освобождения</td><td>{{release.releaseID}}</td>
+            </tr>
+            <tr > 
+                <td>Дата освобождения</td><td>{{release.releaseDate}}</td>
+            </tr>
+            <tr > 
+                <td>Начислено за содержание</td><td>{{release.amountAccrued}}</td>
+            </tr>
+            <tr > 
+                <td>Выплачено за содержание</td><td>{{release.amountPaid}}</td>
+            </tr>
+        </tbody>
+    </table> 
+</div>
+
+<br>
+<div *ngIf="change">  
+    <p>В работе employee ID</p>{{release.releasedByEmployeeID}}
+    <p>Дата освобождения:</p>
+    <input type="date" [ngModel] ="release.releaseDate | date:'yyyy-MM-dd'" (ngModelChange)="release.releaseDate = $event" class="form-control" />
+    <p>Начислено за содержание:</p>
+    <input type="text" [(ngModel)]="release.amountAccrued" class="form-control" />   
+    <p>Выплачено за содержание:</p>
+    <input type="text" [(ngModel)]="release.amountPaid" class="form-control" />   
+</div>
+<employee-detail *ngIf="release.releaseID" (toReleaseChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="release.releasedByEmployeeID"></employee-detail><br>
+<br>
+<div *ngIf="change">
+    <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
+    <p></p>
+    <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
+</div>  

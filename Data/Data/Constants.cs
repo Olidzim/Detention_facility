@@ -87,7 +87,9 @@
 
         public const string ReleaseID = "@ReleaseID";
         public const string ReleasedByEmployeeID = "@ReleasedByEmployeeID";
-        public const string ReleaseDate = "@ReleaseDate";     
+        public const string ReleaseDate = "@ReleaseDate";
+        public const string AmountPaid = "@AmountPaid";
+        public const string AmountAccrued = "@AmountAccrued";
 
         //Common
         public const string term = "@term";

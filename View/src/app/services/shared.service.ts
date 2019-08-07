@@ -20,6 +20,15 @@ export class SharedService {
   private messageSource = new BehaviorSubject<Date>(undefined);
   currentDate = this.messageSource.asObservable();
 
+  private cancelDeliverySource = new BehaviorSubject<boolean>(undefined);
+  cancelDeliveryStatus = this.cancelDeliverySource.asObservable();
+
+  private cancelReleaseSource = new BehaviorSubject<boolean>(undefined);
+  cancelReleaseStatus = this.cancelReleaseSource.asObservable();
+
+  private changeEmployeeSource = new BehaviorSubject<boolean>(undefined);
+  changeEmployeeStatus = this.changeEmployeeSource.asObservable();
+
     id: number;
     forDetentionDetailID: number;
     ifChange = false;
@@ -31,6 +40,24 @@ export class SharedService {
     {       
       this.messageSource.next(date)
     }
+
+    changeReleaseCancel(cancel: boolean)
+    {       
+      this.cancelReleaseSource.next(cancel)
+    }
+
+    changeDeliveryCancel(cancel: boolean)
+    {       
+      this.cancelDeliverySource.next(cancel)
+    }
+
+    changeEmployeeStatusFlag(cancel: boolean)
+    {       
+      this.changeEmployeeSource.next(cancel)
+    }
+
+
+
 
     constructor(
    

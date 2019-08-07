@@ -16,6 +16,7 @@ export class EmployeeDetailComponent implements OnInit {
   @Output() toReleaseChange = new EventEmitter<number>();
   @Output() toDetentionChange = new EventEmitter<number>();
   @Output() toDeliveryAdd = new EventEmitter<number>();
+  @Output() toReleaseAdd = new EventEmitter<number>();
   @Input() employeeID: number;
   employee: Employee = new Employee();
   defaultemployee: Employee = new Employee();
@@ -74,6 +75,7 @@ export class EmployeeDetailComponent implements OnInit {
   {
     alert("delivery")
     this.toDeliveryAdd.emit(foundEmployee.employeeID);
+    this.toReleaseAdd.emit(foundEmployee.employeeID);
     this.toDeliveryChange.emit(foundEmployee.employeeID);
     this.toReleaseChange.emit(foundEmployee.employeeID);
   }  

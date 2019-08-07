@@ -31,6 +31,11 @@ export class DeliveryDetailComponent implements OnInit {
     this.getDelivery(this.detaineeID, this.detentionID)
     this.sharedService.ifChange = false;
     this.res = this.router.url.substring(0, 15);
+    this.sharedService.cancelDeliveryStatus.subscribe(status =>
+      {   
+        this.add = status   
+      
+      })  
   }
 
   ngOnChanges() {
@@ -48,7 +53,7 @@ export class DeliveryDetailComponent implements OnInit {
     console.log(this.delivery)
     this.getDelivery(this.detaineeID, this.detentionID)
    // this.ngOnInit();
-    }
+  }
 
   changeForm(){
     this.change = true;
@@ -57,11 +62,13 @@ export class DeliveryDetailComponent implements OnInit {
 
   addForm()
   {
+    this.sharedService.changeDeliveryCancel(true)
     this.add = true;
   }
 
   deleteForm()
   {
+    this.sharedService.changeDeliveryCancel(false)
     this.deliveryService.deleteDelivery(this.delivery.deliveryID)
     .subscribe(delivery => 
       {console.log(delivery)

@@ -27,6 +27,12 @@ namespace Detention_facility.Data
 
                 command.Parameters.Add(Constants.ReleaseDate, SqlDbType.DateTime);
                 command.Parameters[Constants.ReleaseDate].Value = release.ReleaseDate;
+                
+                command.Parameters.Add(Constants.AmountPaid, SqlDbType.Int);
+                command.Parameters[Constants.AmountPaid].Value = release.AmountPaid;
+
+                command.Parameters.Add(Constants.AmountAccrued, SqlDbType.Int);
+                command.Parameters[Constants.AmountAccrued].Value = release.AmountAccrued;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -55,6 +61,12 @@ namespace Detention_facility.Data
 
                 command.Parameters.Add(Constants.ReleaseDate, SqlDbType.DateTime);
                 command.Parameters[Constants.ReleaseDate].Value = release.ReleaseDate;
+                
+                command.Parameters.Add(Constants.AmountPaid, SqlDbType.Int);
+                command.Parameters[Constants.AmountPaid].Value = release.AmountPaid;
+
+                command.Parameters.Add(Constants.AmountAccrued, SqlDbType.Int);
+                command.Parameters[Constants.AmountAccrued].Value = release.AmountAccrued;
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -187,7 +199,12 @@ namespace Detention_facility.Data
                     release.AmountPaid = reader.GetValue(3) == DBNull.Value ? 0: Convert.ToInt32(reader.GetValue(3)) ;
 
                     release.ReleasedByEmployeeID = Convert.ToInt32(reader.GetValue(4));
-                    
+
+                    release.DetentionID = Convert.ToInt32(reader.GetValue(4));
+
+                    release.DetaineeID = Convert.ToInt32(reader.GetValue(5));
+
+
                 }
                 connection.Close();
                 return release;
@@ -219,7 +236,11 @@ namespace Detention_facility.Data
 
                         DetentionID = Convert.ToInt32(reader.GetValue(3)),
 
-                        ReleaseDate = Convert.ToDateTime(reader.GetValue(4))
+                        ReleaseDate = Convert.ToDateTime(reader.GetValue(4)),
+
+                        AmountPaid = Convert.ToInt32(reader.GetValue(5)),
+
+                        AmountAccrued = Convert.ToInt32(reader.GetValue(6))
                     };
 
                     Releases_list.Add(Release);

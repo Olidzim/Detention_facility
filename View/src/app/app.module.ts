@@ -18,7 +18,7 @@ import { UploadComponent } from './upload/upload.component';
 import { DetaineeSearchComponent } from './detainee-search/detainee-search.component';
 import { FindDetaineeComponent } from './find-detainee/find-detainee.component';
 import { DeliveryDetailComponent } from './delivery-detail/delivery-detail.component';
-import { ReleaseComponent } from './release/release.component';
+import { ReleaseDetailComponent } from './release-detail/release-detail.component';
 import { DetentionDetailComponent } from './detention-detail/detention-detail.component';
 import { DetentionSearchComponent } from './detention-search/detention-search.component';
 import { DetentionComponent } from './detention/detention.component';
@@ -36,6 +36,7 @@ import { DatePipe } from '@angular/common';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { AddReleaseComponent } from './add-release/add-release.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { ReleaseComponent } from './release/release.component';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { DeliveryComponent } from './delivery/delivery.component';
     DetaineeSearchComponent,
     FindDetaineeComponent,
     DeliveryDetailComponent,
-    ReleaseComponent,
+    ReleaseDetailComponent,
     DetentionDetailComponent,
     DetentionSearchComponent,
     DetentionComponent,
@@ -65,6 +66,7 @@ import { DeliveryComponent } from './delivery/delivery.component';
     AddDeliveryComponent,
     AddReleaseComponent,
     DeliveryComponent,
+    ReleaseComponent,
 
   
  
