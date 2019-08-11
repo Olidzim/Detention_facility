@@ -41,7 +41,8 @@ const tableRoutes: Routes = [
   {path: 'detainee-detail', component: DetaineeDetailComponent},
   {path: 'find-detainee', component: FindDetaineeComponent},
   {path: 'detention-search', component: DetentionSearchComponent},
-  {path: 'find-detainee/detainee-detail/:id', component: DetaineeDetailComponent},
+ // {path: 'find-detainee/detainee-detail/:id', component: DetaineeDetailComponent},
+  {path: 'detainee/detainee-detail/:id', component: DetaineeDetailComponent},
   {path: 'detention/detention-detail/:id', component: DetentionDetailComponent},
   {path: 'delivery', component: DeliveryComponent},
   {path: 'release', component: ReleaseComponent}

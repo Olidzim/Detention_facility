@@ -1,12 +1,18 @@
-import { Component, OnInit, Input, ANALYZE_FOR_ENTRY_COMPONENTS } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Component, OnInit, Input, ANALYZE_FOR_ENTRY_COMPONENTS, ComponentFactoryResolver } from '@angular/core';
+import { Observable, Subject , of } from 'rxjs';
 import { SmartEmployee } from '../models/smartemployee';
 import { DetentionService }  from '../services/detention.service';
 import { DetaineeService }  from '../services/detainee.service';
 import { Detention } from '../models/detention';
 import { Detainee } from '../models/detainee';
-import { HttpClient } from '@angular/common/http';
+import { ResponseClass } from '../models/response';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { SharedService } from '../services/shared.service';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators'; 
+
 
 @Component({
   selector: 'add-detention',
@@ -18,6 +24,8 @@ export class AddDetentionComponent implements OnInit {
 
   detainee: Detainee;
 
+
+  resp: ResponseClass
   detainees : Detainee[] = new Array();
   newDetainees: Detainee[] = new Array();
 
@@ -27,7 +35,7 @@ export class AddDetentionComponent implements OnInit {
 
   private searchTerms = new Subject<string>();
 
-  constructor( private http: HttpClient,  private detentionService: DetentionService, private detaineeService: DetaineeService) { }
+  constructor( private http: HttpClient, private sanitizer: DomSanitizer, private detentionService: DetentionService, private detaineeService: DetaineeService, private sharedService: SharedService) { }
 
   ngOnInit() {
   }
@@ -37,6 +45,7 @@ export class AddDetentionComponent implements OnInit {
 
   getEmployeeFromSearch(foundEmployee: SmartEmployee)
   {
+  console.log(foundEmployee)
   this.employeeWhoDetain = foundEmployee;
   }
 
@@ -57,13 +66,90 @@ export class AddDetentionComponent implements OnInit {
   } 
 
   addDetention()
-  {
+  { 
+    let r
+    this.uploadFile().subscribe(data=>{
+      r = data
+      if(r.isSuccess)
+      {
+        this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
+        this.detentionService.addDetention(this.detention).subscribe(response => {
+        this.addDetainees(response.detentionID)
+        });
+      }
+      else if (!r.isSuccess)
+      {
+        alert(r.message)
+      }
+  
+  
+  })
+ 
+
   /**Add detention**/
-    this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
-    this.detentionService.addDetention(this.detention).subscribe(response => {
-    this.addDetainees(response.detentionID)
-    });
+
+
+      
+  
+
+
   }
+  but()
+  {
+    
+   
+    let k = this.sanitizer.bypassSecurityTrustUrl("http://localhost:58653/UploadFile/1.png");
+    console.log()
+ 
+    /*alert()
+    this.http.get("http://localhost:58653/UploadFile/1.png", {observe: 'response'}).subscribe(data => 
+    {
+      console.log(data.status)
+      if (data.status == 404)
+      {
+      alert("Нет")
+      }
+      else  
+      {
+        alert("Есть")
+      }
+    })*/
+
+  }
+
+  uploadFile(): any
+  {
+    let r: ResponseClass;
+    ///TODO Upload file service
+    let formData: FormData = new FormData(); 
+    this.sharedService.files.forEach(element => {
+      formData.append('uploadFile',element, element.name);  
+    });
+    
+    //this.detainee.photo = this.file.name;
+    let apiUrl1 = "http://localhost:58653/api/Upload/UploadJsonFile";
+    console.log("form data: "+formData)  
+
+    return this.http.post(apiUrl1, formData).pipe(map((response: ResponseClass) => 
+    {r = response
+      return r;
+    }));
+  }
+     /// <<<=== use `map` here
+
+
+  
+
+
+  /*  this.http.post(apiUrl1, formData).subscribe
+   (res=> 
+    {r = res
+    return r;
+    })*/
+
+
+   
+  
 
   addDetainees (detentionID)
   {
@@ -82,7 +168,7 @@ export class AddDetentionComponent implements OnInit {
   addDetaineesInDetention(detentionID,detaineeID)
   {
   /**Add detainees in detention **/
-    this.detentionService.addDetaineeToDetention(detentionID,detaineeID).subscribe(hero => {
+    this.detaineeService.addDetaineeToDetention(detentionID,detaineeID).subscribe(hero => {
     });
   }
 

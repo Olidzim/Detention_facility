@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr  *ngFor="let d of detainees" (dblclick)="editdetainee(d)">
+        <tr  *ngFor="let d of detainees" (dblclick)="toDetaineeDetail(d)">
             <ng-template [ngIf]="detainee?.detaineeID != d.detaineeID" [ngIfElse]="edit">
                 <td>{{d?.detaineeID}}</td>
                 <td>{{d?.firstName}}</td>

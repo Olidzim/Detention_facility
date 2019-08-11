@@ -13,6 +13,7 @@ import { SmartRelease } from '../models/smartrelease';
 import { SharedService} from '../services/shared.service';
 import { DeliveryService} from '../services/delivery.service';
 import { DetentionService } from '../services/detention.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-detainee-detail',
   templateUrl: './detainee-detail.component.html',
@@ -32,6 +33,11 @@ export class DetaineeDetailComponent implements OnInit {
   change: boolean = false;
   age: number;
   myDate = new Date();
+  filetoUpload: File = null;
+  filetoUploadMassive: File[] = null;
+  fileToUpload: File = null;
+  imageUrl: string = null;
+  url;
 
   constructor(
     private sharedService: SharedService,
@@ -39,18 +45,19 @@ export class DetaineeDetailComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private detaineeService: DetaineeService,
     private deliveryService: DeliveryService,
-    private detentionService: DetentionService
+    private detentionService: DetentionService,
+    private router: Router
     ) { }
 
   ngOnInit() {
-    this.sharedService.id;
-    this.getDetainee(this.sharedService.id);
+    //this.sharedService.id;
+    this.getDetainee(this.sharedService.forDetaineeDetailID);
   }
   public getSantizeUrl() { 
-
-    this.path = "http://localhost:58653/UploadFile/"+this.detainee.homePhoneNumber; 
-    return this.sanitizer.bypassSecurityTrustUrl(this.path);
-
+    alert("call")
+    console.log(this.detainee)    
+    this.path = "http://localhost:58653/UploadFile/"+this.detainee.photo; 
+    this.url = this.sanitizer.bypassSecurityTrustUrl(this.path);
   }
 
   getSmartDetentionsByID(): void {
@@ -58,14 +65,47 @@ export class DetaineeDetailComponent implements OnInit {
     let id = this.detainee.detaineeID;
     //+this.route.snapshot.paramMap.get('id');
     this.detentionService.getSmartDetentionsByDetaineeID(id)
-    .subscribe(smartDetentions => this.smartDetentions = smartDetentions); 
-    
+    .subscribe(smartDetentions => this.smartDetentions = smartDetentions);     
   }  
 
   getSmartDetentionsByDetaineeID(): void {            
-    this.detentionService.getSmartDetentionsByDetaineeID(this.sharedService.id)
+    this.detentionService.getSmartDetentionsByDetaineeID(this.sharedService.forDetaineeDetailID)
     .subscribe(res => this.smartDetentions = res);  
   } 
+
+  deleteCurrentDetainee()
+  {
+    console.log(this.detainee.detaineeID)
+    this.detaineeService.deleteDetainee(this.detainee.detaineeID).subscribe
+    (res => {console.log(res)
+    this.router.navigate(['/home/detainee']);
+    })
+    
+  }
+
+  handleFileInput(file: FileList)
+  {
+  console.log("handleFileInput")
+  this.fileToUpload = file.item(0);
+  var reader = new FileReader();
+  reader.onload = (event:any) =>
+  {
+    this.url = event.target.result;
+  }
+  reader.readAsDataURL(this.fileToUpload);
+  console.log(this.fileToUpload)
+  this.detainee.photo = this.fileToUpload.name;
+  }
+
+  saveChanges()
+  {
+    console.log(this.detainee)
+    this.detaineeService.updateDetainee(this.detainee)
+    .subscribe(data => this.detainee = data);
+    this.change = false;
+  /*  this.sharedService.ifChange = false;
+    this.sharedService.default = true;*/
+  }
 
   getDetention(d: SmartDetention): void {
     if(this.change)
@@ -109,6 +149,20 @@ export class DetaineeDetailComponent implements OnInit {
     .subscribe((data: SmartDelivery) => this.smartDelivery = data)      
 
   }
+
+  uploadFile()
+  {
+    alert("dd")
+    ///TODO Upload file service
+    let formData: FormData = new FormData(); 
+    formData.append('uploadFile',   this.fileToUpload, this.fileToUpload.name);  
+    this.detainee.photo = this.fileToUpload.name;
+    let apiUrl1 = "http://localhost:58653/api/Upload/UploadJsonFile";
+    console.log(formData)  
+    this.http.post(apiUrl1, formData)  
+    .subscribe(hero => {
+    });
+  }
 /*
     getTrue(k: number): void {
     //TODO Delivery Service
@@ -134,11 +188,14 @@ export class DetaineeDetailComponent implements OnInit {
         let newDate = new Date(response.birthDate);
         let timeDiff = Math.abs(Date.now() - newDate.getTime());
         this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
+        this.getSantizeUrl();
       
     });   
-    this.getSmartDetentionsByDetaineeID();
+    this.getSmartDetentionsByDetaineeID();     
    
    // alert(this.myDate)
   }
+
+  
 }
 

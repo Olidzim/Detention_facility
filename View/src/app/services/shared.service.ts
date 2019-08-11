@@ -29,8 +29,10 @@ export class SharedService {
   private changeEmployeeSource = new BehaviorSubject<boolean>(undefined);
   changeEmployeeStatus = this.changeEmployeeSource.asObservable();
 
-    id: number;
+    files: File[] = new Array;
+    //id: number;
     forDetentionDetailID: number;
+    forDetaineeDetailID: number;
     ifChange = false;
     default = false;
     ifDetention = false;

@@ -1,5 +1,5 @@
-<h1>Задержание {{"№:"+smartDetention.detentionID}}</h1>
-<button style="float:right" type = "button" class = "btn btn-danger" mat-raised-button (click)="openSearch()">Удалить</button>
+<h1>Задержание {{"№:"+ddetention.detentionID}}</h1>
+<button style="float:right" type = "button" class = "btn btn-danger" mat-raised-button (click)="deleteDetention()">Удалить</button>
 <button  style="float:right; margin-right:20px" type = "button" class = "btn btn-warning" mat-raised-button (click)="changeDetention()">Изменить</button>
 <br>
 <br>
@@ -9,10 +9,10 @@
 </div>  
 <h2>Дата</h2>
 <div *ngIf="!change">
-{{smartDetention.detentionDate | date: "dd/MM/yyyy" }}
+{{ddetention.detentionDate | date: "dd/MM/yyyy" }}
 </div>
 <div *ngIf="change">
-<input type="date" [ngModel] ="smartDetention.detentionDate | date:'yyyy-MM-dd'" (ngModelChange)="smartDetention.detentionDate = $event" class="form-control" />
+<input type="date" [ngModel] ="ddetention.detentionDate | date:'yyyy-MM-dd'" (ngModelChange)="ddetention.detentionDate = $event" class="form-control" />
 </div>
 <!--
 <h2>Лицо ответственное за задержание</h2>

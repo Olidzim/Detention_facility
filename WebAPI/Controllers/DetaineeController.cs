@@ -50,8 +50,9 @@ namespace Detention_facility.Controllers
             if (ModelState.IsValid)
             {
                 _detaineeService.UpdateDetainee(id, detainee);
+                _detaineeCachingService.Update(detainee);
                 return Ok(detainee);
-            }
+            }            
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
@@ -89,6 +90,7 @@ namespace Detention_facility.Controllers
             }
             else
             {
+                _detaineeCachingService.Delete(id);
                 _detaineeService.DeleteDetainee(id);
                 return Ok(detaineeForDelete);
             }

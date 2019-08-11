@@ -22,8 +22,8 @@ namespace Detention_facility.Data
                 command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
                 command.Parameters[Constants.LastName].Value = detainee.LastName;
 
-                command.Parameters.Add(Constants.LastName, SqlDbType.NVarChar);
-                command.Parameters[Constants.LastName].Value = detainee.Patronymic;
+                command.Parameters.Add(Constants.Patronymic, SqlDbType.NVarChar);
+                command.Parameters[Constants.Patronymic].Value = detainee.Patronymic;
 
                 command.Parameters.Add(Constants.Birthdate, SqlDbType.DateTime);
                 command.Parameters[Constants.Birthdate].Value = detainee.BirthDate;
@@ -272,7 +272,7 @@ namespace Detention_facility.Data
                            Detainee.Photo = Convert.ToBase64String((byte[])reader.GetValue(9));
                        }*/
 
-                    Detainee.HomePhoneNumber = reader.GetValue(9).ToString();
+                    Detainee.Photo = reader.GetValue(9).ToString();
                     Detainee.ExtraInfo = reader.GetValue(10).ToString();
                     Detainee.ResidencePlace = reader.GetValue(11).ToString();
                 }

@@ -1,7 +1,7 @@
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { DetentionService }  from '../services/detention.service';
 import { DetaineeService }  from '../services/detainee.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SharedService } from '../services/shared.service';
 import { SmartDetention } from '../models/smartdetention';
 import { SmartDetainee } from '../models/smartdetainee';
@@ -20,7 +20,8 @@ export class DetentionDetailComponent implements OnInit {
   constructor(
     private detentionService: DetentionService,
     private detaineeService: DetaineeService,
-    private router: Router,
+    private router: Router,   
+    private route: ActivatedRoute,
     private sharedService: SharedService) { }  
     
     change: boolean = false;
@@ -62,22 +63,39 @@ export class DetentionDetailComponent implements OnInit {
     this.sharedService.default = true;*/
   }
 
-  getSmartDetentionsByID(): void {    
-    let id = this.sharedService.forDetentionDetailID;    
+  getSmartDetentionsByID(): void {  
+    let id
+    if (this.sharedService.forDetentionDetailID == undefined)
+    {
+      alert("Hi")
+      console.log("Hi"+this.route.snapshot.paramMap.get('id'))
+      id = this.route.snapshot.paramMap.get('id');
+    } 
+    else 
+    {
+      alert("hello")
+     id = this.sharedService.forDetentionDetailID;  
+    }  
+    alert(id)
     this.detentionService.getSmartDetentionByDetentionID(id)
-    .subscribe(res => this.smartDetention = res);      
+    .subscribe(res => 
+      {this.smartDetention = res
+        console.log(res)
+      }
+      );      
 
     this.detentionService.getDetentionByDetentionID(id)
     .subscribe(
       res => {
       this.ddetention = res
       this.employeeID = res.detainedByEmployeeID
-      this.defaultEmployeeID = res.detainedByEmployeeID   
+      this.defaultEmployeeID = res.detainedByEmployeeID  
+      this.getSmartDetaineesByDetentionID();   
       }
     );   
    
 
-    this.getSmartDetaineesByDetentionID();    
+      
     this.employeeID = this.ddetention.detainedByEmployeeID;
     this.showEmployeeDetail();  
   }  
@@ -86,14 +104,30 @@ export class DetentionDetailComponent implements OnInit {
     this.ddetention.detainedByEmployeeID = employeeIDForChange;
   }
 
+  deleteDetention()
+  {
+    console.log(this.ddetention.detentionID)
+    this.detentionService.deleteDetention(this.ddetention.detentionID).subscribe
+    (res=>console.log(res))
+    this.router.navigate(['/home/detention']);
+  }
+
   showEmployeeDetail() : void  {
   this.show = true; 
   }
 
-  getSmartDetaineesByDetentionID(): void {  
- 
-    let id = this.sharedService.forDetentionDetailID;    
-    this.detaineeService.getsmartDetaineesByDetentionID(this.sharedService.forDetentionDetailID)
+  saveChanges()
+  {
+    console.log(this.ddetention)
+    this.detentionService.updateDetention(this.ddetention)
+    .subscribe(data => this.ddetention = data);
+    this.change = false;
+    this.sharedService.ifChange = false;
+    this.sharedService.default = true;
+  }
+
+  getSmartDetaineesByDetentionID(): void { 
+    this.detaineeService.getsmartDetaineesByDetentionID(this.ddetention.detentionID )
     .subscribe(res => this.smartDetainees = res);  
   } 
 

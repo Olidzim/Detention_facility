@@ -51,7 +51,7 @@ export class FindDetaineeComponent implements OnInit {
   }
  
   chooseSmartDetainee(foundSmartDetainee: SmartDetainee){    
-    this.sharedService.id = foundSmartDetainee.detaineeID
+    this.sharedService.forDetaineeDetailID = foundSmartDetainee.detaineeID
     this.foundDetainee.detaineeID = foundSmartDetainee.detaineeID;
     if (typeof this.detaineesCheck !== 'undefined' && this.detaineesCheck.length > 0){
       this.detaineesCheck.forEach(element => {
@@ -71,7 +71,8 @@ export class FindDetaineeComponent implements OnInit {
       this.router.navigateByUrl('/home/add-detention/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
     }
     else
-      this.router.navigateByUrl('/home/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
+      //this.router.navigateByUrl('/home/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
+      this.router.navigateByUrl('/home/detainee/detainee-detail/'+this.foundDetainee.detaineeID);
   }  
 
   onActivate(componentReference) {  

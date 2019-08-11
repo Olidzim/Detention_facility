@@ -29,13 +29,15 @@ export class LoginComponent implements OnInit {
     .set('grant_type', "password")
     .set('username', this.formModel.Login)
     .set('password', this.formModel.Password);
-
+    
     this.http.post('http://localhost:58653/token', payload).subscribe((res:any) => {
-      localStorage.setItem('token',res.access_token);})
-
-    this.http.get('http://localhost:58653/api/account/getrole').subscribe((res:any) => {
+      localStorage.setItem('token',res.access_token);    
+    
+      this.http.get('http://localhost:58653/api/account/getrole').subscribe((res:any) => {
         localStorage.setItem('role',res);
         this.router.navigateByUrl('/home');})
+    })
+
     }
   }
 

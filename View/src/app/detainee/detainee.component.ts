@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Detainee } from '../models/detainee';
 import { DetaineeService }  from '../services/detainee.service';
 import { SmartDetention } from '../models/smartdetention';
+import { SmartDetainee } from '../models/smartdetainee';
+import { Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-detainee',
@@ -17,10 +20,13 @@ export class DetaineeComponent implements OnInit {
   tableMode: boolean = true;
   
   constructor(
-  private detaineeService: DetaineeService
+  private detaineeService: DetaineeService,
+  private router: Router,
+  private sharedService: SharedService
   ) { }
 
   ngOnInit() {
+    console.log("detainees")   
     this.loadsmartDetainees();  
   }
 
@@ -48,6 +54,12 @@ export class DetaineeComponent implements OnInit {
   cancel() {
     this.detainee = new Detainee();
     //this.tableMode = true;
+  }
+
+  toDetaineeDetail(d: SmartDetainee)
+  {    
+    this.sharedService.forDetaineeDetailID = d.detaineeID;    
+    this.router.navigateByUrl('/home/detainee/detainee-detail/'+d.detaineeID);
   }
 
   getDetainee(): void { 

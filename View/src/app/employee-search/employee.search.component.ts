@@ -18,6 +18,7 @@ export class EmployeeSearchComponent implements OnInit {
   @Input() employeeFullNameParent: string;
   @Output() employeeForParent: SmartEmployee;
   @Output() toEmployeeDetail = new EventEmitter<SmartEmployee>();
+  @Output() toAddDetention = new EventEmitter<SmartEmployee>();
   private searchTerms = new Subject<string>();
  
   constructor(private employeeService: EmployeeService   
@@ -39,6 +40,7 @@ export class EmployeeSearchComponent implements OnInit {
   this.employeeForParent = foundEmployee;
   this.k = this.employeeForParent.employeeID;
   this.toEmployeeDetail.emit(this.employeeForParent);
+  this.toAddDetention.emit(this.employeeForParent);
   this.employeeFullNameParent = this.employeeForParent.fullName;
   }
 }

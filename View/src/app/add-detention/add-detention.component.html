@@ -1,51 +1,59 @@
+<h2>Задержание</h2>   
+<br>
 <div class="container">
-   <div class="form-style" class="block1">     
-      <h2>Задержание</h2>   
-        <form #form=ngForm form class="form-group">
+   <div class="form-style" class="block1">    
+    <form #form=ngForm form class="form-group">
           <br><b>Дата задержания:</b><br>         
           <input type="date" [(ngModel)]="detention.detentionDate" class="form-control" name="UserName" />    
           <br><b>Фамилия и инициалы лица отвественного за задержание:</b> 
-          <employee-search (toparent)="getEmployeeFromSearch($event)"></employee-search>  
+          <employee-search (toAddDetention)="getEmployeeFromSearch($event)"></employee-search>  
           <br>   
           <p *ngIf="employeeWhoDetain">Ответственный за задержание:</p>  
           <p *ngIf="employeeWhoDetain">{{employeeWhoDetain.fullName}} {{employeeWhoDetain.employeeRank}} {{employeeWhoDetain.position}}</p>  
+     
         </form>
+    
     </div>
-
+    <div class="block15">
+    <button type="button"  id="#add-button" routerLink="add-detainee" routerLinkActive="active" class="btn btn-primary">Добавить нового задержанного</button> 
+    <br>
+    <br>                 
+    <button type="button" id="#add-button" routerLink="find-detainee" routerLinkActive="active" class="btn btn-primary">Найти задержанного для добавления</button>
+   </div>
     <div class="block2">  
       <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
-  
-    <div class="block3">
-      <button type="button" id="bot-button" routerLink="add-detainee" routerLinkActive="active" class="btn btn-primary">Добавить нового задержанного</button>
-      <br>           
-      <button type="button" id="bot-button" routerLink="find-detainee" routerLinkActive="active" class="btn btn-primary">Найти задержанного для добавления</button>
-      <h4>Список задержанных</h4> <h5>Новые задержанные</h5><h5>Задерживались ранее</h5>
-    </div>
+   <!--- <button type="button" (click)="but()" class="btn btn-primary">but</button>&nbsp;-->
 
-    <table *ngIf="detainees[0]" class="table1">
-      <thead>
-        <tr> 
-          <td>Номер задержанного</td>
-          <td>Имя</td>
-          <td>Фамилия</td>
-          <td>Отчество</td>     
-        </tr>
-      </thead>
-      <tbody> 
-        <tr  *ngFor="let detainee of detainees">                 
-          <td>{{detainee?.detaineeID}}</td>
-          <td>{{detainee?.firstName}}</td>
-          <td>{{detainee?.lastName}}</td>
-          <td>{{detainee?.patronymic}}</td>                    
-        </tr>
-      </tbody>
-    </table>
 
+
+      <div *ngIf="detainees[0] || newDetainees[0]" class="block3">
+      <h4 *ngIf="detainees[0] || newDetainees[0]">Список задержанных</h4> 
+      <p *ngIf="detainees[0]">Задерживались ранее</p>
+      <table *ngIf="detainees[0]" class="table1">
+        <thead>
+          <tr> 
+            <td>Номер задержанного</td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Отчество</td>     
+          </tr>
+        </thead>
+        <tbody> 
+          <tr  *ngFor="let detainee of detainees">                 
+            <td>{{detainee?.detaineeID}}</td>
+            <td>{{detainee?.firstName}}</td>
+            <td>{{detainee?.lastName}}</td>
+            <td>{{detainee?.patronymic}}</td>                    
+          </tr>
+        </tbody>
+      </table>
+      
+      <p *ngIf="newDetainees[0]" >Новые задержанные</p>      
     <table *ngIf="newDetainees[0]" class="table2">
       <thead>
         <tr> 
-          <td >Номер задержанного</td>
+          <td>Номер задержанного</td>
           <td >Имя</td>
           <td>Фамилия</td>
           <td>Отчество</td>       
@@ -60,5 +68,10 @@
         </tr>
       </tbody>
     </table>
-    <button type="button" id="final"  (click)="addDetention()" class="btn btn-primary">Добавить задержание</button>
+    <button type="button"  id="#bot-button"  (click)="addDetention()" class="btn btn-primary">Добавить задержание</button>
+    </div>
+
+
+
+   
 </div>

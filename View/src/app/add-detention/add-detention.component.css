@@ -41,27 +41,32 @@
       height: 500px;
   
   }
-  table.table1 {    border: 1px solid black;    position: fixed;
-    position: fixed;
+  table.table1 {    border: 1px solid black;   
+    position: relative;
     width: 31%;
     top: 40%;
     border: 3px solid #000000;}
   table.table1 tr {    border: 1px solid black;}
   table.table1 td {    border: 1px solid black;}
   
-  table.table2 {    border: 1px solid red;position: fixed;
-    position: fixed;
+  table.table2 {    border: 1px solid red;
+    
     width: 31%;
     top: 50%;
     border: 3px solid red;}
   table.table2 tr {    border: 1px solid red;}
   table.table2 td {    border: 1px solid red;}
   .block1 { 
-    width: 30%; 
+    width: 20%; 
     background: #ccc;  
     padding-right: 20px; 
     border: solid 1px black; 
     float: left;
+   }
+   .block15 { 
+    margin-top: 2.3%;     
+    width: 10%; 
+    float: left;       
    }
    .block2 { 
     width: 70%; 
@@ -162,6 +167,14 @@
   }
 #bot-button
 {
+  position: relative;
   margin: 0 auto;
   display: block;
+}
+#add-button
+{
+  
+  display: block;
+  height: 400px;
+  width:  10px;
 }

@@ -11,11 +11,15 @@ import {SharedService} from '../services/shared.service';
 })
 export class HomeComponent implements OnInit {
   //date: {year: number, month: number, day: number};
-  show: number = 1;
+  isSearch: boolean;
   constructor(private calendar: NgbCalendar, private router: Router, private sharedService: SharedService) { }
 
   ngOnInit() {
-   
+    this.isSearch = false;
+  }
+
+  isAdmin() {
+    return localStorage.getItem('role') == 'Admin';
   }
 
   ngOnChanges() {   
@@ -25,17 +29,9 @@ export class HomeComponent implements OnInit {
    {
    console.log(this.model)
    //this.sharedService.date = 
-   this.sharedService.changeMessage(new Date(this.model.year, this.model.month - 1, this.model.day))
+   this.sharedService.changeMessage(new Date(this.model.year, this.model.month - 1, this.model.day))   
    }
-
-  tablePanel()
-  {
-    this.show = 1;
-  }
- searchPanel ()
-  {
-    this.show = 2;
-  }
+   
   onLogout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

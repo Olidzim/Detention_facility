@@ -32,6 +32,10 @@ export class DetentionService {
     );
   }
 
+  updateDetention(detention: Detention) {   
+    return this.http.put(this.DetentionsUrl + '/UpdateDetention/'+ detention.detentionID, detention);
+  }
+
 /** Search detentions by date*/
   searchDetentionsByDate(date: Date): Observable<SmartDetention[]> {  
     let latest_date = this.datepipe.transform(date, 'yyyy-MM-dd');     
@@ -78,13 +82,14 @@ export class DetentionService {
     return this.http.post<Detention>(`${this.DetentionsUrl}/InsertDetention/`, detention);
   }
 
-  addDetaineeToDetention (detentionID: number, detaineeId: number) : Observable<Detention> {        
-    return this.http.post<Detention>(`${this.DetentionsUrl}/AddDetaineeToDetention/${detaineeId}`, detentionID);
-  }
-
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {     
     console.error(error); 
     return of(result as T);};
-    }        
+    }    
+    
+    deleteDetention(id: number) {
+      console.log(id)
+      return this.http.delete(this.DetentionsUrl + '/DeleteDetention/' + id);
+    }
 }

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Detainee } from '../models/detainee';
 import { SmartDetainee } from '../models/smartdetainee';
+import { Detention } from '../models/detention';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -51,7 +52,9 @@ export class DetaineeService {
         return this.http.put(`${this.detaineeUrl}/UpdateDetainee/${detainee.detaineeID}`, detainee);
     }
 
-
+    addDetaineeToDetention (detentionID: number, detaineeId: number) : Observable<Detention> {        
+        return this.http.post<Detention>(`${this.detaineeUrl}/AddDetaineeToDetention/${detaineeId}`, detentionID);
+      }
 
     addDetainee (detainee: Detainee)  {       
         return this.http.post(`${this.detaineeUrl}/InsertDetainee/`, detainee);
