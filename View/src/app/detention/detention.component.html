@@ -1,4 +1,7 @@
-<button id="addbutton" type="button" class="btn btn-primary" routerLink="../add-detention">Добавить задержание</button>
+
+
+<button *appIsGranted="'UPDATE'" id="addbutton" type="button" class="btn btn-primary" routerLink="../add-detention">Добавить задержание</button>
+
 <router-outlet></router-outlet>
 <br>
 <h2>Список задержаний</h2>

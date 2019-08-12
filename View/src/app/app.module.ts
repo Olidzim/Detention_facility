@@ -37,7 +37,9 @@ import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
 import { AddReleaseComponent } from './add-release/add-release.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { ReleaseComponent } from './release/release.component';
-
+import { PermissionManagerService } from './role/permission-manager.service';
+import { IsGrantedDirective } from './role/is-granted.directive';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -66,11 +68,10 @@ import { ReleaseComponent } from './release/release.component';
     AddDeliveryComponent,
     AddReleaseComponent,
     DeliveryComponent,
-    ReleaseComponent,
-
-  
- 
+    ReleaseComponent, 
+    IsGrantedDirective, RegistrationComponent 
   ],
+
   imports: [
     NgbModule,
     BrowserModule,
@@ -82,14 +83,17 @@ import { ReleaseComponent } from './release/release.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
-   
-  ],
+   ],
+
   entryComponents:[DetaineeSearchComponent],
+
   providers: [
+    PermissionManagerService,
     DatePipe,
     LoginService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
