@@ -1,1 +1,30 @@
-<p>registration works!</p>
+<form #form=ngForm class="form-style">
+    <h2>Добавление пользователя</h2><br>
+      <ul>
+  
+          <li>                  
+            <input type="text" name="field1" [(ngModel)]="user.login" class="field-style field-split3 align-left" placeholder="Логин" required />
+          </li>
+  
+          <li>                  
+            <input type="text" name="field1" [(ngModel)]="user.password" class="field-style field-split3 align-left" placeholder="Пароль" />
+          </li>
+  
+  
+          <li style="height: 44px">
+            <input type="text" name="field1"  [(ngModel)]="user.email" class="field-style field-split3 align-left" placeholder="Email" />          
+          </li>
+  
+          <li>
+            <p>Роли</p>
+            <select [(ngModel)]="role" name="field1">
+              <option *ngFor="let role of roles">
+                {{role}}
+              </option>
+            </select>
+          </li>   
+      </ul>
+
+      <button type="submit"  (click)="addUser()" value="Добавить задержанного к задержанию">Добавить пользователя</button>
+   
+

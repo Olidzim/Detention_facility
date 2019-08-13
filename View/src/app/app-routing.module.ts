@@ -17,8 +17,10 @@ import {DetentionSearchComponent} from './detention-search/detention-search.comp
 import {EmployeeComponent} from './employee/employee.component';
 import {DeliveryComponent} from './delivery/delivery.component';
 import {ReleaseComponent} from './release/release.component';
+import {UserComponent} from './user/user.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {UserDetailComponent} from './user-detail/user-detail.component';
 
-EmployeeComponent
 import {from } from 'rxjs';
 import { DetentionDetailComponent } from './detention-detail/detention-detail.component';
 const itemRoutes: Routes = [
@@ -36,16 +38,19 @@ const iitemRoutes: Routes = [
 const tableRoutes: Routes = [
   {path: 'detention', component: DetentionComponent, children: iitemRoutes},
   {path: 'add-detention', component: AddDetentionComponent, children: iitemRoutes},
+  {path: 'registration', component: RegistrationComponent, children: iitemRoutes},
   {path: 'detainee', component: DetaineeComponent, children: itemRoutes},
   {path: 'employee', component: EmployeeComponent, children: itemRoutes},
   {path: 'detainee-detail', component: DetaineeDetailComponent},
   {path: 'find-detainee', component: FindDetaineeComponent},
   {path: 'detention-search', component: DetentionSearchComponent},
  // {path: 'find-detainee/detainee-detail/:id', component: DetaineeDetailComponent},
+  {path: 'user/user-detail/', component: UserDetailComponent},
   {path: 'detainee/detainee-detail/:id', component: DetaineeDetailComponent},
   {path: 'detention/detention-detail/:id', component: DetentionDetailComponent},
   {path: 'delivery', component: DeliveryComponent},
-  {path: 'release', component: ReleaseComponent}
+  {path: 'release', component: ReleaseComponent},
+  {path: 'user', component: UserComponent}
 ];
 
 

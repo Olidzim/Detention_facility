@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http"
+import {SharedService} from '../services/shared.service'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +36,7 @@ roleMatch(allowedRoles): boolean {
   var isMatch = false;
   var userRole = localStorage.getItem('role');
   allowedRoles.forEach(element => {
+    console.log("Role Match")
     if (userRole == element) {
       isMatch = true;
       return false;

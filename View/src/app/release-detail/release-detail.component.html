@@ -1,4 +1,4 @@
-<button *ngIf="release.releaseID==null" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
+<button *ngIf="release.releaseID==null && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
 <app-add-release [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewRelease)="getReleaseFromAdd($event)" *ngIf="add && release.releaseID==null"></app-add-release>
 <div *ngIf="release.releaseID">
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить освобождение</button>

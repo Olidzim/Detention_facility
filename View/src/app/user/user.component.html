@@ -1,1 +1,22 @@
-<p>user works!</p>
+<h2 style="margin-left: 10px">Пользователи</h2>
+<button *appIsGranted="'UPDATE'" id="addbutton" type="button" class="btn btn-primary" routerLink="../registration">Добавить пользователя</button>
+<div class="container">
+<table  form  class="table table-bordered table-sm" style="height: 100px;">
+    <thead>
+        <tr > 
+            <td>Номер пользователя</td>
+            <td>Логин</td>
+            <td>Роль</td>
+            <td>Электронная почта</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  *ngFor="let u of users" (dblclick)="toUserDetail(u)">    
+                <td>{{u?.userID}}</td>
+                <td>{{u?.login}}</td>
+                <td>{{u?.role}}</td>
+                <td>{{u?.email}}</td>             
+        </tr>
+    </tbody>
+</table>
+</div>

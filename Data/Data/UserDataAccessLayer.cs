@@ -1,4 +1,6 @@
 ﻿using Detention_facility.Models;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -32,6 +34,39 @@ namespace Detention_facility.Data
             }
         }
 
+        public List<User> GetUsers()
+        {
+            const string storedProcedureName = "GetUsers";
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;              
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                User user = null;
+                List<User> users_list = new List<User>();
+                while (reader.Read())
+                {
+                    user = new User();
+
+                    user.UserID = Convert.ToInt32(reader.GetValue(0));
+
+                    user.Login = reader.GetValue(1).ToString();                 
+
+                    user.Role = reader.GetValue(2).ToString();
+
+                    user.Email = reader.GetValue(3).ToString();
+
+                    users_list.Add(user);
+                    
+                }
+                connection.Close();
+                return users_list;
+            }
+        }
+
         public User GetUserByID(int id)
         {
             const string storedProcedureName = "GetUserByID";
@@ -45,11 +80,13 @@ namespace Detention_facility.Data
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-
+                
                 User user = null;
                 while (reader.Read())
                 {
                     user = new User();
+                   
+                    user.UserID = Convert.ToInt32(reader.GetValue(0));
 
                     user.Login = reader.GetValue(1).ToString();
 

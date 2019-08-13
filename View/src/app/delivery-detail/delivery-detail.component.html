@@ -1,6 +1,6 @@
 <!--{{res}}-->
 
-<button *ngIf="delivery.deliveryID==null && !add" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
+<button *ngIf="delivery.deliveryID==null && !add && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
 <app-add-delivery [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewDelivery)="getDeliveryFromAdd($event)" *ngIf="add && delivery.deliveryID==null"></app-add-delivery>
 <div *ngIf="delivery.deliveryID && !change">
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить доставку</button>

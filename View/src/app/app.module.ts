@@ -40,6 +40,7 @@ import { ReleaseComponent } from './release/release.component';
 import { PermissionManagerService } from './role/permission-manager.service';
 import { IsGrantedDirective } from './role/is-granted.directive';
 import { RegistrationComponent } from './registration/registration.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,7 @@ import { RegistrationComponent } from './registration/registration.component';
     AddReleaseComponent,
     DeliveryComponent,
     ReleaseComponent, 
-    IsGrantedDirective, RegistrationComponent 
+    IsGrantedDirective, RegistrationComponent, UserDetailComponent 
   ],
 
   imports: [

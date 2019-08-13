@@ -32,7 +32,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [Route("Api/Release/GetReleaseByIDs/{detaineeID}/{detentionID}")]
         [HttpGet]
         public IHttpActionResult GetReleaseByIDs(int detaineeID, int detentionID)
@@ -64,7 +64,8 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
 
         }
-       
+
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetRelease(int id)
         {           
@@ -91,7 +92,7 @@ namespace Detention_facility.Controllers
             return Ok(release);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles ="Admin,Editor,User")] 
         [HttpGet]
         public IHttpActionResult GetReleases()
         {            

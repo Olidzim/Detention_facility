@@ -30,8 +30,7 @@ export class DetentionComponent implements OnInit {
       this.loadsmartDetentions()
     }
     else {    */
-    this.sharedService.currentDate.subscribe(date =>
-      {
+    this.sharedService.currentDate.subscribe(date =>{
      console.log("else")     
       this.date = date
       if(this.date == undefined)
@@ -43,16 +42,9 @@ export class DetentionComponent implements OnInit {
       {
         console.log("initDate")
         this.getDetentionsByDate();
-      }
-      
-      })  
- 
-  }
-
-  toDefaultDate()
-  {
-    this.sharedService.changeMessage(undefined);
-  }
+      }      
+      }) 
+    }
 
   loadsmartDetentions() {
     console.log("NoDate")

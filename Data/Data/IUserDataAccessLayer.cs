@@ -1,4 +1,5 @@
 ﻿using Detention_facility.Models;
+using System.Collections.Generic;
 
 namespace Detention_facility.Data
 {
@@ -11,5 +12,6 @@ namespace Detention_facility.Data
         void DeleteUser(int id);
         User GetUserByID (int id);
         string GetRole(string Login, string password);
+        List<User> GetUsers();
     }
 }

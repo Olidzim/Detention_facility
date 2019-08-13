@@ -13,7 +13,7 @@ import { SmartRelease } from '../models/smartrelease';
 import { SharedService} from '../services/shared.service';
 import { DeliveryService} from '../services/delivery.service';
 import { DetentionService } from '../services/detention.service';
-import { Router } from '@angular/router';
+import { Router, Route } from '@angular/router';
 @Component({
   selector: 'app-detainee-detail',
   templateUrl: './detainee-detail.component.html',
@@ -46,7 +46,8 @@ export class DetaineeDetailComponent implements OnInit {
     private detaineeService: DetaineeService,
     private deliveryService: DeliveryService,
     private detentionService: DetentionService,
-    private router: Router
+    private router: Router,
+ 
     ) { }
 
   ngOnInit() {

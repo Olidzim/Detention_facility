@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     public class UploadController : ApiController
     {
 
-        
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpPost]
         public IHttpActionResult UploadJsonFile()
         {
@@ -40,8 +40,8 @@ namespace WebAPI.Controllers
                 }
                 if (flag)
                 {
-                   ResponseClass r = new ResponseClass(false,"На сервере имеются файлы с именами:"+ fileNamesList, null);
-                   return Ok(r);
+                  // ResponseClass<T> r = new ResponseClass(false,"На сервере имеются файлы с именами:"+ fileNamesList, null);
+                   return Ok();
                 }
                 else
                     foreach (string file in httpRequest.Files)

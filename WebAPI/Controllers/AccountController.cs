@@ -18,6 +18,20 @@ namespace Detention_facility.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IHttpActionResult GetEmployee(int id)
+        {
+            var user = _accountService.GetUserByID(id);
+            if (user == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IHttpActionResult RegisterUser([FromBody] User user)
         {
@@ -28,6 +42,19 @@ namespace Detention_facility.Controllers
             }
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IHttpActionResult GetUsers()
+        {
+            var users_list = _accountService.GetUsers();
+            if (users_list == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Не существует доставки с таким номером");
+                return NotFound();
+            }
+            return Ok(users_list);
         }
 
         [Authorize(Roles = "Admin")]
@@ -81,7 +108,7 @@ namespace Detention_facility.Controllers
             return Ok(userForDelete);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetRole()
         {

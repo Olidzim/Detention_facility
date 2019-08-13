@@ -17,6 +17,7 @@ namespace Detention_facility.Controllers
             _employeeService = employeeService;
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetention(int id)
         {
@@ -29,7 +30,7 @@ namespace Detention_facility.Controllers
             return Ok(detention);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetentions()
         {
@@ -41,6 +42,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetSmartDetentionsByDetaineeID(int id)
         {
@@ -52,6 +54,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetSmartDetentionsByDetentionID(int id)
         {
@@ -63,6 +66,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetSmartDetentions()
         {
@@ -74,6 +78,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpPost]
         public IHttpActionResult GetDetentionsByPlace([FromBody] string place)
         {
@@ -86,6 +91,7 @@ namespace Detention_facility.Controllers
             return Ok(detentionsList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetentionsByLastName([FromBody] string lastname)
         {
@@ -99,6 +105,7 @@ namespace Detention_facility.Controllers
         }
 
         //[Route("Api/Detention/GetDetentionsByDate/{date:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpPost]
         public IHttpActionResult GetDetentionsByDate([FromBody] DateTime date)
         {

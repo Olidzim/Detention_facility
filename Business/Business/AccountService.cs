@@ -1,6 +1,7 @@
 ﻿using Detention_facility.Data;
 using Detention_facility.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Detention_facility.Business
 {
@@ -41,6 +42,11 @@ namespace Detention_facility.Business
         {
             string role = _userDataProvider.GetRole(login, password);
             return role;
+        }
+
+        public List<User> GetUsers()
+        {
+            return _userDataProvider.GetUsers();
         }
     }
 }

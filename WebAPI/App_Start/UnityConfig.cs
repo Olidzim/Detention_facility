@@ -2,6 +2,7 @@ using Detention_facility.Business;
 using System.Web.Http;
 using Unity;
 using Unity.WebApi;
+using Detention_facility.Custom;
 namespace Detention_facility
 {
     public static class UnityConfig
@@ -16,8 +17,10 @@ namespace Detention_facility
             container.RegisterType<IEmployeeBusinesslayer, EmployeesBusinessLayer>();
             container.RegisterType<IDetentionBusinessLayer, DetentionBusinessLayer>();
             container.RegisterType<IReleaseBusinessLayer, ReleaseBusinessLayer>();
-            container.RegisterType<IAuthorizationService, AuthorizationService>();
+            container.RegisterType<IAuthorizationService, AuthorizationService>();   
             container.RegisterType<IAccountService, AccountService>();
+            
+
             container.AddNewExtension<DependencyInjectionExtension>();   
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

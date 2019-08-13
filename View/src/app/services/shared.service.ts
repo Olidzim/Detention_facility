@@ -31,8 +31,10 @@ export class SharedService {
 
     files: File[] = new Array;
     //id: number;
+    login
     forDetentionDetailID: number;
     forDetaineeDetailID: number;
+    forUserDetailID: number;
     ifChange = false;
     default = false;
     ifDetention = false;

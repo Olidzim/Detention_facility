@@ -49,7 +49,8 @@ namespace Detention_facility.Controllers
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
-       
+
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDelivery(int id)
         {
@@ -62,7 +63,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [Route("Api/Delivery/GetSmartDeliveryByIDs/{detaineeID}/{detentionID}")]
         [HttpGet]
         public IHttpActionResult GetSmartDeliveryByIDs(int detaineeID, int detentionID)
@@ -76,7 +77,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [Route("Api/Delivery/GetDeliveryByIDs/{detaineeID}/{detentionID}")]
         [HttpGet]
         public IHttpActionResult GetDeliveryByIDs(int detaineeID, int detentionID)
@@ -105,7 +106,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles ="Admin,Editor,User")] 
         [HttpGet]
         public IHttpActionResult GetDeliveries()
         {            

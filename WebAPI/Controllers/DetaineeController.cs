@@ -56,7 +56,8 @@ namespace Detention_facility.Controllers
             CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
             return BadRequest(ModelState);
         }
-        
+
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetaineeByID(int id)
         {
@@ -96,7 +97,7 @@ namespace Detention_facility.Controllers
             }
         }
 
-        [Authorize(Roles ="Admin,Editor")] 
+        [Authorize(Roles ="Admin,Editor,User")] 
         [HttpGet]
         public IHttpActionResult GetDetainees()
         {
@@ -108,6 +109,7 @@ namespace Detention_facility.Controllers
             return Ok(detaineesList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetaineeByDetentionID(int id)
         {
@@ -119,6 +121,7 @@ namespace Detention_facility.Controllers
             return Ok(detaineesList);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDet(string term)
         {
@@ -130,6 +133,7 @@ namespace Detention_facility.Controllers
             return Ok(detainee_list);
         }
 
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetaineeByAddress(string term)
         {

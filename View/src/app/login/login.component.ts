@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 import {HttpParams} from '@angular/common/http';
 import {HttpClient} from "@angular/common/http"
 import { Router } from '@angular/router';
-
+import {SharedService} from '../services/shared.service'
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,14 @@ export class LoginComponent implements OnInit {
     Password:''
     };
     
-  constructor(private service: LoginService, private http: HttpClient, private router: Router) { }
+  constructor(
+
+    private service: LoginService, 
+    private http: HttpClient, 
+    private router: Router,
+    private sharedService: SharedService
+    
+    ) { }
 
   ngOnInit() {
   }
@@ -34,8 +41,11 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token',res.access_token);    
     
       this.http.get('http://localhost:58653/api/account/getrole').subscribe((res:any) => {
+        this.sharedService.login = this.formModel.Login;
         localStorage.setItem('role',res);
-        this.router.navigateByUrl('/home');})
+        this.router.navigateByUrl('/home');
+      
+      })
     })
 
     }

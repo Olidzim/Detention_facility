@@ -1,6 +1,7 @@
 ﻿using Detention_facility.Data;
 using Detention_facility.Models;
 using System.Collections.Generic;
+using Detention_facility.Custom;
 
 namespace Detention_facility.Business
 {
@@ -11,12 +12,18 @@ namespace Detention_facility.Business
         private IEmployeeDataAccess _employeeDataProvider;
         private IDetaineeDataAccess _detaineeDataProvider;
 
-        public DeliveryBusinessLayer(IDeliveryDataAccess deliveryDataProvider, IDetentionDataAccess detentionDataProvider, IEmployeeDataAccess employeeDataProvider, IDetaineeDataAccess detaineeDataProvider)
+        public DeliveryBusinessLayer(
+            IDeliveryDataAccess deliveryDataProvider,
+            IDetentionDataAccess detentionDataProvider,
+            IEmployeeDataAccess employeeDataProvider, IDetaineeDataAccess detaineeDataProvider
+
+            )
         {
             _deliveryDataProvider = deliveryDataProvider;
             _detentionDataProvider = detentionDataProvider;
             _employeeDataProvider = employeeDataProvider;
             _detaineeDataProvider = detaineeDataProvider;
+
         }
 
         public void InsertDelivery(Delivery delivery)
@@ -35,13 +42,29 @@ namespace Detention_facility.Business
 
         public Delivery GetDeliveryByID(int id)
         {
+
             return _deliveryDataProvider.GetDeliveryByID(id);
         }
 
-        public List<Delivery> GetDeliveries()
+        /* public List<Delivery> GetDeliveries()
+         {
+             return _deliveryDataProvider.GetDeliveries();
+         }*/
+
+        public ResponseClass<List<Delivery>> GetDeliveries()
         {
-            return _deliveryDataProvider.GetDeliveries();
+            return new ResponseClass<List<Delivery>>
+            {
+                IsSuccess = true,
+                Message = "Deliveries list",
+                ResponseData = _deliveryDataProvider.GetDeliveries()
+            };
         }
+
+      /* public ResponseClass<List<Delivery>> GetDeliveries()
+        {
+            return _deliveryResponseList.CreateResponse("Delivery list", true, _deliveryDataProvider.GetDeliveries());
+        }*/
 
         public string CheckValuesForDelivery(int detaineeID, int detentionID, int employeeID)
         {

@@ -48,7 +48,7 @@ namespace Detention_facility.Controllers
             return BadRequest(ModelState);
         }
 
-        [Authorize(Roles = "Admin,Editor")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetEmployee(int id)
         {
@@ -87,7 +87,8 @@ namespace Detention_facility.Controllers
             return Ok(employeesList);
         }
 
-       // [Route("Api/employee/name=/{term}")]
+        // [Route("Api/employee/name=/{term}")]
+        [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetEmploy(string term)
         {

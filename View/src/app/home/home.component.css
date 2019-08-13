@@ -17,6 +17,12 @@ bottom: 0;
 height: 100%;
 }
 
+#radio{
+background-color: "black"    
+}
+
+
+
 .child{  
     margin-top:30px;
     margin-left:320px;   
@@ -32,6 +38,12 @@ a, a:hover, a:focus {
     color: #fff;
     font-size: 18pt
 }
+
+#sidebar #lessText {
+    color: #fff;
+    font-size: 12pt
+}
+
 
 #nav-cursor {
     cursor: pointer;

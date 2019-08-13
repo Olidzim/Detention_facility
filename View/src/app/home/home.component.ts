@@ -12,6 +12,7 @@ import {SharedService} from '../services/shared.service';
 export class HomeComponent implements OnInit {
   //date: {year: number, month: number, day: number};
   isSearch: boolean;
+  viewDate;
   constructor(private calendar: NgbCalendar, private router: Router, private sharedService: SharedService) { }
 
   ngOnInit() {
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
    {
    console.log(this.model)
    //this.sharedService.date = 
-   this.sharedService.changeMessage(new Date(this.model.year, this.model.month - 1, this.model.day))   
+   this.viewDate = new Date(this.model.year, this.model.month - 1, this.model.day); 
+   this.sharedService.changeMessage(this.viewDate)   
    }
    
   onLogout() {
@@ -42,6 +44,12 @@ export class HomeComponent implements OnInit {
 
   selectToday() {
     this.model = this.calendar.getToday();
+  }
+
+  toDefaultDate()
+  {
+    this.sharedService.changeMessage(undefined);
+    this.viewDate = undefined;
   }
 
 }

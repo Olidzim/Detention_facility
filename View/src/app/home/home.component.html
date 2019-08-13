@@ -1,74 +1,84 @@
 <nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
-    <a class="navbar-brand text-white" id="nav-cursor" [routerLink]="['/home']">Специальный изолятор</a>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" id="nav-cursor">
-          <a class="nav-link" (click)="isSearch = !isSearch">Поиск</a>
-        </li>
-      <li  class="nav-item" id="nav-cursor">
-          <a class="nav-link"  (click)="isSearch = !isSearch">Панель редактора</a>
-        </li>
-        <li *ngIf="isAdmin()" class="nav-item" id="nav-cursor">
-          <a class="nav-link" href="#">Панель администратора</a>
-        </li>      
-    </ul>
+        <a class="navbar-brand text-white" id="nav-cursor" [routerLink]="['/home']">Специальный изолятор</a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" id="nav-cursor">
+              <a class="nav-link" (click)="isSearch = !isSearch">Поиск</a>
+            </li>
+          <li  class="nav-item" id="nav-cursor">
+              <a class="nav-link"  (click)="isSearch = !isSearch">Таблицы</a>
+            </li>
+            <li *ngIf="isAdmin()" class="nav-item" id="nav-cursor">
+              <a class="nav-link" href="#">Панель администратора</a>
+            </li>      
+        </ul>
+        
+        <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
+    </nav>
+    <div *ngIf="!isSearch" class="wrapper">
+        <nav id="sidebar">
+            <ul class="list-unstyled components">
+                <li>
+                    <p>Таблицы</p>
+                </li>
+                <li>                
+                </li>
+                <li>
+                    <a  routerLink="detention" routerLinkActive="active">Задержания</a>
+                </li>
+                <li>
+                    <a  routerLink="detainee" routerLinkActive="active">Задержанные</a>
+                </li>
+                <li>
+                    <a routerLink="employee" routerLinkActive="active">Сотрудники</a>
+                </li>  
+                <li>
+                    <a routerLink="delivery" routerLinkActive="active">Доставки</a>
+                </li>     
+                <li>
+                    <a routerLink="release" routerLinkActive="active">Освобождения</a>
+                </li>  
+                <li>
+                    <a routerLink="user" routerLinkActive="active">Пользователи</a>
+                </li>      
+            </ul>
+            <ul  class="list-unstyled components">
+                    <p>Дата</p>
+                    <div *ngIf="viewDate">
+                    <p id="lessText">Выбранная дата:</p>
+                  <p id="lessText">{{viewDate| date: 'dd-MM-yyyy'}}</p>
+                   </div>
+                    <br>
+                    <ngb-datepicker style="background-color: white" #dp [(ngModel)]="model" (ngModelChange)="onDateSelected()" (navigate)="date = $event.next"></ngb-datepicker>
+                    
     
-    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
-</nav>
-<div *ngIf="isSearch" class="wrapper">
-    <nav id="sidebar">
-        <ul class="list-unstyled components">
-            <li>
-                <p>Таблицы</p>
-            </li>
-            <li>                
-            </li>
-            <li>
-                <a  routerLink="detention" routerLinkActive="active">Задержания</a>
-            </li>
-            <li>
-                <a  routerLink="detainee" routerLinkActive="active">Задержанные</a>
-            </li>
-            <li>
-                <a routerLink="employee" routerLinkActive="active">Сотрудники</a>
-            </li>  
-            <li>
-                <a routerLink="delivery" routerLinkActive="active">Доставки</a>
-            </li>     
-            <li>
-                <a routerLink="release" routerLinkActive="active">Освобождения</a>
-            </li>     
-        </ul>
-        <ul  class="list-unstyled components">
-                <p>Дата</p>
-
-                <ngb-datepicker style="background-color: white" #dp [(ngModel)]="model" (ngModelChange)="onDateSelected()" (navigate)="date = $event.next"></ngb-datepicker>
-                
-
-            
-                <pre>Month: {{ date.month }}.{{ date.year }}</pre>
-                <pre>Model: {{ model | json }}</pre>
-        </ul>
-    </nav>
-</div>
-<div *ngIf="!isSearch" class="wrapper">
-    <nav id="sidebar">  
-        <ul class="list-unstyled components">
-            <li>
-                <p>Поиски</p>
-            </li>
-            <li>                
-            </li>
-            <li>
-                <a  routerLink="detention-search" routerLinkActive="active">Задержания</a>
-            </li>
-            <li>
-                <a  routerLink="find-detainee" routerLinkActive="active">Задержанные</a>
-            </li>   
-        </ul>
-
-    </nav>
-</div>
-<div class="child">
-<router-outlet></router-outlet>
-</div>
-
+                    <button  class="btn btn-block btn-secondary button5" (click)="toDefaultDate()">Отменить дату</button>
+                    
+                    
+                    <!--<pre>Month: {{ date.month }}.{{ date.year }}</pre>-->
+                   
+            </ul>
+        </nav>
+    </div>
+    <div *ngIf="isSearch" class="wrapper">
+        <nav id="sidebar">  
+            <ul class="list-unstyled components">
+                <li>
+                    <p>Поиски</p>
+                </li>
+                <li>                
+                </li>
+                <li>
+                    <a  routerLink="detention-search" routerLinkActive="active">Задержания</a>
+                </li>
+                <li>
+                    <a  routerLink="find-detainee" routerLinkActive="active">Задержанные</a>
+                </li>   
+            </ul>
+    
+        </nav>
+    </div>
+    <div class="child">
+    <router-outlet></router-outlet>
+    </div>
+    
+    
