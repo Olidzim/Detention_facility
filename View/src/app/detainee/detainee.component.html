@@ -1,6 +1,6 @@
 <h2 style="margin-left: 10px">Задержанные</h2>
 <div class="container">
-<table  form  class="table table-bordered table-sm" style="height: 100px;">
+<table  form id="auto-layout" class="table table-bordered table-sm">
     <thead>
         <tr > 
             <td>Номер задержанного</td>
@@ -18,7 +18,6 @@
     </thead>
     <tbody>
         <tr  *ngFor="let d of detainees" (dblclick)="toDetaineeDetail(d)">
-            <ng-template [ngIf]="detainee?.detaineeID != d.detaineeID" [ngIfElse]="edit">
                 <td>{{d?.detaineeID}}</td>
                 <td>{{d?.firstName}}</td>
                 <td>{{d?.lastName}}</td>
@@ -29,12 +28,6 @@
                 <td>{{d?.mobilePhoneNumber}}</td>
                 <td>{{d?.homePhoneNumber}}</td>           
                 <td class="text-truncate" style="max-width: 150px;">{{d?.residencePlace}}</td>
-                <td >
-                 <!--<button class="btn btn-block btn-secondary" (click)="editDetainee(d)">Изменить</button>
-                  <p></p>-->
-                <button class="btn btn-block btn-secondary button5" (click)="delete(d)">X</button>                  
-              </td>
-            </ng-template>
         </tr>
     </tbody>
 </table>

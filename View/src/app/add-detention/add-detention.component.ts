@@ -38,9 +38,43 @@ export class AddDetentionComponent implements OnInit {
   constructor( private http: HttpClient, private sanitizer: DomSanitizer, private detentionService: DetentionService, private detaineeService: DetaineeService, private sharedService: SharedService) { }
 
   ngOnInit() {
+    this.sharedService.detaineeToDetention.subscribe(detainee => {
+      if (detainee == undefined)
+      {
+        console.log("undefined")
+      }
+      else
+      {     
+        if (this.searchInOldDetaineesArray(detainee.detaineeID))
+        {
+          alert("Уже добавлен")
+        }
+        else
+        {
+          this.detainees.push(detainee)      
+        }
+      }
+    }) 
   }
+
+  searchInOldDetaineesArray (id: number) : boolean
+  {
+    let value = false;
+    console.log(id)
+    this.detainees.forEach(element => {
+      if (element.detaineeID == id)
+      {
+        console.log("true")        
+        value = true;
+      }
+      
+    });
+    return value;
+  }
+
   search(term: string): void {
   this.searchTerms.next(term);
+  
   }
 
   getEmployeeFromSearch(foundEmployee: SmartEmployee)
@@ -50,7 +84,7 @@ export class AddDetentionComponent implements OnInit {
   }
 
 //ternar
-  onActivate(componentReference) {
+ onActivate(componentReference) {
   componentReference.anyFunction();
   componentReference.searchItem.subscribe((data) => {
   let newDetainee = data;
@@ -72,6 +106,7 @@ export class AddDetentionComponent implements OnInit {
       r = data
       if(r.isSuccess)
       {
+        console.log("file uploaded")
         this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
         this.detentionService.addDetention(this.detention).subscribe(response => {
         this.addDetainees(response.detentionID)

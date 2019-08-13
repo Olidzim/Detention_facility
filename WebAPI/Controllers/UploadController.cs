@@ -7,7 +7,8 @@ using System.Web.Http;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Web;
-using WebAPI.Response;
+using Detention_facility.Custom;
+
 
 namespace WebAPI.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebAPI.Controllers
     public class UploadController : ApiController
     {
 
-        [Authorize(Roles = "Admin,Editor,User")]
+        [Authorize(Roles = "Admin, Editor, User")]
         [HttpPost]
         public IHttpActionResult UploadJsonFile()
         {
@@ -40,8 +41,15 @@ namespace WebAPI.Controllers
                 }
                 if (flag)
                 {
-                  // ResponseClass<T> r = new ResponseClass(false,"На сервере имеются файлы с именами:"+ fileNamesList, null);
-                   return Ok();
+
+                   var r = new ResponseClass<string>
+                   {
+                       IsSuccess = false,
+                       Message = "На сервере имеются файлы с именами:" + fileNamesList,
+                       ResponseData = null
+                   };
+
+                   return Ok(r);
                 }
                 else
                     foreach (string file in httpRequest.Files)

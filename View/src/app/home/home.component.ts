@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
 
   toDefaultDate()
   {
+    this.model = undefined;
     this.sharedService.changeMessage(undefined);
     this.viewDate = undefined;
   }

@@ -1,0 +1,16 @@
+#addbutton {
+    float:right;
+    margin-right: 3%;
+    margin-top: 1%;
+}
+#tablebutton {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+ #auto-layout {
+    background-color:#F1F6FB;    
+    table-layout: auto;
+    width: 100%;
+   }
+

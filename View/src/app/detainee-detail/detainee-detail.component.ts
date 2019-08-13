@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
 import { Detainee } from '../models/detainee';
 import { DetaineeService }  from '../services/detainee.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
@@ -38,6 +38,8 @@ export class DetaineeDetailComponent implements OnInit {
   fileToUpload: File = null;
   imageUrl: string = null;
   url;
+  foundDetainee: Detainee = new Detainee();
+  @Output() searchItem: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private sharedService: SharedService,
@@ -67,7 +69,14 @@ export class DetaineeDetailComponent implements OnInit {
     //+this.route.snapshot.paramMap.get('id');
     this.detentionService.getSmartDetentionsByDetaineeID(id)
     .subscribe(smartDetentions => this.smartDetentions = smartDetentions);     
-  }  
+  } 
+  
+  sendDetaineeToDetention() {
+    console.log("Detainee to detention")    
+    this.sharedService.sendDetaineeToDetention(this.detainee); 
+   // this.searchItem.emit(this.detainee);
+    //this.buttonShow = false;
+  }
 
   getSmartDetentionsByDetaineeID(): void {            
     this.detentionService.getSmartDetentionsByDetaineeID(this.sharedService.forDetaineeDetailID)

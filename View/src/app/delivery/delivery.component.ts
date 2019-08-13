@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DeliveryService} from '../services/delivery.service'
 import { SmartDelivery } from '../models/smartdelivery';
 import { SharedService } from '../services/shared.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'delivery',
@@ -11,29 +12,34 @@ import { SharedService } from '../services/shared.service';
 export class DeliveryComponent implements OnInit {
 
   date: Date;
-
+  
   smartDeliverys: SmartDelivery[];
 
-  constructor(private sharedService: SharedService, private deliveryService: DeliveryService) { }
+  constructor(private router: Router, private sharedService: SharedService, private deliveryService: DeliveryService) { }
 
   ngOnInit() {
-    this.sharedService.currentDate.subscribe(date =>{
-      console.log("else")     
-       this.date = date
-       if(this.date == undefined)
+    this.sharedService.currentDate.subscribe(date =>{        
+       this.date = date     
+       if(this.router.url == '/home/delivery')
        {
-         console.log("initNoDate")
-         this.loadsmartDeliveries();
-       }
-       else
-       {
-         console.log("initDate")
-         //this.getDetentionsByDate();
-       }      
+        if(this.date == undefined)
+        {
+        console.log("initNoDate")
+        this.loadsmartDeliveries();
+        }
+        else
+        {
+        console.log("initDate")
+        this.getSmartDeliveriesByDate();
+        } 
+      }     
        }) 
      }
     
-  
+    getSmartDeliveriesByDate() {   
+    this.deliveryService.getSmartDeliveriesByDate(this.date).subscribe
+    ((smartDeliverys:SmartDelivery[]) => this.smartDeliverys = smartDeliverys)
+    } 
 
   loadsmartDeliveries() { 
     this.deliveryService.getsmartDeliverys()

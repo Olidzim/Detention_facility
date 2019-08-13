@@ -9,7 +9,7 @@
 {{message}}
 
 <br>
-<table class="table table-bordered table-sm">
+<table id= "auto-layout" class="table table-striped">
     <thead>
         <tr > 
             <td>Номер задержания</td>
@@ -18,15 +18,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let d of detentions" (dblclick)="editdetention(d)">
-            <ng-template [ngIf]="detention?.detentionID != d.detentionID" [ngIfElse]="edit">
-                <td>{{d?.detentionID}}</td>
-                <td >{{d?.detentionDate}}</td>
-                <td>{{d?.employeeFullName}}</td>
-                <button class="btn btn-block btn-secondary button5" (click)="toDetentionDetail(d)">Подробнее</button>                  
-                <button class="btn btn-block btn-secondary button5" (click)="delete(d)">X</button>      
-                <br>      
-            </ng-template>
+        <tr *ngFor="let d of detentions" (dblclick)="toDetentionDetail(d)">           
+            <td>{{d?.detentionID}}</td>
+            <td >{{d?.detentionDate}}</td>
+            <td>{{d?.employeeFullName}}</td>    
         </tr>
     </tbody>
 </table>

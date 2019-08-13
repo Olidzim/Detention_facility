@@ -1,7 +1,10 @@
+<div *appIsGranted="'UPDATE'">
+<button *ngIf = "!add"  (click)="changeAdd()" id="addbutton" type="button" class="btn btn-primary" >Добавить сотрудника</button>
+</div>
 <h2 style="margin-left: 10px">Сотрудники</h2>
-<button *ngIf = "!add"  (click)="changeAdd()">Добавить сотрудника</button>
+<br>
 <div *ngIf = "!add">
-<table class="table table-bordered table-sm">
+<table id="auto-layout" class="table table-bordered table-sm">
     <thead>
       <tr > 
         <td>Номер сотрудника</td>
@@ -10,6 +13,7 @@
         <td>Отчество</td>
         <td>Должность</td>
         <td>Звание</td>
+        <td>z</td>
       </tr>
     </thead>
     <tbody>
@@ -20,9 +24,11 @@
             <td>{{e?.lastName}}</td>
             <td>{{e?.patronymic}}</td>
             <td>{{e?.position}}</td>
-            <td>{{e?.employeeRank}}</td>               
-             <button class="btn btn-block btn-secondary" (click)="editEmployee(e)">Изменить</button>                
-            <button class="btn btn-block btn-secondary button5" (click)="delete(e)">X</button>
+            <td>{{e?.employeeRank}}</td>  
+            <td>                    
+            <button id="tablebutton" class="btn btn-block btn-secondary" (click)="editEmployee(e)"></button>                
+            <button id="tablebutton" class="btn btn-block btn-secondary button5" (click)="delete(e)">X</button>
+            </td> 
           </ng-template>
         </tr>
     </tbody>
@@ -90,7 +96,7 @@
   <div class="form-row">
     <div class="form-group">
       <button type="submit" (click)="createNewEmployee()" class="btn btn-lg btn-block" [disabled]="form.invalid">Добавить сотрудника</button>
-      <button type="submit" (click)="changeAdd()" class="btn btn-lg btn-block" [disabled]="form.invalid">Отмена</button>
+      <button type="submit" (click)="add = false" class="btn btn-lg btn-block" >Отмена</button>
     </div>
   </div>
   

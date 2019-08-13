@@ -30,18 +30,20 @@ export class DetentionComponent implements OnInit {
       this.loadsmartDetentions()
     }
     else {    */
+
     this.sharedService.currentDate.subscribe(date =>{
-     console.log("else")     
-      this.date = date
-      if(this.date == undefined)
+      if(this.router.url == '/home/detention')
       {
-        console.log("initNoDate")
-        this.loadsmartDetentions();
-      }
-      else
-      {
-        console.log("initDate")
-        this.getDetentionsByDate();
+        this.date = date
+        if(this.date == undefined)
+        {
+          this.loadsmartDetentions();
+        }
+        else
+        {
+ 
+          this.getDetentionsByDate();
+        } 
       }      
       }) 
     }

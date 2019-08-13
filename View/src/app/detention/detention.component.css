@@ -47,7 +47,10 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-
+#auto-layout {
+  table-layout: auto;
+  width: 100%;
+ }
 .hi {
   height: 1000px !important;
 }

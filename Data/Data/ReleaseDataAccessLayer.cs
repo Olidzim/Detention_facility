@@ -103,10 +103,10 @@ namespace Detention_facility.Data
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                Release Release = null;
+                Release release = null;
                 while (reader.Read())
                 {
-                    Release = new Release
+                    release = new Release
                     {
                         ReleaseID = Convert.ToInt32(reader.GetValue(0)),
 
@@ -121,7 +121,7 @@ namespace Detention_facility.Data
 
                 }
                 connection.Close();
-                return Release;
+                return release;
             }
         }
 
@@ -221,12 +221,12 @@ namespace Detention_facility.Data
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
-                Release Release = null;
+                Release release = null;
 
-                List<Release> Releases_list = new List<Release>();
+                List<Release> releases_list = new List<Release>();
                 while (reader.Read())
                 {
-                    Release = new Release
+                    release = new Release
                     {
                         ReleaseID = Convert.ToInt32(reader.GetValue(0)),
 
@@ -243,7 +243,46 @@ namespace Detention_facility.Data
                         AmountAccrued = Convert.ToInt32(reader.GetValue(6))
                     };
 
-                    Releases_list.Add(Release);
+                    releases_list.Add(release);
+                }
+                connection.Close();
+                return releases_list;
+            }
+        }
+
+        public List<SmartRelease> GetSmartReleasesByDate(DateTime date)
+        {
+            const string storedProcedureName = Constants.GetSmartReleasesByDate;
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(Constants.ReleaseDate, SqlDbType.Date);
+                command.Parameters[Constants.ReleaseDate].Value = date;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SmartRelease release = null;
+                List<SmartRelease> Releases_list = new List<SmartRelease> ();
+                while (reader.Read())
+                {
+                    release = new SmartRelease
+                    {
+
+                    ReleaseID = Convert.ToInt32(reader.GetValue(0)),
+
+                    ReleaseDate = Convert.ToDateTime(reader.GetValue(1)),
+
+                    AmountAccrued = reader.GetValue(2) == DBNull.Value ? 0 : Convert.ToInt32(reader.GetValue(2)),
+
+                    AmountPaid = reader.GetValue(3) == DBNull.Value ? 0 : Convert.ToInt32(reader.GetValue(3)),
+
+                    EmployeeFullName = reader.GetValue(4).ToString(),
+                };
+
+                    Releases_list.Add(release);
                 }
                 connection.Close();
                 return Releases_list;

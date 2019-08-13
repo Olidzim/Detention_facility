@@ -1,5 +1,6 @@
 ﻿using Detention_facility.Data;
 using Detention_facility.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Detention_facility.Business
@@ -68,6 +69,11 @@ namespace Detention_facility.Business
         public Release GetReleaseByIDs(int detaineeID, int detentionID)
         {
             return _releaseDataProvider.GetReleaseByIDs(detaineeID, detentionID);
+        }
+
+        public List<SmartRelease> GetSmartReleasesByDate(DateTime date)
+        {
+            return _releaseDataProvider.GetSmartReleasesByDate(date);
         }
     }
 }

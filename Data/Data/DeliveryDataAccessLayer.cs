@@ -117,7 +117,6 @@ namespace Detention_facility.Data
             }
         }
 
-
         public Delivery GetDeliveryByIDs(int detaineeID, int detentionID)
         {
             const string storedProcedureName = Constants.GetDeliveriesByIDs;
@@ -193,6 +192,41 @@ namespace Detention_facility.Data
                 }
                 connection.Close();
                 return delivery;
+            }
+        }
+
+        public List<SmartDelivery> GetSmartDeliveriesByDate(DateTime date)
+        {
+            const string storedProcedureName = Constants.GetSmartDeliveriesByDate;
+            using (SqlConnection connection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(storedProcedureName, connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(Constants.DeliveryDate, SqlDbType.Date);
+                command.Parameters[Constants.DeliveryDate].Value = date;
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SmartDelivery delivery = null;
+                List<SmartDelivery> deliveriesList = new List<SmartDelivery>();
+                while (reader.Read())
+                {
+                    delivery = new SmartDelivery
+                    {
+                        DeliveryID = Convert.ToInt32(reader.GetValue(0)),
+
+                        DeliveryDate = Convert.ToDateTime(reader.GetValue(1)),
+
+                        PlaceAddress = reader.GetValue(2).ToString(),
+
+                        EmployeeFullName = reader.GetValue(3).ToString()
+                    };
+                    deliveriesList.Add(delivery);
+                }
+                connection.Close();
+                return deliveriesList;
             }
         }
 

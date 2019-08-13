@@ -6,22 +6,26 @@
           <br><b>Дата задержания:</b><br>         
           <input type="date" [(ngModel)]="detention.detentionDate" class="form-control" name="UserName" />    
           <br><b>Фамилия и инициалы лица отвественного за задержание:</b> 
+          <div>
           <employee-search (toAddDetention)="getEmployeeFromSearch($event)"></employee-search>  
+          </div>
           <br>   
           <p *ngIf="employeeWhoDetain">Ответственный за задержание:</p>  
           <p *ngIf="employeeWhoDetain">{{employeeWhoDetain.fullName}} {{employeeWhoDetain.employeeRank}} {{employeeWhoDetain.position}}</p>  
-     
+          <button type="button"  routerLink="add-detainee" routerLinkActive="active" class="btn btn-primary">Добавить нового задержанного</button> 
+          <br>
+          <br>                 
+          <button type="button"  routerLink="find-detainee" routerLinkActive="active" class="btn btn-primary">Найти задержанного для добавления</button>
         </form>
     
     </div>
-    <div class="block15">
-    <button type="button" id="#add-button" routerLink="add-detainee" routerLinkActive="active" class="btn btn-primary">Добавить нового задержанного</button> 
-    <br>
-    <br>                 
-    <button type="button" id="#add-button" routerLink="find-detainee" routerLinkActive="active" class="btn btn-primary">Найти задержанного для добавления</button>
-   </div>
+    
+    <!--<div class="block15">
+
+   </div>-->
     <div class="block2">  
       <router-outlet (activate)="onActivate($event)"></router-outlet>
+      <!--<router-outlet ></router-outlet>-->
     </div>
    <!--- <button type="button" (click)="but()" class="btn btn-primary">but</button>&nbsp;-->
 
@@ -68,6 +72,7 @@
         </tr>
       </tbody>
     </table>
+    <br>    
     <button type="button"  id="#bot-button"  (click)="addDetention()" class="btn btn-primary">Добавить задержание</button>
     </div>
 

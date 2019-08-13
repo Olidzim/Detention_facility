@@ -2,6 +2,7 @@
 using Detention_facility.Models;
 using System.Collections.Generic;
 using Detention_facility.Custom;
+using System;
 
 namespace Detention_facility.Business
 {
@@ -95,6 +96,11 @@ namespace Detention_facility.Business
         public Delivery GetDeliveryByIDs(int detaineeID, int detentionID)
         {
             return _deliveryDataProvider.GetDeliveryByIDs(detaineeID, detentionID);
+        }
+
+        public List<SmartDelivery> GetSmartDeliveriesByDate(DateTime date)
+        {
+            return _deliveryDataProvider.GetSmartDeliveriesByDate(date);
         }
     }
 }

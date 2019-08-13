@@ -3,7 +3,7 @@
   <form method="post">
       <div class="row" id="float-left">
          
-             
+         
                 <img style="width:250px; height:200px" *ngIf="detainee && imageUrl == null" id="img" class="image-holder" [src]=url>  
                <!-- <img style="width:250px; height:200px" *ngIf="imageUrl != null" id="img" class="image-holder" [src]="imageUrl"> -->            
                 <br>
@@ -19,8 +19,11 @@
       </div>
       <div class="row">          
           <div class="col-md-8">
+              <div *appIsGranted="'UPDATE'">
+                    <button type="button" *ngIf="router.url.substring(0, 19) == '/home/add-detention'" (click)="sendDetaineeToDetention()" class="btn btn-primary">Добавить к задержанию</button>
                     <button type="button" (click)="change = !change" class="btn btn-primary">Изменить информацию о задержанном</button>
-                    <button type="button" (click)="deleteCurrentDetainee()" class="btn btn-primary">Удалить задержанного</button>    
+                    <button type="button"  (click)="deleteCurrentDetainee()" class="btn btn-primary">Удалить задержанного</button>  
+                </div>  
                     <button type="button" (click)="saveChanges()" class="btn btn-primary">Сохранить изменения</button>      
                     <button type="button" (click)="change = !change" class="btn btn-primary">Отмена</button>               
                     &nbsp;

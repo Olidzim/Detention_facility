@@ -11,11 +11,12 @@
         public const string GetDeliveriesOfDetainees = "GetDeliveriesOfDetainees";
         public const string UpdateDelivery = "UpdateDelivery";
         public const string DeleteDelivery = "DeleteDelivery";
+        public const string GetSmartDeliveriesByDate = "GetSmartDeliveriesByDate";
 
         public const string DeliveryID = "@DeliveryID";
         public const string DeliveredByEmployeeID = "@DeliveredByEmployeeID";
         public const string DeliveryDate = "@DeliveryDate";
-
+        
 
         //Detainee
         public const string InsertDetainee = "InsertDetainee";
@@ -84,12 +85,13 @@
         public const string UpdateRelease = "UpdateRelease";
         public const string DeleteRelease = "DeleteRelease";
         public const string GetReleaseByID = "GetReleaseByID";
+        public const string GetSmartReleasesByDate = "GetSmartReleasesByDate";
 
         public const string ReleaseID = "@ReleaseID";
         public const string ReleasedByEmployeeID = "@ReleasedByEmployeeID";
         public const string ReleaseDate = "@ReleaseDate";
         public const string AmountPaid = "@AmountPaid";
-        public const string AmountAccrued = "@AmountAccrued";
+        public const string AmountAccrued = "@AmountAccrued";        
 
         //Common
         public const string term = "@term";

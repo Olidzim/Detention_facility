@@ -1,10 +1,14 @@
 <!--{{res}}-->
 
+<div *appIsGranted="'UPDATE'">
 <button *ngIf="delivery.deliveryID==null && !add && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
+</div>
 <app-add-delivery [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewDelivery)="getDeliveryFromAdd($event)" *ngIf="add && delivery.deliveryID==null"></app-add-delivery>
 <div *ngIf="delivery.deliveryID && !change">
+    <div *appIsGranted="'UPDATE'">
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить доставку</button>
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали доставки</button>
+    </div>
     <table class="table2">
         <tbody>
             <tr> 

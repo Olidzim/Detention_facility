@@ -1,8 +1,13 @@
+
+<div *appIsGranted="'UPDATE'">
 <button *ngIf="release.releaseID==null && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
+</div>
 <app-add-release [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewRelease)="getReleaseFromAdd($event)" *ngIf="add && release.releaseID==null"></app-add-release>
 <div *ngIf="release.releaseID">
+    <div *appIsGranted="'UPDATE'">
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить освобождение</button>
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали освобождения</button>
+</div>
     <table class="table2">
         <tbody>
             <tr > 

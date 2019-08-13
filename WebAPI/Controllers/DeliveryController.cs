@@ -1,5 +1,6 @@
 ﻿using Detention_facility.Business;
 using Detention_facility.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -75,6 +76,19 @@ namespace Detention_facility.Controllers
                 return NotFound();
             }
             return Ok(delivery);
+        }
+
+        [Authorize(Roles = "Admin,Editor,User")]
+        [HttpPost]
+        public IHttpActionResult GetSmartDeliveriesByDate([FromBody] DateTime date)
+        {
+            var deliveriesList = _deliveryService.GetSmartDeliveriesByDate(date);
+            if (deliveriesList == null)
+            {
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет доставок");
+                return NotFound();
+            }
+            return Ok(deliveriesList);
         }
 
         [Authorize(Roles = "Admin,Editor,User")]

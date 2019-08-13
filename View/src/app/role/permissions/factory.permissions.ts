@@ -10,8 +10,7 @@ export class PermissionsFactory {
   public static instance: PermissionBase;
   private constructor() {}
 
-  public static getInstance() {
-    console.log("Hi role:"+localStorage.getItem('role'))
+  public static getInstance() {   
    /* if (this.instance) {
       return this.instance;
     } else {*/
@@ -21,8 +20,7 @@ export class PermissionsFactory {
          this.instance = new AdminPermission();
          break;
         case Role.EDITOR: 
-        {
-          console.log("Hi Editor")
+        {        
          this.instance = new EditorPermission();
           break;  
         }            
@@ -34,7 +32,6 @@ export class PermissionsFactory {
           break;
     //  }
     }
-    console.log(this.instance)
     return this.instance;
   }
 }

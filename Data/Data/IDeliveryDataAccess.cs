@@ -1,4 +1,5 @@
 ﻿using Detention_facility.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Detention_facility.Data
@@ -12,5 +13,6 @@ namespace Detention_facility.Data
         List<Delivery> GetDeliveries();
         SmartDelivery GetSmartDeliveryByIDs(int detaineeID, int detentionID);
         Delivery GetDeliveryByIDs(int detaineeID, int detentionID);
+        List<SmartDelivery> GetSmartDeliveriesByDate(DateTime date);
     }
 }

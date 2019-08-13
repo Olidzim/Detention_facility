@@ -1,15 +1,12 @@
 <nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
         <a class="navbar-brand text-white" id="nav-cursor" [routerLink]="['/home']">Специальный изолятор</a>
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item" id="nav-cursor">
-              <a class="nav-link" (click)="isSearch = !isSearch">Поиск</a>
+            <li class="nav-item" id="nav-cursor">
+              <a class="nav-link" (click)="isSearch = true">Поиск</a>
             </li>
-          <li  class="nav-item" id="nav-cursor">
-              <a class="nav-link"  (click)="isSearch = !isSearch">Таблицы</a>
-            </li>
-            <li *ngIf="isAdmin()" class="nav-item" id="nav-cursor">
-              <a class="nav-link" href="#">Панель администратора</a>
-            </li>      
+            <li class="nav-item" id="nav-cursor">
+              <a class="nav-link"  (click)="isSearch = false">Таблицы</a>
+            </li>    
         </ul>
         
         <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
@@ -28,7 +25,7 @@
                 <li>
                     <a  routerLink="detainee" routerLinkActive="active">Задержанные</a>
                 </li>
-                <li>
+                <li *appIsGranted="'UPDATE'">
                     <a routerLink="employee" routerLinkActive="active">Сотрудники</a>
                 </li>  
                 <li>
@@ -37,7 +34,7 @@
                 <li>
                     <a routerLink="release" routerLinkActive="active">Освобождения</a>
                 </li>  
-                <li>
+                <li *ngIf="isAdmin()">
                     <a routerLink="user" routerLinkActive="active">Пользователи</a>
                 </li>      
             </ul>

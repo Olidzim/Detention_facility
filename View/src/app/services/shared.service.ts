@@ -17,6 +17,9 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class SharedService {
 
+  private detainee = new BehaviorSubject<Detainee>(undefined);
+  detaineeToDetention = this.detainee.asObservable();
+
   private messageSource = new BehaviorSubject<Date>(undefined);
   currentDate = this.messageSource.asObservable();
 
@@ -39,10 +42,17 @@ export class SharedService {
     default = false;
     ifDetention = false;
     date: Date;
+    oldDetaineeForDetention: Detainee;
   
     changeMessage(date: Date)
     {       
       this.messageSource.next(date)
+    }
+
+    sendDetaineeToDetention(detainee: Detainee)
+    {       
+      this.detainee.next(detainee)
+      console.log(detainee)
     }
 
     changeReleaseCancel(cancel: boolean)
