@@ -57,8 +57,7 @@ export class AddDetaineeComponent implements OnInit {
 
 
   uploadFile()
-  {
-    alert("dd")
+  {  
     ///TODO Upload file service
     let formData: FormData = new FormData(); 
     formData.append('uploadFile',   this.fileToUpload, this.fileToUpload.name);  

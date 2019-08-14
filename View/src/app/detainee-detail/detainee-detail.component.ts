@@ -58,7 +58,6 @@ export class DetaineeDetailComponent implements OnInit {
     this.getDetainee();
   }
   public getSantizeUrl() { 
-    alert("call")
     console.log(this.detainee)    
     this.path = "http://localhost:58653/UploadFile/"+this.detainee.photo; 
     this.url = this.sanitizer.bypassSecurityTrustUrl(this.path);
@@ -165,8 +164,7 @@ export class DetaineeDetailComponent implements OnInit {
   }
 
   uploadFile()
-  {
-    alert("dd")
+  {  
     ///TODO Upload file service
     let formData: FormData = new FormData(); 
     formData.append('uploadFile',   this.fileToUpload, this.fileToUpload.name);  
@@ -197,15 +195,13 @@ export class DetaineeDetailComponent implements OnInit {
   getDetainee(): void {
     let id;
       if (this.sharedService.forDetaineeDetailID == undefined)
-    {
-      alert("Hi")
+    {   
       console.log("Hi"+this.route.snapshot.paramMap.get('id'))
       id = this.route.snapshot.paramMap.get('id');
       this.sharedService.forDetaineeDetailID = id
     } 
     else
     {
-    alert("hello")
     id = this.sharedService.forDetaineeDetailID;  
     }  
     this.detaineeService.getDetainee(id)

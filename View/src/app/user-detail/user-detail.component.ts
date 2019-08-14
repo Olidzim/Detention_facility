@@ -26,7 +26,6 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
 
     this.getUser(this.sharedService.forUserDetailID)
-
   }
 
   getUser(id: number): void {
@@ -37,4 +36,16 @@ export class UserDetailComponent implements OnInit {
     });  
   }
 
+  deleteCurrentDetainee()
+  {   
+    if (localStorage.getItem('login') == this.user.login) {
+      alert("Нельзя удалить текущего пользователя")
+    }
+    else {
+      this.userService.deleteUser(this.user.userID)
+      .subscribe (data => { 
+      this.router.navigateByUrl('/home/user');
+      });
+    }
+  }
 }

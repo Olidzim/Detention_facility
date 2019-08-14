@@ -67,13 +67,11 @@ export class EmployeeDetailComponent implements OnInit {
   //this.sharedService.default = false;
   this.ifSearch = false;
   if (this.sharedService.ifDetention)
-  {
-    alert("detention")
+  {  
     this.toDetentionChange.emit(foundEmployee.employeeID);
   }
   else
-  {
-    alert("delivery")
+  {  
     this.toDeliveryAdd.emit(foundEmployee.employeeID);
     this.toReleaseAdd.emit(foundEmployee.employeeID);
     this.toDeliveryChange.emit(foundEmployee.employeeID);

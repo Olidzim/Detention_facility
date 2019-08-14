@@ -66,17 +66,14 @@ export class DetentionDetailComponent implements OnInit {
   getSmartDetentionsByID(): void {  
     let id
     if (this.sharedService.forDetentionDetailID == undefined)
-    {
-      alert("Hi")
+    { 
       console.log("Hi"+this.route.snapshot.paramMap.get('id'))
       id = this.route.snapshot.paramMap.get('id');
     } 
     else 
-    {
-      alert("hello")
+    {   
      id = this.sharedService.forDetentionDetailID;  
-    }  
-    alert(id)
+    }     
     this.detentionService.getSmartDetentionByDetentionID(id)
     .subscribe(res => 
       {this.smartDetention = res

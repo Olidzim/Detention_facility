@@ -41,8 +41,9 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token',res.access_token);    
     
       this.http.get('http://localhost:58653/api/account/getrole').subscribe((res:any) => {
-        this.sharedService.login = this.formModel.Login;
+        this.sharedService.login = this.formModel.Login;   
         localStorage.setItem('role',res);
+        localStorage.setItem('login',this.formModel.Login);
         this.router.navigateByUrl('/home');
       
       })

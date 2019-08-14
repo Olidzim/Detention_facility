@@ -39,9 +39,7 @@ export class ReleaseDetailComponent implements OnInit {
   }
 
   saveChanges()  
-  {
-
-    alert(this.release.releaseID)
+  { 
     console.log(this.release)
     this.releaseService.updateRelease(this.release)
     .subscribe(data => this.release = data);
