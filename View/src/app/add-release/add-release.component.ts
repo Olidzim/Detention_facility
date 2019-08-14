@@ -15,35 +15,36 @@ export class AddReleaseComponent implements OnInit {
   @Output() release: Release = new Release;
   @Output() toNewRelease = new EventEmitter<Release>();
 
-  constructor(private releaseService: ReleaseService, private sharedService: SharedService) { }
+  constructor(
+    private releaseService: ReleaseService, 
+    private sharedService: SharedService) { }
 
-  getEmployeeFromDetail(employeeIDForChange: number){  
-    console.log("releaseadd")
-    this.release.releasedByEmployeeID = employeeIDForChange;
-    }
-
-    cancel()
-    {
-      console.log("Check")
-      this.sharedService.changeReleaseCancel(false)
-    }
-
-  save()
-  {
-    this.release.detaineeID = this.detaineeID;
-    this.release.detentionID = this.detentionID;
-  this.releaseService.createRelease(this.release)
-  .subscribe((data: Release) => 
-  {
-    let sendDelivery = new Release; 
-    console.log(data);
-    this.toNewRelease.emit(this.release);
-  });
-  //console.log(this.delivery);
-  
-}
 
   ngOnInit() {
+  }
+
+
+  getEmployeeFromDetail(employeeIDForChange: number) {  
+    console.log("releaseadd")
+    this.release.releasedByEmployeeID = employeeIDForChange;
+  }
+
+
+  cancel() {
+    console.log("Check")
+    this.sharedService.changeReleaseCancel(false)
+  }
+
+
+  save() {
+    this.release.detaineeID = this.detaineeID;
+    this.release.detentionID = this.detentionID;
+    this.releaseService.createRelease(this.release)
+    .subscribe((data: Release) => {
+      let sendDelivery = new Release; 
+      console.log(data);
+      this.toNewRelease.emit(this.release);
+    });  
   }
 
 }

@@ -45,7 +45,25 @@ a, a:hover, a:focus {
     font-size: 12pt
 }
 
+#navbutton
+{
+    width: 200px
+}
+
 
 #nav-cursor {
     cursor: pointer;
 }
+
+.navbar-toggle {
+    float: left !important;
+    margin-left: 15px;
+  }
+  
+  .navbar-header.navbar-right.pull-right {
+    margin-right: 15px;
+  }
+  
+  .navbar-right > li {
+    float: left;
+  }

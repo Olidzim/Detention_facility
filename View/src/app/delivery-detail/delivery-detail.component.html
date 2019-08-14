@@ -1,10 +1,8 @@
-<!--{{res}}-->
-
 <div *appIsGranted="'UPDATE'">
-<button *ngIf="delivery.deliveryID==null && !add && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
+<button *ngIf="!isDelivery && !add && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию о доставке</button>
 </div>
-<app-add-delivery [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewDelivery)="getDeliveryFromAdd($event)" *ngIf="add && delivery.deliveryID==null"></app-add-delivery>
-<div *ngIf="delivery.deliveryID && !change">
+<app-add-delivery [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewDelivery)="getDeliveryFromAdd($event)" *ngIf="add && isDelivery"></app-add-delivery>
+<div *ngIf="isDelivery && !change">
     <div *appIsGranted="'UPDATE'">
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить доставку</button>
     <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали доставки</button>
@@ -38,7 +36,7 @@
     <p>Адрес места содержания:</p>
     <input type="text" [(ngModel)]="delivery.placeAddress" class="form-control" />   
 </div>
-<employee-detail *ngIf="delivery.deliveryID" (toDeliveryChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
+<employee-detail *ngIf="isDelivery" (toDeliveryChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="delivery.deliveredByEmployeeID"></employee-detail>
 <br>
 <br>
 <div *ngIf="change">

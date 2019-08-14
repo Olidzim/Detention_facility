@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ReleaseDetailComponent implements OnInit {
   add: boolean = false;
+  isRelease = false;
   res: string;
   change: boolean = false;
   @Input() detaineeID: number;
@@ -89,6 +90,7 @@ export class ReleaseDetailComponent implements OnInit {
     }
     else
     {
+      this.isRelease = true;
       this.release = res;  
       this.defaultEmployeeID = this.release.releasedByEmployeeID;      
     }

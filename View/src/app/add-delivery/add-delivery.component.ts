@@ -9,43 +9,43 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './add-delivery.component.html',
   styleUrls: ['./add-delivery.component.css']
 })
+
 export class AddDeliveryComponent implements OnInit {
-
-
- /* @Input()  employeeFullNameParent: boolean;*/
+  
   @Input() detaineeID: number;
   @Input() detentionID: number;
   @Output() delivery: Delivery = new Delivery;
   @Output() toNewDelivery = new EventEmitter<Delivery>();
 
+  constructor(
+    private deliveryService: DeliveryService, 
+    private sharedService: SharedService) { }
 
-  constructor(private deliveryService: DeliveryService, private sharedService: SharedService) { }
+
+  ngOnInit() {    
+  }
+
 
   getEmployeeFromDetail(employeeIDForChange: number){  
     console.log("deliveryadd")
     this.delivery.deliveredByEmployeeID = employeeIDForChange;
     }
 
-  save()
-  {
+
+  save(){
     this.delivery.detaineeID = this.detaineeID;
     this.delivery.detentionID = this.detentionID;
-  this.deliveryService.createDelivery(this.delivery)
-  .subscribe((data: Delivery) => 
-  {
+    this.deliveryService.createDelivery(this.delivery)
+    .subscribe((data: Delivery) => {
     let sendDelivery = new Delivery; 
     console.log(data);
     this.toNewDelivery.emit(this.delivery);
-  });
-  //console.log(this.delivery);
+    });  
+  }
   
-}
-cancel()
-{
+
+  cancel(){
   this.sharedService.changeDeliveryCancel(false)
-}
-  ngOnInit() {
-    
   }
 
 }

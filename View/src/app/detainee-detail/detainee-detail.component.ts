@@ -13,7 +13,7 @@ import { SmartRelease } from '../models/smartrelease';
 import { SharedService} from '../services/shared.service';
 import { DeliveryService} from '../services/delivery.service';
 import { DetentionService } from '../services/detention.service';
-import { Router, Route } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-detainee-detail',
   templateUrl: './detainee-detail.component.html',
@@ -49,12 +49,13 @@ export class DetaineeDetailComponent implements OnInit {
     private deliveryService: DeliveryService,
     private detentionService: DetentionService,
     private router: Router,
+    private route: ActivatedRoute
  
     ) { }
 
   ngOnInit() {
     //this.sharedService.id;
-    this.getDetainee(this.sharedService.forDetaineeDetailID);
+    this.getDetainee();
   }
   public getSantizeUrl() { 
     alert("call")
@@ -111,7 +112,10 @@ export class DetaineeDetailComponent implements OnInit {
   {
     console.log(this.detainee)
     this.detaineeService.updateDetainee(this.detainee)
-    .subscribe(data => this.detainee = data);
+    .subscribe(data => 
+      {this.detainee = data
+        this.uploadFile();
+      });
     this.change = false;
   /*  this.sharedService.ifChange = false;
     this.sharedService.default = true;*/
@@ -190,8 +194,20 @@ export class DetaineeDetailComponent implements OnInit {
 
   }
 
-    getDetainee(id: number): void {
-
+  getDetainee(): void {
+    let id;
+      if (this.sharedService.forDetaineeDetailID == undefined)
+    {
+      alert("Hi")
+      console.log("Hi"+this.route.snapshot.paramMap.get('id'))
+      id = this.route.snapshot.paramMap.get('id');
+      this.sharedService.forDetaineeDetailID = id
+    } 
+    else
+    {
+    alert("hello")
+    id = this.sharedService.forDetaineeDetailID;  
+    }  
     this.detaineeService.getDetainee(id)
     .subscribe(response =>     
       {this.detainee = response 
@@ -199,11 +215,11 @@ export class DetaineeDetailComponent implements OnInit {
         let timeDiff = Math.abs(Date.now() - newDate.getTime());
         this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
         this.getSantizeUrl();
+        this.getSmartDetentionsByDetaineeID();   
       
     });   
-    this.getSmartDetentionsByDetaineeID();     
-   
-   // alert(this.myDate)
+  
+  
   }
 
   

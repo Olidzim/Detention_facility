@@ -9,6 +9,7 @@ import { SharedService } from '../services/shared.service';
   styleUrls: ['./add-detainee.component.css']
 })
 export class AddDetaineeComponent implements OnInit {
+
   bookFormGroup: FormGroup;
   imageUrl: string = "/assets/img/find.png";
   filetoUpload: File = null;
@@ -18,39 +19,42 @@ export class AddDetaineeComponent implements OnInit {
   path: string;
   Logo: string;
   fileToUpload: File = null;
-  constructor(private fb: FormBuilder, private http: HttpClient, private sharedService: SharedService) 
+
+  constructor (
+    private fb: FormBuilder, 
+    private http: HttpClient, 
+    private sharedService: SharedService ) 
   {
     this.bookFormGroup = this.fb.group({})
   }
 
+
   ngOnInit() {}
-  checkIt() {}
+
 
   handleFileInput(file: FileList)
   {
   this.fileToUpload = file.item(0);
   var reader = new FileReader();
-  reader.onload = (event:any) =>
-  {
+  reader.onload = (event:any) => {
     this.imageUrl = event.target.result;
   }
-  reader.readAsDataURL(this.fileToUpload);
-  console.log(this.fileToUpload)
-  //TODO Observable
+  reader.readAsDataURL(this.fileToUpload);  
   if (!this.filesArrayCheck(this.fileToUpload))
    this.filetoUploadMassive.push(this.fileToUpload);  
   }
 
+
   filesArrayCheck(file: File): boolean
   {
     this.sharedService.files.forEach(element => {
-      if (element == file)
-      {
+      if (element == file) {
         return true;
       }      
     });
    return false;
   }
+
 
   uploadFile()
   {
@@ -66,11 +70,11 @@ export class AddDetaineeComponent implements OnInit {
     });
   }
 
-    handleUpload(e):void{
-      this.Logo = e.target.value;
+
+  handleUpload(e):void {
+    this.Logo = e.target.value;
   }
 
-  anyFunction(){}
 
   sendDetaineeToDetention() {
     this.detainee.photo = this.fileToUpload.name;
@@ -80,4 +84,5 @@ export class AddDetaineeComponent implements OnInit {
 
     this.searchItem.emit(copy);
   }
+  
 }

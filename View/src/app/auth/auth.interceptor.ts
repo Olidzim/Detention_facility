@@ -8,7 +8,6 @@ import { Router } from "@angular/router";
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private router: Router) {
-
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,4 +32,5 @@ export class AuthInterceptor implements HttpInterceptor {
         else
             return next.handle(req.clone());
     }
+    
 }

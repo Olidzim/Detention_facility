@@ -20,175 +20,110 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./add-detention.component.css']
 })
 export class AddDetentionComponent implements OnInit {
+
   employeeWhoDetain: SmartEmployee;
-
   detainee: Detainee;
-
-
   resp: ResponseClass
   detainees : Detainee[] = new Array();
   newDetainees: Detainee[] = new Array();
-
-  ss: number = 4;
-
   detention:  Detention = new Detention(); 
-
   private searchTerms = new Subject<string>();
+  
 
-  constructor( private http: HttpClient, private sanitizer: DomSanitizer, private detentionService: DetentionService, private detaineeService: DetaineeService, private sharedService: SharedService) { }
+  constructor( 
+    private http: HttpClient, 
+    private sanitizer: DomSanitizer, 
+    private detentionService: DetentionService, 
+    private detaineeService: DetaineeService, 
+    private sharedService: SharedService) { }
+
 
   ngOnInit() {
-    this.sharedService.detaineeToDetention.subscribe(detainee => {
-      if (detainee == undefined)
-      {
-        console.log("undefined")
-      }
-      else
-      {     
-        if (this.searchInOldDetaineesArray(detainee.detaineeID))
-        {
+    this.sharedService.detaineeToDetention.subscribe(detainee => {  
+      if (detainee != undefined) {     
+        if (this.searchInOldDetaineesArray(detainee.detaineeID)) {
           alert("Уже добавлен")
         }
-        else
-        {
+        else {
           this.detainees.push(detainee)      
         }
       }
     }) 
   }
 
+
   searchInOldDetaineesArray (id: number) : boolean
   {
-    let value = false;
-    console.log(id)
+    let isAdded = false;
     this.detainees.forEach(element => {
-      if (element.detaineeID == id)
-      {
-        console.log("true")        
-        value = true;
-      }
-      
+      if (element.detaineeID == id) {      
+        isAdded= true;
+      }      
     });
-    return value;
+    return isAdded;
   }
+
 
   search(term: string): void {
-  this.searchTerms.next(term);
-  
+  this.searchTerms.next(term);  
   }
 
-  getEmployeeFromSearch(foundEmployee: SmartEmployee)
-  {
-  console.log(foundEmployee)
+
+  getEmployeeFromSearch(foundEmployee: SmartEmployee){  
   this.employeeWhoDetain = foundEmployee;
   }
 
-//ternar
- onActivate(componentReference) {
-  componentReference.anyFunction();
-  componentReference.searchItem.subscribe((data) => {
-  let newDetainee = data;
-    if (newDetainee.detaineeID == undefined)
-      {
+  
+  onActivate(componentReference) { 
+    componentReference.searchItem.subscribe((data) => {
+      let newDetainee = data;
+      if (newDetainee.detaineeID == undefined){
       this.newDetainees.push(data);
       }
-    else
-      {
+      else {
       this.detainees.push(data);
       }
     })
   } 
 
-  addDetention()
-  { 
-    let r
-    this.uploadFile().subscribe(data=>{
-      r = data
-      if(r.isSuccess)
-      {
+
+  addDetention() { 
+    let smartResponse
+    this.uploadFile().subscribe( data=> {
+      smartResponse = data
+      if(smartResponse.isSuccess) {
         console.log("file uploaded")
         this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
         this.detentionService.addDetention(this.detention).subscribe(response => {
         this.addDetainees(response.detentionID)
         });
       }
-      else if (!r.isSuccess)
-      {
-        alert(r.message)
+      else if (!smartResponse.isSuccess) {
+        alert(smartResponse.message)
       }
-  
-  
-  })
- 
-
-  /**Add detention**/
-
-
-      
-  
-
-
-  }
-  but()
-  {
-    
-   
-    let k = this.sanitizer.bypassSecurityTrustUrl("http://localhost:58653/UploadFile/1.png");
-    console.log()
- 
-    /*alert()
-    this.http.get("http://localhost:58653/UploadFile/1.png", {observe: 'response'}).subscribe(data => 
-    {
-      console.log(data.status)
-      if (data.status == 404)
-      {
-      alert("Нет")
-      }
-      else  
-      {
-        alert("Есть")
-      }
-    })*/
-
+    })
   }
 
-  uploadFile(): any
-  {
+
+  uploadFile(): any {
     let r: ResponseClass;
-    ///TODO Upload file service
     let formData: FormData = new FormData(); 
     this.sharedService.files.forEach(element => {
       formData.append('uploadFile',element, element.name);  
-    });
-    
-    //this.detainee.photo = this.file.name;
-    let apiUrl1 = "http://localhost:58653/api/Upload/UploadJsonFile";
+    }); 
+
+    let url = "http://localhost:58653/api/Upload/UploadJsonFile";
     console.log("form data: "+formData)  
 
-    return this.http.post(apiUrl1, formData).pipe(map((response: ResponseClass) => 
-    {r = response
+    return this.http.post(url, formData).pipe(map((response: ResponseClass) => {
+      r = response
       return r;
     }));
   }
-     /// <<<=== use `map` here
 
 
-  
-
-
-  /*  this.http.post(apiUrl1, formData).subscribe
-   (res=> 
-    {r = res
-    return r;
-    })*/
-
-
-   
-  
-
-  addDetainees (detentionID)
-  {
   /**Add new detainees**/
+  addDetainees (detentionID) {  
   this.newDetainees.forEach(newDetainee => {
     this.detaineeService.addDetainee(newDetainee).subscribe(response => {
       newDetainee = response;
@@ -200,12 +135,13 @@ export class AddDetentionComponent implements OnInit {
     });
   }
 
-  addDetaineesInDetention(detentionID,detaineeID)
-  {
-  /**Add detainees in detention **/
+
+   /**Add detainees in detention **/
+  addDetaineesInDetention(detentionID,detaineeID){ 
     this.detaineeService.addDetaineeToDetention(detentionID,detaineeID).subscribe(hero => {
     });
   }
+
 
   save(): void {
   this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;

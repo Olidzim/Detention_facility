@@ -11,35 +11,32 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DeliveryComponent implements OnInit {
 
-  date: Date;
-  
+  date: Date;  
   smartDeliverys: SmartDelivery[];
 
-  constructor(private router: Router, private sharedService: SharedService, private deliveryService: DeliveryService) { }
+  constructor(
+    private router: Router, 
+    private sharedService: SharedService, 
+    private deliveryService: DeliveryService ) { }
 
   ngOnInit() {
-    this.sharedService.currentDate.subscribe(date =>{        
-       this.date = date     
-       if(this.router.url == '/home/delivery')
-       {
-        if(this.date == undefined)
-        {
-        console.log("initNoDate")
-        this.loadsmartDeliveries();
+    this.sharedService.currentDate.subscribe(date => {        
+      this.date = date     
+      if(this.router.url == '/home/delivery') {
+        if(this.date == undefined) {   
+          this.loadsmartDeliveries();
         }
-        else
-        {
-        console.log("initDate")
-        this.getSmartDeliveriesByDate();
+        else { 
+          this.getSmartDeliveriesByDate();
         } 
       }     
-       }) 
-     }
+    })     
+  }
     
-    getSmartDeliveriesByDate() {   
+  getSmartDeliveriesByDate() {   
     this.deliveryService.getSmartDeliveriesByDate(this.date).subscribe
     ((smartDeliverys:SmartDelivery[]) => this.smartDeliverys = smartDeliverys)
-    } 
+  } 
 
   loadsmartDeliveries() { 
     this.deliveryService.getsmartDeliverys()

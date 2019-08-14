@@ -79,9 +79,7 @@ export class FindDetaineeComponent implements OnInit {
     componentReference.getDetainee(this.foundDetainee.detaineeID);
   }
 
-  anyFunction(){
-    console.log('called from parent')
-  }
+
 
   cl(){}
 

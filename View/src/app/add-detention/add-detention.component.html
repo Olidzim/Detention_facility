@@ -1,7 +1,7 @@
 <h2>Задержание</h2>   
 <br>
 <div class="container">
-   <div class="form-style" class="block1">    
+  <div class="form-style" class="block1">    
     <form #form=ngForm form class="form-group">
           <br><b>Дата задержания:</b><br>         
           <input type="date" [(ngModel)]="detention.detentionDate" class="form-control" name="UserName" />    
@@ -17,43 +17,32 @@
           <br>                 
           <button type="button"  routerLink="find-detainee" routerLinkActive="active" class="btn btn-primary">Найти задержанного для добавления</button>
         </form>
-    
-    </div>
-    
-    <!--<div class="block15">
-
-   </div>-->
-    <div class="block2">  
-      <router-outlet (activate)="onActivate($event)"></router-outlet>
-      <!--<router-outlet ></router-outlet>-->
-    </div>
-   <!--- <button type="button" (click)="but()" class="btn btn-primary">but</button>&nbsp;-->
-
-
-
-      <div *ngIf="detainees[0] || newDetainees[0]" class="block3">
-      <h4 *ngIf="detainees[0] || newDetainees[0]">Список задержанных</h4> 
-      <p *ngIf="detainees[0]">Задерживались ранее</p>
-      <table *ngIf="detainees[0]" class="table1">
-        <thead>
-          <tr> 
-            <td>Номер задержанного</td>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>Отчество</td>     
-          </tr>
-        </thead>
-        <tbody> 
-          <tr  *ngFor="let detainee of detainees">                 
-            <td>{{detainee?.detaineeID}}</td>
-            <td>{{detainee?.firstName}}</td>
-            <td>{{detainee?.lastName}}</td>
-            <td>{{detainee?.patronymic}}</td>                    
-          </tr>
-        </tbody>
-      </table>
-      
-      <p *ngIf="newDetainees[0]" >Новые задержанные</p>      
+  </div>   
+  <div class="block2">  
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </div>
+  <div *ngIf="detainees[0] || newDetainees[0]" class="block3">
+    <h4 *ngIf="detainees[0] || newDetainees[0]">Список задержанных</h4> 
+    <p *ngIf="detainees[0]">Задерживались ранее</p>
+    <table *ngIf="detainees[0]" class="table1">
+      <thead>
+        <tr> 
+          <td>Номер задержанного</td>
+          <td>Имя</td>
+          <td>Фамилия</td>
+          <td>Отчество</td>     
+        </tr>
+      </thead>
+      <tbody> 
+        <tr  *ngFor="let detainee of detainees">                 
+          <td>{{detainee?.detaineeID}}</td>
+          <td>{{detainee?.firstName}}</td>
+          <td>{{detainee?.lastName}}</td>
+          <td>{{detainee?.patronymic}}</td>                    
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="newDetainees[0]" >Новые задержанные</p>      
     <table *ngIf="newDetainees[0]" class="table2">
       <thead>
         <tr> 
@@ -74,9 +63,5 @@
     </table>
     <br>    
     <button type="button"  id="#bot-button"  (click)="addDetention()" class="btn btn-primary">Добавить задержание</button>
-    </div>
-
-
-
-   
+  </div>
 </div>

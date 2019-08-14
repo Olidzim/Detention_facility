@@ -14,6 +14,7 @@ import { SharedService } from '../services/shared.service';
 export class DetaineeComponent implements OnInit {
   @Input() detainee: Detainee;
   @Input() smartDetentions: SmartDetention[];
+
   detainees : Detainee[];
   number: string ='';
   id: number;
@@ -25,24 +26,27 @@ export class DetaineeComponent implements OnInit {
   private sharedService: SharedService
   ) { }
 
-  ngOnInit() {
-    console.log("detainees")   
+  ngOnInit() {    
     this.loadsmartDetainees();  
   }
+
 
   loadsmartDetainees() { 
     this.detaineeService.getsmartDetainees()
     .subscribe((data: Detainee[]) => this.detainees = data);
   }
 
+
   editdetainee(d:Detainee) {
     this.detainee = d;
   }
+
 
   delete(p: Detainee) {
     this.detaineeService.deleteDetainee(p.detaineeID)
     .subscribe(data => this.loadsmartDetainees());
   }
+
 
   saveChanges()
   { 
@@ -51,16 +55,18 @@ export class DetaineeComponent implements OnInit {
     this.cancel();    
   }
 
+
   cancel() {
-    this.detainee = new Detainee();
-    //this.tableMode = true;
+    this.detainee = new Detainee();    
   }
+
 
   toDetaineeDetail(d: SmartDetainee)
   {    
     this.sharedService.forDetaineeDetailID = d.detaineeID;    
     this.router.navigateByUrl('/home/detainee/detainee-detail/'+d.detaineeID);
   }
+  
 
   getDetainee(): void { 
     this.detaineeService.getDetainee(this.id)

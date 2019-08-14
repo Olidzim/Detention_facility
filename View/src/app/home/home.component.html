@@ -1,4 +1,5 @@
-<nav class="navbar  navbar-expand-sm navbar-dark bg-dark">
+<nav id="nav-width" class="navbar  navbar-expand navbar-dark bg-dark">
+        <div class="navbar-collapse collapse">
         <a class="navbar-brand text-white" id="nav-cursor" [routerLink]="['/home']">Специальный изолятор</a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" id="nav-cursor">
@@ -9,7 +10,8 @@
             </li>    
         </ul>
         
-        <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
+        <button id="navbutton"class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Выход из системы</button>
+        </div>
     </nav>
     <div *ngIf="!isSearch" class="wrapper">
         <nav id="sidebar">

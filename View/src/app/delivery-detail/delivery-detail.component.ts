@@ -14,51 +14,58 @@ import { Router } from '@angular/router';
   styleUrls: ['./delivery-detail.component.css']
 })
 export class DeliveryDetailComponent implements OnInit { 
-  add: boolean;
-  res: string;
-  change: boolean = false;
+
   @Input() detaineeID: number;
   @Input() detentionID: number;
+
+  add: boolean;
+  isDelivery: boolean = false;
+  res: string;
+  change: boolean = false;
   delivery: Delivery;
   defaultEmployeeID: number;
-  constructor(private deliveryService: DeliveryService, private sharedService: SharedService, private router: Router) { }
-  
+
+  constructor(private deliveryService: DeliveryService, 
+    private sharedService: SharedService, 
+    private router: Router) { }  
   
   openDialog(): void {}
+
 
   ngOnInit() {
     console.log(this.delivery)   
     this.getDelivery(this.detaineeID, this.detentionID)
     this.sharedService.ifChange = false;
     this.res = this.router.url.substring(0, 15);
-    this.sharedService.cancelDeliveryStatus.subscribe(status =>
-      {   
-        this.add = status   
-      
-      })  
+    this.sharedService.cancelDeliveryStatus.subscribe(status => {   
+      this.add = status   
+    })  
   }
+
 
   ngOnChanges() {
    this.getDelivery(this.detaineeID, this.detentionID)
   }
 
+
   getEmployeeFromDetail(employeeIDForChange: number){  
   this.delivery.deliveredByEmployeeID = employeeIDForChange;
   }
 
-  getDeliveryFromAdd(delivery: Delivery){  
-    console.log("newDelivery")
+
+  getDeliveryFromAdd(delivery: Delivery){      
     this.delivery = delivery;
     this.add = false;
     console.log(this.delivery)
     this.getDelivery(this.detaineeID, this.detentionID)
-   // this.ngOnInit();
   }
+
 
   changeForm(){
     this.change = true;
     this.sharedService.ifChange = true;
   }
+
 
   addForm()
   {
@@ -66,19 +73,19 @@ export class DeliveryDetailComponent implements OnInit {
     this.add = true;
   }
 
+
   deleteForm()
   {
     this.sharedService.changeDeliveryCancel(false)
     this.deliveryService.deleteDelivery(this.delivery.deliveryID)
-    .subscribe(delivery => 
-      {console.log(delivery)
+    .subscribe(delivery => {
         this.ngOnInit();
       });
   }
 
+
   saveChanges()  
-  {
-    console.log(this.delivery)
+  {    
     this.deliveryService.updateDelivery(this.delivery)
     .subscribe(data => this.delivery = data);
     this.change = false;
@@ -86,29 +93,27 @@ export class DeliveryDetailComponent implements OnInit {
     this.sharedService.default = true;
   }
 
+
   getDelivery(detaineeID, detentionID): void {
-    if (detaineeID == undefined)
-    {
+    if (detaineeID == undefined) {
       detaineeID = 0;
     }
-    if (detentionID == undefined)
-    {
+    if (detentionID == undefined) {
       detentionID = 0;
     }
     this.deliveryService.getDelivery(detaineeID, detentionID)
-    .subscribe(
-    res => 
-    {if (res==undefined)
-    {      
-     this.delivery = {}      
-    }
-    else
-    {
-      this.delivery = res; 
-      this.defaultEmployeeID = this.delivery.deliveredByEmployeeID;      
-    }
+    .subscribe( res => {
+      if (res==undefined){      
+        this.delivery = {}      
+      }
+      else {
+        this.delivery = res; 
+        this.defaultEmployeeID = this.delivery.deliveredByEmployeeID;
+        this.isDelivery = true;      
+      }
     });
   }
+  
 
   cancel() {
     this.delivery.deliveredByEmployeeID = this.defaultEmployeeID;
@@ -116,4 +121,5 @@ export class DeliveryDetailComponent implements OnInit {
     this.sharedService.ifChange = false;
     this.sharedService.default = true;
   }
+
 }
