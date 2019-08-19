@@ -28,21 +28,16 @@ export class AddDetaineeComponent implements OnInit {
     this.bookFormGroup = this.fb.group({})
   }
 
-
   ngOnInit() {}
 
 
-  handleFileInput(file: FileList)
-  {
+  handleFileInput(file: FileList) {
   this.fileToUpload = file.item(0);
-  console.log(this.fileToUpload)
   var reader = new FileReader();
   reader.onload = (event:any) => {
     this.imageUrl = event.target.result;
   }
-  reader.readAsDataURL(this.fileToUpload);  
-  
-
+  reader.readAsDataURL(this.fileToUpload);   
   }
 
 
@@ -65,7 +60,6 @@ export class AddDetaineeComponent implements OnInit {
     formData.append('uploadFile',   this.fileToUpload, this.fileToUpload.name);  
     this.detainee.photo = this.fileToUpload.name;
     let apiUrl1 = "http://localhost:58653/api/Upload/UploadJsonFile";
-    console.log(formData)  
     this.http.post(apiUrl1, formData)  
     .subscribe(hero => {
     });
@@ -77,32 +71,20 @@ export class AddDetaineeComponent implements OnInit {
   }
 
 
-
   sendDetaineeToDetention() {
 
-    if (!this.filesArrayCheck(this.fileToUpload)) {
-    
-      this.detainee.photo = this.fileToUpload.name;
-
-      
+    if (!this.filesArrayCheck(this.fileToUpload)) {    
+      this.detainee.photo = this.fileToUpload.name;      
       this.sharedService.files.push(this.fileToUpload);
       this.sharedService.files.forEach(element => {
-        console.log(element.name)
       });
-      var copy = Object.assign({}, this.detainee);
-      
+      var copy = Object.assign({}, this.detainee);      
       this.searchItem.emit(copy);
-      this.imageUrl = "/assets/img/find.png";
-      
+      this.imageUrl = "/assets/img/find.png";      
     }
 
-  
     else
-    {alert("Такое фото уже добавлено")}
+      alert("Такое фото уже добавлено")
+  }  
 
-}
-
-
-
-  
 }

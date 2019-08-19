@@ -45,7 +45,6 @@ export class EmployeeComponent implements OnInit {
 
   
   createNewEmployee() {
-    console.log(this.employee);
     this.employeeService.createEmployee(this.employee)
     .subscribe(data => this.loadsmartEmployees());
        this.changeAdd();
@@ -57,7 +56,7 @@ export class EmployeeComponent implements OnInit {
       .subscribe(data => this.loadsmartEmployees());
       this.cancel();    
     }
-
+    
   
   delete(e: Employee) {
     this.employeeService.deleteEmployee(e.employeeID)

@@ -70,11 +70,9 @@ export class DetentionDetailComponent implements OnInit {
      id = this.sharedService.forDetentionDetailID;  
     }     
     this.detentionService.getSmartDetentionByDetentionID(id)
-    .subscribe(res => 
-      {this.smartDetention = res
-        console.log(res)
-      }
-      );      
+    .subscribe(res => {
+        this.smartDetention = res      
+      });      
 
     this.detentionService.getDetentionByDetentionID(id)
     .subscribe(
@@ -84,21 +82,18 @@ export class DetentionDetailComponent implements OnInit {
       this.defaultEmployeeID = res.detainedByEmployeeID  
       this.getSmartDetaineesByDetentionID();   
       }
-    );   
-   
-
-      
+    );     
+  
     this.employeeID = this.ddetention.detainedByEmployeeID;
     this.showEmployeeDetail();  
   }  
 
-  getEmployeeFromDetail(employeeIDForChange: number){  
+  getEmployeeFromDetail(employeeIDForChange: number) {  
     this.ddetention.detainedByEmployeeID = employeeIDForChange;
   }
 
-  deleteDetention()
-  {
-    console.log(this.ddetention.detentionID)
+  deleteDetention() {
+
     this.detentionService.deleteDetention(this.ddetention.detentionID).subscribe
     (res=>console.log(res))
     this.router.navigate(['/home/detention']);
@@ -110,7 +105,6 @@ export class DetentionDetailComponent implements OnInit {
 
   saveChanges()
   {
-    console.log(this.ddetention)
     this.detentionService.updateDetention(this.ddetention)
     .subscribe(data => this.ddetention = data);
     this.change = false;
@@ -123,36 +117,15 @@ export class DetentionDetailComponent implements OnInit {
     .subscribe(res => this.smartDetainees = res);  
   } 
 
-  getDetainee(d: SmartDetainee): void {
-    if(this.change)
-    {
-
-    }
-    else
-    {
+  getDetainee(d: SmartDetainee): void {  
+    if (!this.change) {
       this.smartDetainee = undefined;
       this.smartDetainee = d;
       this.sharedService.ifChange = false;    
     }
   } 
 
-  dataChanged(newObj) { 
-    this.some = null
-    this.some = newObj
-  }
-
-  releaseShow(){
-  this.dShow = false;
-  this.rShow = true;
-  }
-
-  deliveryShow(){
-  this.rShow = false;
-  this.dShow = true;
-  }
-
-  onActivate(componentReference) {  
- 
+  onActivate(componentReference) {   
     componentReference.getHeroes(this.detention, this.detainee);
   }
 }

@@ -20,7 +20,6 @@ export class EmployeeSearchComponent implements OnInit {
 
   employees$: Observable<SmartEmployee[]>;
   private searchTerms = new Subject<string>();
-  //k: number = 0;  
 
   constructor(private employeeService: EmployeeService   
     ) {}
@@ -38,8 +37,7 @@ export class EmployeeSearchComponent implements OnInit {
   } 
 
   chooseEmployee(foundEmployee: SmartEmployee) {
-    this.employeeForParent = foundEmployee;
-    //this.k = this.employeeForParent.employeeID;
+    this.employeeForParent = foundEmployee;   
     this.toEmployeeDetail.emit(this.employeeForParent);
     this.toAddDetention.emit(this.employeeForParent);
     this.employeeFullNameParent = this.employeeForParent.fullName;

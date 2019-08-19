@@ -25,7 +25,6 @@ export class RegistrationComponent implements OnInit {
   }
   addUser()
   {
-    console.log(this.role)
     this.user.role = this.role
     this.userService.createUser(this.user)
     .subscribe(data=>this.router.navigateByUrl('/home/user'))    

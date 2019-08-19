@@ -9,10 +9,12 @@ namespace Detention_facility.Controllers
     {
         private IEmployeeBusinesslayer _employeeService;
 
+
         public EmployeeController(IEmployeeBusinesslayer employeeService)
         {
             _employeeService = employeeService;
         }
+
 
         [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
@@ -30,36 +32,40 @@ namespace Detention_facility.Controllers
             }
         }
 
+
         [Authorize(Roles = "Admin,Editor")]
         [HttpPut]
         public IHttpActionResult UpdateEmployee(int id, [FromBody] Employee employee)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _employeeService.UpdateEmployee(id, employee);
-                return Ok(employee);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);          
             }
             if (_employeeService.GetEmployeeByID(id) == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+            _employeeService.UpdateEmployee(id, employee);
+            return Ok(employee);
+
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetEmployee(int id)
         {
-            var Employee = _employeeService.GetEmployeeByID(id);
-            if (Employee == null)
+            var employee = _employeeService.GetEmployeeByID(id);
+            if (employee == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого сотрудника");
                 return NotFound();
             }
-            return Ok(Employee);
+            return Ok(employee);
         }
+
 
         [Authorize(Roles = "Admin,Editor")]
         [HttpDelete]
@@ -75,6 +81,7 @@ namespace Detention_facility.Controllers
             return Ok(employeeForDelete);
         }
 
+
         [Authorize(Roles = "Admin,Editor")]
         [HttpGet]
         public IHttpActionResult GetEmployees()
@@ -87,7 +94,7 @@ namespace Detention_facility.Controllers
             return Ok(employeesList);
         }
 
-        // [Route("Api/employee/name=/{term}")]
+
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetEmploy(string term)

@@ -15,22 +15,18 @@ import { EmployeeSearchComponent } from './employee-search/employee.search.compo
 import { EmployeeComponent } from './employee/employee.component';
 import { AddDetaineeComponent } from './add-detainee/add-detainee.component';
 import { UploadComponent } from './upload/upload.component';
-import { DetaineeSearchComponent } from './detainee-search/detainee-search.component';
 import { FindDetaineeComponent } from './find-detainee/find-detainee.component';
 import { DeliveryDetailComponent } from './delivery-detail/delivery-detail.component';
 import { ReleaseDetailComponent } from './release-detail/release-detail.component';
 import { DetentionDetailComponent } from './detention-detail/detention-detail.component';
 import { DetentionSearchComponent } from './detention-search/detention-search.component';
 import { DetentionComponent } from './detention/detention.component';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UserComponent } from './user/user.component';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material';
-import { DatepickerComponent } from './datepicker/datepicker.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { AddDeliveryComponent } from './add-delivery/add-delivery.component';
@@ -53,7 +49,6 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     EmployeeSearchComponent,
     AddDetaineeComponent,
     UploadComponent,
-    DetaineeSearchComponent,
     FindDetaineeComponent,
     DeliveryDetailComponent,
     ReleaseDetailComponent,
@@ -61,11 +56,8 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     DetentionSearchComponent,
     DetentionComponent,
     EmployeeComponent,
-    AddEmployeeComponent,
     UserComponent,
-    AdminPanelComponent,
     EmployeeDetailComponent,
-    DatepickerComponent,
     AddDeliveryComponent,
     AddReleaseComponent,
     DeliveryComponent,
@@ -87,8 +79,6 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     MatFormFieldModule,
     MatInputModule,
    ],
-
-  entryComponents:[DetaineeSearchComponent],
 
   providers: [
     PermissionManagerService,

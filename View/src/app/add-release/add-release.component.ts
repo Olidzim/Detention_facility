@@ -25,13 +25,11 @@ export class AddReleaseComponent implements OnInit {
 
 
   getEmployeeFromDetail(employeeIDForChange: number) {  
-    console.log("releaseadd")
     this.release.releasedByEmployeeID = employeeIDForChange;
   }
 
 
   cancel() {
-    console.log("Check")
     this.sharedService.changeReleaseCancel(false)
   }
 
@@ -41,8 +39,7 @@ export class AddReleaseComponent implements OnInit {
     this.release.detentionID = this.detentionID;
     this.releaseService.createRelease(this.release)
     .subscribe((data: Release) => {
-      let sendDelivery = new Release; 
-      console.log(data);
+      let sendDelivery = new Release;  
       this.toNewRelease.emit(this.release);
       this.sharedService.changeReleaseCancel(false)
     });  

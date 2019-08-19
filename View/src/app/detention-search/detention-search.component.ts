@@ -44,15 +44,9 @@ export class DetentionSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  /*  this.detentions$ = this.searchTerms.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap((term: string) => this.detentionService.searchDetentions(term)),
-    );*/
   }
 
-  getDetaineesOfDetention(index: number, chosenDetention: SmartDetention){
-    ///TODO SEND TO DETENTION DETAIL?
+  getDetaineesOfDetention(index: number, chosenDetention: SmartDetention) { 
     this.flag = index;
     this.detaineeService.getsmartDetaineesByDetentionID(chosenDetention.detentionID).subscribe
     ((data: SmartDetainee[]) => this.foundDetainees = data)    
@@ -64,9 +58,7 @@ export class DetentionSearchComponent implements OnInit {
     ((data: SmartDetention[]) => this.foundDetentions = data)
   }   
 
-  toDetentionDetail(d: SmartDetention)
-  {
-    //this.sharedService.forDetentionDetailID = d.detentionID
+  toDetentionDetail(d: SmartDetention) {
     this.router.navigateByUrl('/home/detention/detention-detail/'+d.detentionID);
   }
 }

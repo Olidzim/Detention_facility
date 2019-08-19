@@ -26,10 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnChanges() {   
    
    }
-   onDateSelected()
-   {
-   console.log(this.model)
-   //this.sharedService.date = 
+   onDateSelected() {
    this.viewDate = new Date(this.model.year, this.model.month - 1, this.model.day); 
    this.sharedService.changeMessage(this.viewDate)   
    }

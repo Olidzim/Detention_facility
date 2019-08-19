@@ -32,17 +32,14 @@ export class ReleaseDetailComponent implements OnInit {
     this.getRelease(this.detaineeID, this.detentionID)
     this.sharedService.ifChange = false;
     this.res = this.router.url.substring(0, 15);
-    this.sharedService.cancelReleaseStatus.subscribe(status => {   
-        console.log(status)
-        this.add = status   
-        console.log(this.add)      
+    this.sharedService.cancelReleaseStatus.subscribe(status => {      
+        this.add = status 
     })  
   }
 
 
   saveChanges()  
   { 
-    console.log(this.release)
     this.releaseService.updateRelease(this.release)
     .subscribe(data => this.release = data);
     this.change = false;
@@ -100,9 +97,7 @@ export class ReleaseDetailComponent implements OnInit {
   getReleaseFromAdd(release: Release){   
     this.release = release;
     this.add = false;
-    console.log(this.release)
     this.getRelease(this.detaineeID, this.detentionID)
-   // this.ngOnInit();
   }
 
   addForm()
@@ -115,8 +110,7 @@ export class ReleaseDetailComponent implements OnInit {
   {
    
     this.releaseService.deleteRelease(this.release.releaseID)
-    .subscribe(release => 
-      {console.log(release)
+    .subscribe(release => {
         this.sharedService.changeDeliveryCancel(false)
         this.ngOnInit();
       });

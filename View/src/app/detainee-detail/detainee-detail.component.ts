@@ -66,7 +66,6 @@ export class DetaineeDetailComponent implements OnInit {
   getSmartDetentionsByID(): void {
 
     let id = this.detainee.detaineeID;
-    //+this.route.snapshot.paramMap.get('id');
     this.detentionService.getSmartDetentionsByDetaineeID(id)
     .subscribe(smartDetentions => this.smartDetentions = smartDetentions);     
   } 
@@ -74,8 +73,6 @@ export class DetaineeDetailComponent implements OnInit {
   sendDetaineeToDetention() {
     console.log("Detainee to detention")    
     this.sharedService.sendDetaineeToDetention(this.detainee);     
-   // this.searchItem.emit(this.detainee);
-    //this.buttonShow = false;
   }
 
   getSmartDetentionsByDetaineeID(): void {            
@@ -83,9 +80,7 @@ export class DetaineeDetailComponent implements OnInit {
     .subscribe(res => this.smartDetentions = res);  
   } 
 
-  deleteCurrentDetainee()
-  {
-    console.log(this.detainee.detaineeID)
+  deleteCurrentDetainee() {
     this.detaineeService.deleteDetainee(this.detainee.detaineeID).subscribe
     (res => {console.log(res)
     this.router.navigate(['/home/detainee']);
@@ -93,9 +88,7 @@ export class DetaineeDetailComponent implements OnInit {
     
   }
 
-  handleFileInput(file: FileList)
-  {
-  console.log("handleFileInput")
+  handleFileInput(file: FileList) {
   this.fileToUpload = file.item(0);
   var reader = new FileReader();
   reader.onload = (event:any) =>
@@ -107,65 +100,32 @@ export class DetaineeDetailComponent implements OnInit {
   this.detainee.photo = this.fileToUpload.name;
   }
 
-  saveChanges()
-  {
-    console.log(this.detainee)
+  saveChanges() {
     this.detaineeService.updateDetainee(this.detainee)
     .subscribe(data => 
       {this.detainee = data
         this.uploadFile();
       });
     this.change = false;
-  /*  this.sharedService.ifChange = false;
-    this.sharedService.default = true;*/
   }
 
-  getDetention(d: SmartDetention): void {
-    if(this.change)
-    {
-
-    }
-    else
-    {
+  getDetention(d: SmartDetention): void {   
+    if(!this.change) {
       this.smartDetention = undefined;
       this.smartDetention = d;
       this.sharedService.ifChange = false;    
     }
-  } 
-  
-
-/*
-  trackByFn(index, item) {
-
-    return item.id;
-
   }
-  /*
-  hi(i:number,e:SmartDetention): void {
 
-
-    this.k = i;
-    this.sho = true;
-    //this.getSmartDeliveries();
-    this.getTrue(e.detentionID);
-    this.getSmartReleases();
-
-  }
- */
-
-
-
- 
-     getSmartDeliveries(): void {  
+  getSmartDeliveries(): void { 
 
     this.http.get('http://localhost:58653/Api/Delivery/GetDeliveryByIDs/1/1')
-    .subscribe((data: SmartDelivery) => this.smartDelivery = data)      
-
+    .subscribe((data: SmartDelivery) => this.smartDelivery = data)    
   }
 
   uploadFile()
   {  
-    ///TODO Upload file service
+
     let formData: FormData = new FormData(); 
     formData.append('uploadFile',   this.fileToUpload, this.fileToUpload.name);  
     this.detainee.photo = this.fileToUpload.name;
@@ -175,16 +135,7 @@ export class DetaineeDetailComponent implements OnInit {
     .subscribe(hero => {
     });
   }
-/*
-    getTrue(k: number): void {
-    //TODO Delivery Service
-    let id = this.detainee.detaineeID;
-    //+this.route.snapshot.paramMap.get('id');
-    this.deliveryService.getSmartDelivery(this.detainee.detaineeID,k)
-    .subscribe((data: SmartDelivery) => this.smartDelivery = data); 
-       
-  }
-*/
+  
     getSmartReleases(): void {  
 
     this.http.get('http://localhost:58653/Api/Release/GetReleaseByIDs/1/1')

@@ -80,7 +80,6 @@ export class FindDetaineeComponent implements OnInit {
       this.router.navigateByUrl('/home/add-detention/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
     }
     else
-      //this.router.navigateByUrl('/home/find-detainee/detainee-detail/'+this.foundDetainee.detaineeID);
       this.router.navigateByUrl('/home/detainee/detainee-detail/'+this.foundDetainee.detaineeID);
   }  
 

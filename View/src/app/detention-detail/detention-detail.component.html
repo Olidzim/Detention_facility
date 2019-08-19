@@ -16,12 +16,6 @@
 <div *ngIf="change">
 <input type="date" [ngModel] ="ddetention.detentionDate | date:'yyyy-MM-dd'" (ngModelChange)="ddetention.detentionDate = $event" class="form-control" />
 </div>
-<!--
-<h2>Лицо ответственное за задержание</h2>
-{{smartDetention.employeeFullName}}
-<h2>ID лица ответственного за задержание</h2>
-{{ddetention.detainedByEmployeeID}}
--->
 <h2>Сведения о сотруднике ответственном за задержание</h2>
 <employee-detail *ngIf="employeeID" (toDetentionChange)="getEmployeeFromDetail($event)" [ifChange]="change" [employeeID]="employeeID"></employee-detail>
 <h2>Задержанные</h2>

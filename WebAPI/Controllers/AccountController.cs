@@ -12,10 +12,12 @@ namespace Detention_facility.Controllers
     {
         private IAccountService _accountService;
 
+
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -35,14 +37,15 @@ namespace Detention_facility.Controllers
         [HttpPost]
         public IHttpActionResult RegisterUser([FromBody] User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _accountService.RegisterUser(user);
-                return Ok(user);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+            _accountService.RegisterUser(user);
+            return Ok(user);
         }
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -57,42 +60,48 @@ namespace Detention_facility.Controllers
             return Ok(users_list);
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpPut]
         public IHttpActionResult UpdateUser(int id, [FromBody] User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _accountService.UpdateUser(id, user);
-                return Ok(user);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);
+                
             }
+
             if (_accountService.GetUserByID(id) == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+
+            _accountService.UpdateUser(id, user);
+            return Ok(user);
         }
+
 
         [Authorize(Roles = "Admin,Editor")]
         [HttpPut]
         public IHttpActionResult UpdateUserPassword(int id, [FromBody] string password)
         {
             var user = _accountService.GetUserByID(id);
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _accountService.UpdateUserPassword(id, password);
-                return Ok(user);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);            
             }
             if (user == null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, "Нет такого пользователя");
                 return NotFound();
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+            _accountService.UpdateUserPassword(id, password);
+            return Ok(user);
         }
+
 
         [Authorize(Roles = "Admin,Editor")]
         [HttpDelete]
@@ -108,11 +117,13 @@ namespace Detention_facility.Controllers
             return Ok(userForDelete);
         }
 
+
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetRole()
         {
             return Ok(Request.GetOwinContext().Authentication.User.Claims.First(claim => claim.Type == ClaimsIdentity.DefaultRoleClaimType).Value);
         }
+
     }
 }

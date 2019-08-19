@@ -12,24 +12,28 @@ namespace Detention_facility.Controllers
         private IDetaineeBusinessLayer _detaineeService;       
         private IDetaineeCachingService _detaineeCachingService;
 
+
         public DetaineeController(IDetaineeBusinessLayer detaineeService, IDetaineeCachingService detaineeCachingService)
         {
             _detaineeService = detaineeService;
             _detaineeCachingService = detaineeCachingService;            
         }
 
+
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertDetainee([FromBody] Detainee detainee)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                detainee.DetaineeID = _detaineeService.InsertDetainee(detainee);               
-                return Ok(detainee);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+
+            detainee.DetaineeID = _detaineeService.InsertDetainee(detainee);
+            return Ok(detainee);
         }
+
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
@@ -43,19 +47,23 @@ namespace Detention_facility.Controllers
             return Ok("Задержанный добавлен к задержанию");
         }
 
+
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateDetainee(int id, [FromBody] Detainee detainee)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _detaineeService.UpdateDetainee(id, detainee);
-                _detaineeCachingService.Update(detainee);
-                return Ok(detainee);
-            }            
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);        
+            }
+
+            _detaineeService.UpdateDetainee(id, detainee);
+            _detaineeCachingService.Update(detainee);
+            return Ok(detainee);
+
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
@@ -79,6 +87,7 @@ namespace Detention_facility.Controllers
             return Ok(detainee);
         }
 
+
         [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
         public IHttpActionResult DeleteDetainee(int id)           
@@ -97,6 +106,7 @@ namespace Detention_facility.Controllers
             }
         }
 
+
         [Authorize(Roles ="Admin,Editor,User")] 
         [HttpGet]
         public IHttpActionResult GetDetainees()
@@ -108,6 +118,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(detaineesList);
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
@@ -121,6 +132,7 @@ namespace Detention_facility.Controllers
             return Ok(detaineesList);
         }
 
+
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDet(string term)
@@ -133,6 +145,7 @@ namespace Detention_facility.Controllers
             return Ok(detainee_list);
         }
 
+
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
         public IHttpActionResult GetDetaineeByAddress(string term)
@@ -144,5 +157,6 @@ namespace Detention_facility.Controllers
             }
             return Ok(detainee_list);
         }
+
     }
 }

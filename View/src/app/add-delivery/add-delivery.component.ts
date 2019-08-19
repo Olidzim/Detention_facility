@@ -27,7 +27,6 @@ export class AddDeliveryComponent implements OnInit {
 
 
   getEmployeeFromDetail(employeeIDForChange: number) {  
-    console.log("deliveryadd")
     this.delivery.deliveredByEmployeeID = employeeIDForChange;
     }
 
@@ -38,7 +37,6 @@ export class AddDeliveryComponent implements OnInit {
     this.deliveryService.createDelivery(this.delivery)
     .subscribe((data: Delivery) => {
     let sendDelivery = new Delivery; 
-    console.log(data);
     this.toNewDelivery.emit(this.delivery);
     });  
   }

@@ -10,46 +10,50 @@ namespace Detention_facility.Controllers
     {
         private IDeliveryBusinessLayer _deliveryService;
 
+
         public DeliveryController(IDeliveryBusinessLayer deliveryService)
         {
             _deliveryService = deliveryService;
         }
 
+
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPost]
         public IHttpActionResult InsertDelivery([FromBody] Delivery delivery)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _deliveryService.InsertDelivery(delivery);
-                return Ok(delivery);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);            
             }
             if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
                 return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+            _deliveryService.InsertDelivery(delivery);
+            return Ok(delivery);
         }
+
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpPut]
         public IHttpActionResult UpdateDelivery(int id, [FromBody] Delivery delivery)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _deliveryService.UpdateDelivery(id, delivery);
-                return Ok(delivery);
+                CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
+                return BadRequest(ModelState);         
             }
             if (_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID) != null)
             {
                 CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, _deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
                 return BadRequest(_deliveryService.CheckValuesForDelivery(delivery.DetaineeID, delivery.DetentionID, delivery.DeliveredByEmployeeID));
             }
-            CustomLogging.LogMessage(CustomLogging.TracingLevel.INFO, CustomLogging.ModelStatusConverter(ModelState));
-            return BadRequest(ModelState);
+            _deliveryService.UpdateDelivery(id, delivery);
+            return Ok(delivery);
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpGet]
@@ -63,6 +67,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(delivery);
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [Route("Api/Delivery/GetSmartDeliveryByIDs/{detaineeID}/{detentionID}")]
@@ -78,6 +83,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
+
         [Authorize(Roles = "Admin,Editor,User")]
         [HttpPost]
         public IHttpActionResult GetSmartDeliveriesByDate([FromBody] DateTime date)
@@ -90,6 +96,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(deliveriesList);
         }
+
 
         [Authorize(Roles = "Admin,Editor,User")]
         [Route("Api/Delivery/GetDeliveryByIDs/{detaineeID}/{detentionID}")]
@@ -104,7 +111,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(delivery);
         }
-
+        
 
         [Authorize(Roles ="Admin,Editor")] 
         [HttpDelete]
@@ -120,6 +127,7 @@ namespace Detention_facility.Controllers
             return Ok(delivery);
         }
 
+
         [Authorize(Roles ="Admin,Editor,User")] 
         [HttpGet]
         public IHttpActionResult GetDeliveries()
@@ -132,7 +140,7 @@ namespace Detention_facility.Controllers
             }
             return Ok(deliveriesList);
         }
-
+        
     }
 }
 

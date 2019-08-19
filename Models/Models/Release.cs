@@ -15,8 +15,8 @@ namespace Detention_facility.Models
         [Required]
         public DateTime ReleaseDate { get; set; }
         [Required]
-        public int AmountAccrued { get; set; }
+        public double AmountAccrued { get; set; }
         [Required]
-        public int AmountPaid { get; set; }
+        public double AmountPaid { get; set; }
     }
 }

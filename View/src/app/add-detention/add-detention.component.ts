@@ -41,7 +41,6 @@ export class AddDetentionComponent implements OnInit {
   ngOnInit() {
     
     this.sharedService.detaineeToDetention.subscribe(detainee => {  
-      console.log("ddd"+ detainee)
       if (detainee != undefined) {     
         if (this.searchInOldDetaineesArray(detainee.detaineeID)) {
           alert("Уже добавлен")
@@ -60,8 +59,7 @@ export class AddDetentionComponent implements OnInit {
   {
     let isAdded = false;
     this.detainees.forEach(element => {
-      if (element.detaineeID == id) {    
-        console.log("element"+element.detaineeID)  
+      if (element.detaineeID == id) {      
         isAdded= true;
       }      
     });
@@ -95,12 +93,10 @@ export class AddDetentionComponent implements OnInit {
   addDetention() { 
     let smartResponse
     this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
-    console.log("det"+this.newDetainees)
     if (this.newDetainees.length > 0) {
       this.uploadFile().subscribe( data=> {
         smartResponse = data
-        if(smartResponse.isSuccess) {
-          console.log("file uploaded")        
+        if(smartResponse.isSuccess) { 
           this.detentionService.addDetention(this.detention).subscribe(response => {
           this.addDetainees(response.detentionID)
           });
@@ -125,8 +121,7 @@ export class AddDetentionComponent implements OnInit {
       formData.append('uploadFile',element, element.name);  
     }); 
 
-    let url = "http://localhost:58653/api/Upload/UploadJsonFile";
-    console.log("form data: "+formData)  
+    let url = "http://localhost:58653/api/Upload/UploadJsonFile";    
 
     return this.http.post(url, formData).pipe(map((response: ResponseClass) => {
       r = response
@@ -138,29 +133,13 @@ export class AddDetentionComponent implements OnInit {
   /**Add new detainees**/
   addDetainees (detentionID) {  
 
-
-
     for (let index = 0; index < this.newDetainees.length; index++) {
-      this.detaineeService.addDetainee(this.newDetainees[index]).subscribe((response: Detainee) => {      
-        
-         
-        console.log(`promise result: ${response}`);
-         this.addDetaineesInDetention(detentionID,response.detaineeID);
-         });
+      this.detaineeService.addDetainee(this.newDetainees[index]).subscribe((response: Detainee) => {    
+        this.addDetaineesInDetention(detentionID,response.detaineeID);
+        });
       
     }
- /* this.newDetainees.forEach(newDetainee => {
-    this.detaineeService.addDetainee(newDetainee).subscribe(response => {
-     // newDetainee = response;
-     
-      this.detainees.push(response)
-      console.log(`promise result: ${response}`);
-      this.addDetaineesInDetention(detentionID,newDetainee.detaineeID);
-      });
-    });*/
-    console.log('I will not wait until promise is resolved');
    this.detainees.forEach (detainee => {
-    console.log("Привет")
     this.addDetaineesInDetention(detentionID,detainee.detaineeID);
     });
   }
@@ -172,11 +151,8 @@ export class AddDetentionComponent implements OnInit {
       this.detainees.length = 0;
       this.newDetainees.length = 0;
       this.sharedService.sendDetaineeToDetention(undefined)
-    });
-    
-   
-   
-  }
+    });  
+ }
 
 
   save(): void {
