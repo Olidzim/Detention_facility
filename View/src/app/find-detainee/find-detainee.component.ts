@@ -13,17 +13,23 @@ import { SmartDetainee } from '../models/smartdetainee';
   styleUrls: ['./find-detainee.component.css']
 })
 export class FindDetaineeComponent implements OnInit {
+
+  @Output() searchItem: EventEmitter<any> = new EventEmitter();
+
+  private searchTermsName = new Subject<string>();
+  private searchTermsAddress = new Subject<string>();
+
   route: string = this.router.url;
   smartDetainees$: Observable<SmartDetainee[]>;
   addressDetainees$: Observable<SmartDetainee[]>;
   buttonShow: boolean = false;
   detaineesCheck: Detainee[] = new Array;
   foundDetainee: Detainee = new Detainee();
-  @Output() searchItem: EventEmitter<any> = new EventEmitter();
-  private searchTermsName = new Subject<string>();
-  private searchTermsAddress = new Subject<string>();
-  
-  constructor(private detaineeService: DetaineeService, private sharedService: SharedService, private router: Router) { }
+    
+  constructor(
+    private detaineeService: DetaineeService, 
+    private sharedService: SharedService, 
+    private router: Router) { }
 
   ngOnInit(): void {
     this.smartDetainees$ = this.searchTermsName.pipe(
@@ -38,19 +44,22 @@ export class FindDetaineeComponent implements OnInit {
      );
   }
 
+
   searchByName(term: string): void {
     if (term == "#" || term == "&")
     term = ""
     this.searchTermsName.next(term);
   }
 
+
   searchByAddres(term: string): void {
     if (term == "#" || term == "&")
     term = ""
     this.searchTermsAddress.next(term);
   }
+
  
-  chooseSmartDetainee(foundSmartDetainee: SmartDetainee){    
+  chooseSmartDetainee(foundSmartDetainee: SmartDetainee) {    
     this.sharedService.forDetaineeDetailID = foundSmartDetainee.detaineeID
     this.foundDetainee.detaineeID = foundSmartDetainee.detaineeID;
     if (typeof this.detaineesCheck !== 'undefined' && this.detaineesCheck.length > 0){
@@ -75,13 +84,11 @@ export class FindDetaineeComponent implements OnInit {
       this.router.navigateByUrl('/home/detainee/detainee-detail/'+this.foundDetainee.detaineeID);
   }  
 
+
   onActivate(componentReference) {  
     componentReference.getDetainee(this.foundDetainee.detaineeID);
   }
 
-
-
-  cl(){}
 
   sendDetaineeToDetention() {
     var copy = Object.assign({}, this.foundDetainee);    

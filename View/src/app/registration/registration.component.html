@@ -7,24 +7,25 @@
           </li>
   
           <li>                  
-            <input type="text" name="field1" [(ngModel)]="user.password" class="field-style field-split3 align-left" placeholder="Пароль" />
+            <input type="text" name="field2" [(ngModel)]="user.password" class="field-style field-split3 align-left" placeholder="Пароль" required />
           </li>
   
   
           <li style="height: 44px">
-            <input type="text" name="field1"  [(ngModel)]="user.email" class="field-style field-split3 align-left" placeholder="Email" />          
+            <input type="email" name="field3"  [(ngModel)]="user.email" class="field-style field-split3 align-left"  #email="ngModel" placeholder="Email" email />          
           </li>
   
           <li>
             <p>Роли</p>
-            <select [(ngModel)]="role" name="field1">
+            <select [(ngModel)]="role" name="field4" required>
               <option *ngFor="let role of roles">
                 {{role}}
               </option>
             </select>
           </li>   
       </ul>
-
-      <button type="submit"  (click)="addUser()" value="Добавить задержанного к задержанию">Добавить пользователя</button>
+      </form>
+     
+      <button type="submit"  [disabled]="form.invalid" (click)="addUser()" value="Добавить задержанного к задержанию">Добавить пользователя</button>
    
 

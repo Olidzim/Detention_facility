@@ -23,12 +23,12 @@ export class ReleaseService {
         catchError(this.handleError<SmartDelivery>('', ))
       );
   }*/
-
+/*
   getsmartDeliverysByIDs(DetaineeID: number, DetentionID: number) {
     const url = `${this.ReleaseUrl}/GetDeliveryByIDs/${DetaineeID}/${DetentionID}`;
     return this.http.get(url);    
   }
-
+*/
   getReleaseByIDs (detaineeID, detentionID): Observable<Release> {
     return this.http.get<Release>(`${this.ReleaseUrl}/GetReleaseByIDs/${detaineeID}/${detentionID}`)
       .pipe(  
@@ -48,7 +48,7 @@ export class ReleaseService {
     );
   }
 
-  getDeliveryByID(id: number): Observable<Release> {   
+  getReleaseByID(id: number): Observable<Release> {   
     return this.http.get <Release>(`${this.ReleaseUrl}/GetRelease/${id}`);
   }
 

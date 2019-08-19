@@ -4,5 +4,4 @@
 <p><b>Должность: </b>{{employee.position}}</p>
 <button *ngIf="ifChange" type = "button" class = "btn btn-success" mat-raised-button (click)="openSearch()">Сменить сотрудника</button>
 <button *ngIf="!employee.employeeID" type = "button" class = "btn btn-success" mat-raised-button (click)="openSearch()">Добавить сотрудника</button>
-{{ifChange}}
 <employee-search *ngIf="ifSearch" (toEmployeeDetail)="getEmployeeFromSearch($event)"></employee-search>  

@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody> 
-        <tr  *ngFor="let detainee of detainees">                 
+        <tr *ngFor="let detainee of detainees">                 
           <td>{{detainee?.detaineeID}}</td>
           <td>{{detainee?.firstName}}</td>
           <td>{{detainee?.lastName}}</td>
@@ -45,17 +45,15 @@
     <p *ngIf="newDetainees[0]" >Новые задержанные</p>      
     <table *ngIf="newDetainees[0]" class="table2">
       <thead>
-        <tr> 
-          <td>Номер задержанного</td>
-          <td >Имя</td>
+        <tr>      
+          <td>Имя</td>
           <td>Фамилия</td>
           <td>Отчество</td>       
         </tr>
       </thead>
       <tbody> 
-        <tr *ngFor="let d of newDetainees">                 
-          <td>{{d?.detaineeID}}</td>
-          <td >{{d?.firstName}}</td>
+        <tr *ngFor="let d of newDetainees">                
+          <td>{{d?.firstName}}</td>
           <td>{{d?.lastName}}</td>
           <td>{{d?.patronymic}}</td>                      
         </tr>
@@ -64,4 +62,5 @@
     <br>    
     <button type="button"  id="#bot-button"  (click)="addDetention()" class="btn btn-primary">Добавить задержание</button>
   </div>
+
 </div>

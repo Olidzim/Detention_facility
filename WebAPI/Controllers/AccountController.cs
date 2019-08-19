@@ -19,7 +19,7 @@ namespace Detention_facility.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IHttpActionResult GetEmployee(int id)
+        public IHttpActionResult GetUser(int id)
         {
             var user = _accountService.GetUserByID(id);
             if (user == null)

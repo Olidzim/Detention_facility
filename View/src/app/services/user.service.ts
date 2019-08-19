@@ -16,7 +16,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
         getUserByID(id: number){           
-            return this.http.get(`${this.userUrl}/GetEmployee/${id}`);
+            return this.http.get(`${this.userUrl}/GetUser/${id}`);
         }
 
         createUser(user: User) { 

@@ -1,4 +1,3 @@
-<!--TODO DETENTION DETAIL-->
 <div>
     <p>Поиск задержаний по дате:</p>
     <input type="date" style="width:25%" [(ngModel)]="date" (ngModelChange)="getfoundDetentions()" class="form-control" name="UserName"/> 
@@ -12,7 +11,8 @@
         </thead>
         <tbody>
             <ng-container  *ngFor="let d of foundDetentions; let i = index">
-                <tr (click)="getDetaineesOfDetention(i,d)">              
+               <!-- <tr (click)="getDetaineesOfDetention(i,d)">-->
+                <tr (click)="toDetentionDetail(d)">   
                     <td>{{d?.detentionID}}</td>                    
                     <td>{{d?.employeeFullName}}</td>             
                 </tr>

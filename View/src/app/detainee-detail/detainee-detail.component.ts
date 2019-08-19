@@ -73,7 +73,7 @@ export class DetaineeDetailComponent implements OnInit {
   
   sendDetaineeToDetention() {
     console.log("Detainee to detention")    
-    this.sharedService.sendDetaineeToDetention(this.detainee); 
+    this.sharedService.sendDetaineeToDetention(this.detainee);     
    // this.searchItem.emit(this.detainee);
     //this.buttonShow = false;
   }
@@ -194,9 +194,7 @@ export class DetaineeDetailComponent implements OnInit {
 
   getDetainee(): void {
     let id;
-      if (this.sharedService.forDetaineeDetailID == undefined)
-    {   
-      console.log("Hi"+this.route.snapshot.paramMap.get('id'))
+      if (this.sharedService.forDetaineeDetailID == undefined) {     
       id = this.route.snapshot.paramMap.get('id');
       this.sharedService.forDetaineeDetailID = id
     } 

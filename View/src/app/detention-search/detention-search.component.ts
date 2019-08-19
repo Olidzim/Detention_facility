@@ -9,6 +9,8 @@ import {
 import { SmartDetention } from '../models/smartdetention';
 import { SmartDetainee} from '../models/smartdetainee';
 import { DetentionService } from '../services/detention.service';
+import { SharedService } from '../services/shared.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +28,12 @@ export class DetentionSearchComponent implements OnInit {
   foundDetainees: SmartDetainee[];
   private searchTerms = new Subject<string>();
   flag: number;
-  constructor(private detentionService: DetentionService, private detaineeService: DetaineeService) {} 
+  constructor (
+    private detentionService: DetentionService, 
+    private detaineeService: DetaineeService,
+    private sharedService: SharedService,
+    private router: Router
+    ) {} 
 
   search(term: string): void {
     this.searchTerms.next(term);
@@ -37,11 +44,11 @@ export class DetentionSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.detentions$ = this.searchTerms.pipe(
+  /*  this.detentions$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string) => this.detentionService.searchDetentions(term)),
-    );
+    );*/
   }
 
   getDetaineesOfDetention(index: number, chosenDetention: SmartDetention){
@@ -56,5 +63,11 @@ export class DetentionSearchComponent implements OnInit {
     this.detentionService.searchDetentionsByDate(this.date).subscribe
     ((data: SmartDetention[]) => this.foundDetentions = data)
   }   
+
+  toDetentionDetail(d: SmartDetention)
+  {
+    //this.sharedService.forDetentionDetailID = d.detentionID
+    this.router.navigateByUrl('/home/detention/detention-detail/'+d.detentionID);
+  }
 }
 

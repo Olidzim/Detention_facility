@@ -12,7 +12,7 @@ import { SharedService } from '../services/shared.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators'; 
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'add-detention',
@@ -39,13 +39,17 @@ export class AddDetentionComponent implements OnInit {
 
 
   ngOnInit() {
+    
     this.sharedService.detaineeToDetention.subscribe(detainee => {  
+      console.log("ddd"+ detainee)
       if (detainee != undefined) {     
         if (this.searchInOldDetaineesArray(detainee.detaineeID)) {
           alert("Уже добавлен")
+       
         }
         else {
-          this.detainees.push(detainee)      
+          this.detainees.push(detainee) 
+          
         }
       }
     }) 
@@ -56,7 +60,8 @@ export class AddDetentionComponent implements OnInit {
   {
     let isAdded = false;
     this.detainees.forEach(element => {
-      if (element.detaineeID == id) {      
+      if (element.detaineeID == id) {    
+        console.log("element"+element.detaineeID)  
         isAdded= true;
       }      
     });
@@ -89,19 +94,27 @@ export class AddDetentionComponent implements OnInit {
 
   addDetention() { 
     let smartResponse
-    this.uploadFile().subscribe( data=> {
-      smartResponse = data
-      if(smartResponse.isSuccess) {
-        console.log("file uploaded")
-        this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
-        this.detentionService.addDetention(this.detention).subscribe(response => {
-        this.addDetainees(response.detentionID)
-        });
-      }
-      else if (!smartResponse.isSuccess) {
-        alert(smartResponse.message)
-      }
-    })
+    this.detention.detainedByEmployeeID = this.employeeWhoDetain.employeeID;
+    console.log("det"+this.newDetainees)
+    if (this.newDetainees.length > 0) {
+      this.uploadFile().subscribe( data=> {
+        smartResponse = data
+        if(smartResponse.isSuccess) {
+          console.log("file uploaded")        
+          this.detentionService.addDetention(this.detention).subscribe(response => {
+          this.addDetainees(response.detentionID)
+          });
+        }
+        else if (!smartResponse.isSuccess) {
+          alert(smartResponse.message)
+        }
+      })
+    }
+    else {
+    this.detentionService.addDetention(this.detention).subscribe(response => {
+      this.addDetainees(response.detentionID)
+      });
+    }
   }
 
 
@@ -124,13 +137,30 @@ export class AddDetentionComponent implements OnInit {
 
   /**Add new detainees**/
   addDetainees (detentionID) {  
-  this.newDetainees.forEach(newDetainee => {
+
+
+
+    for (let index = 0; index < this.newDetainees.length; index++) {
+      this.detaineeService.addDetainee(this.newDetainees[index]).subscribe((response: Detainee) => {      
+        
+         
+        console.log(`promise result: ${response}`);
+         this.addDetaineesInDetention(detentionID,response.detaineeID);
+         });
+      
+    }
+ /* this.newDetainees.forEach(newDetainee => {
     this.detaineeService.addDetainee(newDetainee).subscribe(response => {
-      newDetainee = response;
+     // newDetainee = response;
+     
+      this.detainees.push(response)
+      console.log(`promise result: ${response}`);
       this.addDetaineesInDetention(detentionID,newDetainee.detaineeID);
       });
-    });
-  this.detainees.forEach(detainee => {
+    });*/
+    console.log('I will not wait until promise is resolved');
+   this.detainees.forEach (detainee => {
+    console.log("Привет")
     this.addDetaineesInDetention(detentionID,detainee.detaineeID);
     });
   }
@@ -139,7 +169,13 @@ export class AddDetentionComponent implements OnInit {
    /**Add detainees in detention **/
   addDetaineesInDetention(detentionID,detaineeID){ 
     this.detaineeService.addDetaineeToDetention(detentionID,detaineeID).subscribe(hero => {
+      this.detainees.length = 0;
+      this.newDetainees.length = 0;
+      this.sharedService.sendDetaineeToDetention(undefined)
     });
+    
+   
+   
   }
 
 

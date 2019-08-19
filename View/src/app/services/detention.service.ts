@@ -11,26 +11,27 @@ const httpOptions = {
 };
 
 @Injectable({ providedIn: 'root' })
+
 export class DetentionService {
 
-  private DetentionsUrl = 'http://localhost:58653/api/detention';
-  constructor(private http: HttpClient,
-    public datepipe: DatePipe
-    
+  readonly DetentionsUrl = 'http://localhost:58653/api/detention';
+  constructor(
+    private http: HttpClient,
+    public datepipe: DatePipe    
     ) { }
 
-  getDetentions() {   
+ /* getDetentions() {   
     return this.http.get(`${this.DetentionsUrl}/GetDetentions/`);    
-  }
+  }*/
 
 /** Search detentions from the server */
-  searchDetentions(term: string): Observable<Detention[]> {
+/*searchDetentions(term: string): Observable<Detention[]> {
     if (!term.trim()) {
     return of([]);}
       return this.http.get<Detention[]>(`${this.DetentionsUrl}/getdetention/${term}`).pipe(            
         catchError(this.handleError<Detention[]>('searchDetentions', []))
     );
-  }
+}*/
 
   updateDetention(detention: Detention) {   
     return this.http.put(this.DetentionsUrl + '/UpdateDetention/'+ detention.detentionID, detention);
@@ -72,11 +73,11 @@ export class DetentionService {
     );
   }
 
-  getSmartDetentionsByDate(): Observable<SmartDetention[]> {    
+  /*getSmartDetentionsByDate(): Observable<SmartDetention[]> {    
     return this.http.get<SmartDetention[]>(`${this.DetentionsUrl}/GetDetentionsByDate`).pipe(              
       catchError(this.handleError<SmartDetention[]>('searchHeroes', []))
     );
-  }
+  }*/
 
   addDetention (detention: Detention) : Observable<Detention> {         
     return this.http.post<Detention>(`${this.DetentionsUrl}/InsertDetention/`, detention);

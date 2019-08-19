@@ -44,6 +44,7 @@ export class AddReleaseComponent implements OnInit {
       let sendDelivery = new Release; 
       console.log(data);
       this.toNewRelease.emit(this.release);
+      this.sharedService.changeReleaseCancel(false)
     });  
   }
 

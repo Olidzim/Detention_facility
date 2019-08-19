@@ -13,7 +13,7 @@ export class AddDetaineeComponent implements OnInit {
   bookFormGroup: FormGroup;
   imageUrl: string = "/assets/img/find.png";
   filetoUpload: File = null;
-  filetoUploadMassive: File[] = null;
+  filetoUploadMassive: File[] = new Array;
   @Output() detainee: Detainee  = new Detainee();
   @Output() searchItem: EventEmitter<any> = new EventEmitter();
   path: string;
@@ -35,24 +35,26 @@ export class AddDetaineeComponent implements OnInit {
   handleFileInput(file: FileList)
   {
   this.fileToUpload = file.item(0);
+  console.log(this.fileToUpload)
   var reader = new FileReader();
   reader.onload = (event:any) => {
     this.imageUrl = event.target.result;
   }
   reader.readAsDataURL(this.fileToUpload);  
-  if (!this.filesArrayCheck(this.fileToUpload))
-   this.filetoUploadMassive.push(this.fileToUpload);  
+  
+
   }
 
 
   filesArrayCheck(file: File): boolean
   {
+    let value = false
     this.sharedService.files.forEach(element => {
-      if (element == file) {
-        return true;
+      if (element.name == file.name) {
+        value = true;
       }      
     });
-   return false;
+   return value;
   }
 
 
@@ -75,13 +77,32 @@ export class AddDetaineeComponent implements OnInit {
   }
 
 
-  sendDetaineeToDetention() {
-    this.detainee.photo = this.fileToUpload.name;
-    this.sharedService.files.push(this.fileToUpload);
-    console.log("files array: " + this.sharedService.files);
-    var copy = Object.assign({}, this.detainee);
 
-    this.searchItem.emit(copy);
-  }
+  sendDetaineeToDetention() {
+
+    if (!this.filesArrayCheck(this.fileToUpload)) {
+    
+      this.detainee.photo = this.fileToUpload.name;
+
+      
+      this.sharedService.files.push(this.fileToUpload);
+      this.sharedService.files.forEach(element => {
+        console.log(element.name)
+      });
+      var copy = Object.assign({}, this.detainee);
+      
+      this.searchItem.emit(copy);
+      this.imageUrl = "/assets/img/find.png";
+      
+    }
+
+  
+    else
+    {alert("Такое фото уже добавлено")}
+
+}
+
+
+
   
 }

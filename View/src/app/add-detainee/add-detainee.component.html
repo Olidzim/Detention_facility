@@ -11,30 +11,31 @@
 
         <li>                  
           <input type="text" name="field1" [(ngModel)]="detainee.firstName" class="field-style field-split3 align-left" placeholder="Имя" required />
-          <input type="email" name="field2" [(ngModel)]="detainee.lastName" class="field-style field-split3 align-center" placeholder="Фамилия" />
-          <input type="email" name="field3"[(ngModel)]="detainee.patronymic" class="field-style field-split3 align-right" placeholder="Отчество" />
+          <input type="email" name="field2" [(ngModel)]="detainee.lastName" class="field-style field-split3 align-center" placeholder="Фамилия" required/>
+          <input type="email" name="field3"[(ngModel)]="detainee.patronymic" class="field-style field-split3 align-right" placeholder="Отчество" required/>
         </li>
 
         <li>                  
-          <input type="date" name="field1" [(ngModel)]="detainee.birthDate" class="field-full" placeholder="Имя" />
+          <input type="date" name="field4" [(ngModel)]="detainee.birthDate" class="field-full" placeholder="Имя" required/>
         </li>
 
         <li style="height: 44px">
-          <input type="text" name="field1" [(ngModel)]="detainee.maritalStatus" class="field-style field-split align-left" placeholder="Семейное положение" />
-          <input type="email" name="field2"[(ngModel)]="detainee.job" class="field-style field-split align-right2" placeholder="Место работы" />
+          <input type="text" name="field5" [(ngModel)]="detainee.maritalStatus" class="field-style field-split align-left" placeholder="Семейное положение" required/>
+          <input type="email" name="field6"[(ngModel)]="detainee.job" class="field-style field-split align-right2" placeholder="Место работы" required/>
         </li>
 
         <li style="height: 44px">
-          <input type="text" name="field1"  [(ngModel)]="detainee.homePhoneNumber" class="field-style field-split align-left" placeholder="Домашний телефон" />
-           <input type="email" name="field2" [(ngModel)]="detainee.mobilePhoneNumber" class="field-style field-split align-right2" placeholder="Мобильный телефон" />
+          <input type="text" name="field7"  [(ngModel)]="detainee.homePhoneNumber" class="field-style field-split align-left" placeholder="Домашний телефон" required/>
+           <input type="email" name="field8" [(ngModel)]="detainee.mobilePhoneNumber" class="field-style field-split align-right2" placeholder="Мобильный телефон" required/>
         </li>
 
         <li>
-          <input type="text" name="field3" [(ngModel)]="detainee.residencePlace"  class="field-style field-full"  placeholder="Адрес прописки" />
+          <input type="text" name="field9" [(ngModel)]="detainee.residencePlace"  class="field-style field-full"  placeholder="Адрес прописки" required/>
         </li>
 
         <li>
-          <textarea name="field5" [(ngModel)]="detainee.extraInfo" class="field-style" placeholder="Дополнительная информация"></textarea>
+          <textarea name="field10" [(ngModel)]="detainee.extraInfo" class="field-style" placeholder="Дополнительная информация"></textarea>
         </li>
     </ul>
-    <button type="submit" [disabled]="Image.value==''||!form.valid" (click)="sendDetaineeToDetention()" value="Добавить задержанного к задержанию">Добавить задержанного к задержанию</button>
+  </form>
+    <button type="submit" [disabled]="imageUrl=='/assets/img/find.png' || form.invalid" (click)="sendDetaineeToDetention()" value="Добавить задержанного к задержанию">Добавить задержанного к задержанию</button>

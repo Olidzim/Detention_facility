@@ -26,13 +26,13 @@ export class AddDeliveryComponent implements OnInit {
   }
 
 
-  getEmployeeFromDetail(employeeIDForChange: number){  
+  getEmployeeFromDetail(employeeIDForChange: number) {  
     console.log("deliveryadd")
     this.delivery.deliveredByEmployeeID = employeeIDForChange;
     }
 
 
-  save(){
+  save() {
     this.delivery.detaineeID = this.detaineeID;
     this.delivery.detentionID = this.detentionID;
     this.deliveryService.createDelivery(this.delivery)
@@ -44,7 +44,7 @@ export class AddDeliveryComponent implements OnInit {
   }
   
 
-  cancel(){
+  cancel() {
   this.sharedService.changeDeliveryCancel(false)
   }
 

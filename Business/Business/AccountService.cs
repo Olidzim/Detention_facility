@@ -38,6 +38,7 @@ namespace Detention_facility.Business
         {
             _userDataProvider.UpdateUserPassword(id, password);
         }
+
         public string GetRole(string login, string password)
         {
             string role = _userDataProvider.GetRole(login, password);

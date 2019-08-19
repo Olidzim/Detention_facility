@@ -26,19 +26,4 @@
     </tbody>
 </table>
 
-<ng-template #edit>
-    <td>
-        <input type="text"  [(ngModel)]="detention.detentionID" class="form-control d-inline-block" />
-    </td>
-     <td>
-        <input type="text" [(ngModel)]="detention.detentionDate" class="form-control" />
-    </td>
-    <td>
-        <input type="text" [(ngModel)]="detention.detainedByEmployeeID" class="form-control" />
-    </td>
-    <td>
-        <button class="btn btn-block btn-secondary" (click)="saveChanges()">Сохранить</button>
-    <p></p>
-        <button class="btn btn-block btn-warning" (click)="cancelChanges()">Отмена</button>
-    </td>
-</ng-template>
+

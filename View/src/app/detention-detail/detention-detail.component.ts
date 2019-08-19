@@ -58,16 +58,11 @@ export class DetentionDetailComponent implements OnInit {
     this.sharedService.ifChange = false;
     this.sharedService.default = true;
     this.ddetention.detainedByEmployeeID = this.defaultEmployeeID;
-    /*this.change = false;
-    this.sharedService.ifChange = false;
-    this.sharedService.default = true;*/
   }
 
   getSmartDetentionsByID(): void {  
     let id
-    if (this.sharedService.forDetentionDetailID == undefined)
-    { 
-      console.log("Hi"+this.route.snapshot.paramMap.get('id'))
+    if (this.sharedService.forDetentionDetailID == undefined) { 
       id = this.route.snapshot.paramMap.get('id');
     } 
     else 

@@ -70,7 +70,9 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     AddReleaseComponent,
     DeliveryComponent,
     ReleaseComponent, 
-    IsGrantedDirective, RegistrationComponent, UserDetailComponent 
+    IsGrantedDirective, 
+    RegistrationComponent, 
+    UserDetailComponent 
   ],
 
   imports: [

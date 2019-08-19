@@ -1,10 +1,10 @@
 <div *appIsGranted="'UPDATE'">
-<button *ngIf = "!add"  (click)="changeAdd()" id="addbutton" type="button" class="btn btn-primary" >Добавить сотрудника</button>
+  <button *ngIf = "!add"  (click)="add = !add" id="addbutton" type="button" class="btn btn-primary" >Добавить сотрудника</button>
 </div>
 <h2 style="margin-left: 10px">Сотрудники</h2>
 <br>
 <div *ngIf = "!add">
-<table id="auto-layout" class="table table-bordered table-sm">
+  <table id="auto-layout" class="table table-bordered table-sm">
     <thead>
       <tr > 
         <td>Номер сотрудника</td>
@@ -35,6 +35,7 @@
 </table>
 
 <ng-template #edit>
+
   <td>
     <input type="text"  [(ngModel)]="employee.employeeID" class="form-control d-inline-block" />
   </td>
@@ -64,40 +65,41 @@
     <br>
     <button class="btn btn-block btn-warning" (click)="cancel()">Отмена</button>
   </td>
+
 </ng-template>
+
 </div>
-<form *ngIf = "add" #form='ngForm' class="mb-4" autocomplete="off">
-
-  <div class="form-group col-md-2 offset-md">
-    <label>Имя</label>
-    <input type="text" default="Hi" name="firstName"  autocomplete="off" [(ngModel)]="employee.firstName" class="form-control"  required autofocus>
-  </div>
-  
-  <div class="form-group col-md-2 offset-md">
-    <label>Фамилия</label>
-    <input type="text" #Login="ngModel" name="lastName" [(ngModel)]="employee.lastName"   class="form-control"  required autofocus>
-  </div>
-
-  <div class="form-group col-md-2 offset-md">
-    <label>Отчество</label>
-    <input type="text" #Login="ngModel" name="patronymic" [(ngModel)]="employee.patronymic"   class="form-control"  required autofocus>
-  </div>
-
-  <div class="form-group col-md-2 offset-md">
-    <label>Должность</label>
-    <input type="text" #Login="ngModel" name="position" [(ngModel)]="employee.position" class="form-control" required autofocus>
-  </div>
-
-  <div class="form-group col-md-2 offset-md">
-    <label>Звание</label>
-    <input type="text" #Login="ngModel" name="employeeRank" [(ngModel)]="employee.employeeRank" class="form-control" required autofocus>
-  </div>  
-
-  <div class="form-row">
-    <div class="form-group">
-      <button type="submit" (click)="createNewEmployee()" class="btn btn-lg btn-block" [disabled]="form.invalid">Добавить сотрудника</button>
-      <button type="submit" (click)="add = false" class="btn btn-lg btn-block" >Отмена</button>
+  <form *ngIf = "add" #form='ngForm' class="mb-4" autocomplete="off">
+    <div class="form-group col-md-2 offset-md">
+      <label>Имя</label>
+      <input type="text" default="Hi" name="firstName"  autocomplete="off" [(ngModel)]="employee.firstName" class="form-control"  required autofocus>
     </div>
-  </div>
+  
+    <div class="form-group col-md-2 offset-md">
+      <label>Фамилия</label>
+      <input type="text" #Login="ngModel" name="lastName" [(ngModel)]="employee.lastName"   class="form-control"  required autofocus>
+    </div>
+
+    <div class="form-group col-md-2 offset-md">
+      <label>Отчество</label>
+      <input type="text" #Login="ngModel" name="patronymic" [(ngModel)]="employee.patronymic"   class="form-control"  required autofocus>
+    </div>
+
+    <div class="form-group col-md-2 offset-md">
+      <label>Должность</label>
+      <input type="text" #Login="ngModel" name="position" [(ngModel)]="employee.position" class="form-control" required autofocus>
+    </div>
+
+    <div class="form-group col-md-2 offset-md">
+      <label>Звание</label>
+      <input type="text" #Login="ngModel" name="employeeRank" [(ngModel)]="employee.employeeRank" class="form-control" required autofocus>
+    </div>  
+
+    <div class="form-row">
+      <div class="form-group">
+        <button type="submit" (click)="createNewEmployee()" class="btn btn-lg btn-block" [disabled]="form.invalid">Добавить сотрудника</button>
+        <button type="submit" (click)="add = false" class="btn btn-lg btn-block" >Отмена</button>
+      </div>
+    </div>
   
 </form>

@@ -1,13 +1,12 @@
-
-<app-add-release [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewRelease)="getReleaseFromAdd($event)" *ngIf="add && isRelease"></app-add-release>
-<div *ngIf="isRelease">
-        <div *appIsGranted="'UPDATE'">
-                <button *ngIf="!isRelease && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
-        </div>
+<app-add-release [detaineeID]="detaineeID" [detentionID]="detentionID" (toNewRelease)="getReleaseFromAdd($event)" *ngIf="add && !isRelease"></app-add-release>
     <div *appIsGranted="'UPDATE'">
-    <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить освобождение</button>
-    <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали освобождения</button>
-</div>
+        <button *ngIf="!isRelease && !add && !(router.url.substring(0, 15)=='/home/detainee/')" type = "button" class = "btn btn-success" (click)="addForm()">Внести информацию об освобождении</button>
+    </div>
+    <div *ngIf="isRelease && !change"> 
+        <div *appIsGranted="'UPDATE'">     
+            <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-danger" (click)="deleteForm()">Удалить освобождение</button>
+            <button  *ngIf="res == '/home/detention'" type = "button" class = "btn btn-success" (click)="changeForm()">Изменить детали освобождения</button>
+        </div>
     <table class="table2">
         <tbody>
             <tr > 
@@ -30,6 +29,7 @@
 </div>
 
 <br>
+
 <div *ngIf="change">  
     <p>В работе employee ID</p>{{release.releasedByEmployeeID}}
     <p>Дата освобождения:</p>

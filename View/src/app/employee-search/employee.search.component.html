@@ -4,7 +4,3 @@
     <li (click)="chooseEmployee(employee)" *ngFor="let employee of employees$ | async"><p>{{employee.fullName}}</p></li>               
   </ul>
 </div>
-<!--
-<p *ngIf="employeeForParent">Выбранный сотрудник</p>
-<p *ngIf="employeeForParent">{{employeeForParent.employeeID}} {{employeeForParent.fullName}}</p>-->
-<!--<button mat-button [mat-dialog-close]="k" cdkFocusInitial>Ok</button>-->

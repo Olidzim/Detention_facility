@@ -42,14 +42,14 @@ namespace WebAPI.Controllers
                 if (flag)
                 {
 
-                   var r = new ResponseClass<string>
+                   var badRequest = new ResponseClass<string>
                    {
                        IsSuccess = false,
                        Message = "На сервере имеются файлы с именами:" + fileNamesList,
                        ResponseData = null
                    };
 
-                   return Ok(r);
+                   return Ok(badRequest);
                 }
                 else
                     foreach (string file in httpRequest.Files)
@@ -57,9 +57,20 @@ namespace WebAPI.Controllers
                         var postedFile = httpRequest.Files[file];
                         var filePath = HttpContext.Current.Server.MapPath("~/UploadFile/" + postedFile.FileName);
                         postedFile.SaveAs(filePath);
-                    }                
+
+                        if (!fileNamesList.Contains(postedFile.FileName))
+                            fileNamesList = fileNamesList + postedFile.FileName + " ";
+                    }
             }
-            return Ok();
+
+            var goodRequest = new ResponseClass<string>
+            {
+                IsSuccess = true,
+                Message = "На сервер добавлены файлы:" + fileNamesList,
+                ResponseData = null
+            };
+
+            return Ok(goodRequest);
         }
     }
 }

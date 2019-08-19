@@ -20,6 +20,7 @@ export class DeliveryDetailComponent implements OnInit {
 
   add: boolean;
   isDelivery: boolean = false;
+  isDetainee: boolean = false;
   res: string;
   change: boolean = false;
   delivery: Delivery;
@@ -27,17 +28,19 @@ export class DeliveryDetailComponent implements OnInit {
 
   constructor(private deliveryService: DeliveryService, 
     private sharedService: SharedService, 
-    private router: Router) { }  
+    public router: Router) { }  
   
   openDialog(): void {}
 
 
   ngOnInit() {
+
     console.log(this.delivery)   
     this.getDelivery(this.detaineeID, this.detentionID)
     this.sharedService.ifChange = false;
     this.res = this.router.url.substring(0, 15);
     this.sharedService.cancelDeliveryStatus.subscribe(status => {   
+      console.log(status)
       this.add = status   
     })  
   }
@@ -81,6 +84,7 @@ export class DeliveryDetailComponent implements OnInit {
     .subscribe(delivery => {
         this.ngOnInit();
       });
+      this.isDelivery = false
   }
 
 

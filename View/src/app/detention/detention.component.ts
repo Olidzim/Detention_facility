@@ -16,7 +16,7 @@ export class DetentionComponent implements OnInit {
    
   // message: String;
 
-  detentions: Detention[];
+  detentions: SmartDetention[];
   constructor(
     private detentionService: DetentionService,
     private router: Router,
@@ -52,6 +52,7 @@ export class DetentionComponent implements OnInit {
     console.log("NoDate")
     this.detentionService.getSmartDetentions()
     .subscribe((data: Detention[]) => this.detentions = data);
+
   }
 
   toDetentionDetail(d: SmartDetention)
@@ -65,5 +66,6 @@ export class DetentionComponent implements OnInit {
     this.detentionService.searchDetentionsByDate(this.date).subscribe
     ((data: Detention[]) => this.detentions = data)
   } 
-
+hi()
+{}
 }
